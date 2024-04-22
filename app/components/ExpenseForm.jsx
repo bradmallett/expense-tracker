@@ -16,7 +16,7 @@ const ExpenseForm = ({addExpenseItem}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(expenseName === '' || expenseAmount === '') return;
+        if(!expenseName || !expenseAmount) return;
 
         addExpenseItem({expenseName, expenseAmount, selectedCategory})
     }

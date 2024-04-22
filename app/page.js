@@ -2,9 +2,13 @@
 import ExpenseForm from "./components/ExpenseForm";
 
 export default function Home() {
-const addExpenseItem = (item) => {
-  console.log(item)
+const  addExpenseItem = async (item) => {
+  const res = await fetch('/api/expenses', {
+    method: 'POST',
+    body: item
+  });
 }
+
   return (
     <>
       <h1>EXPENSE TRACKER</h1>
