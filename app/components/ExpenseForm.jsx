@@ -1,7 +1,8 @@
 'use client';
 import { useState } from "react";
+import { addExpenseItem } from "../api/expenses/helperFunctions";
 
-const ExpenseForm = ({addExpenseItem}) => {
+const ExpenseForm = () => {
     const [expenseName, setExpenseName] = useState('');
     const [expenseAmount, setExpenseAmount] = useState('');
     const [selectedCategory, setselectedCategory] = useState('Fundamental');

@@ -1,14 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
-
-
+import { NextResponse } from "next/server";
+import { putExpense } from "./dbFunctions";
 
 export async function POST(request) {
-    // Get the request body as a JSON object
-    const body = await request.json();
+    const myRequest = await request.json();
   
-    // Now you can work with the data in the body
-    console.log('Received data:', body);
-  
+    // Calling our DB interactor function
+    const myResponse = await putExpense(myRequest);
+    console.log('RESPONSE FROM DYNAMO: ', myResponse);
+    
     // Return an appropriate response (e.g., send back a JSON response)
-    return NextResponse.json({ message: 'Request received successfully' });
+    return NextResponse.json('Expense added to Database');
   }
