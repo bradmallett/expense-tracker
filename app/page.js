@@ -1,6 +1,8 @@
 import ExpenseForm from "./components/ExpenseForm";
+import { getExpenses } from "./api/expenses/expenseRepository";
 
-export default function Home() {
+export default async function Home() {
+  //const expenses = await getExpenses();
 
   return (
     <>

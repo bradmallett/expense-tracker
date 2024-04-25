@@ -4,6 +4,30 @@ import { v4 as uuid } from "uuid";
 
 const client = DynamoDBDocument.from(new DynamoDB({}));
 
+
+export const getExpenses = async () => {
+    try {
+        // Define the parameters for the put operation
+        const params = {
+            TableName: "Expenses"
+        };
+
+        // Put the item into the table using the document client
+        const result = await client.scan(params);
+        console.log('Expense Items: ', result);
+        return result;
+        
+    } catch (error) {
+        console.error("------ERROR ADDING EXPENSE TO DB----: ", error);
+    }
+}
+
+
+
+
+
+
+
 export const putExpense = async ({expenseAmount, expenseName, selectedCategory}) => {
 
     try {

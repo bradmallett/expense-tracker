@@ -11,3 +11,4 @@ export const addExpenseItem = async (item) => {
         console.error('Error sending POST request: ', error)
     }
 };
+

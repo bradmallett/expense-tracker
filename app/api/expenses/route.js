@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { putExpense } from "./dbFunctions";
+import { putExpense } from "./expenseRepository";
 
 export async function POST(request) {
     const myRequest = await request.json();
@@ -11,3 +11,5 @@ export async function POST(request) {
     // Return an appropriate response (e.g., send back a JSON response)
     return NextResponse.json('Expense added to Database');
   }
+
+  
