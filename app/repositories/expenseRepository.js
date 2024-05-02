@@ -14,18 +14,12 @@ export const getExpenses = async () => {
 
         // Put the item into the table using the document client
         const result = await client.scan(params);
-        console.log('Expense Items: ', result);
         return result;
         
     } catch (error) {
         console.error("------ERROR ADDING EXPENSE TO DB----: ", error);
     }
 }
-
-
-
-
-
 
 
 export const putExpense = async ({expenseAmount, expenseName, selectedCategory}) => {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { putExpense } from "./expenseRepository";
+import { putExpense } from "../../repositories/expenseRepository";
 
 export async function POST(request) {
     const myRequest = await request.json();
