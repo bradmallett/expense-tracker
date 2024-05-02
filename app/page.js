@@ -1,13 +1,13 @@
 import ExpenseForm from "./components/ExpenseForm";
-import { getExpenses } from "./api/expenses/expenseRepository";
+import Expenses from "./components/Expenses";
 
 export default async function Home() {
-  //const expenses = await getExpenses();
 
   return (
     <>
       <h1>EXPENSE TRACKER</h1>
       <ExpenseForm/>
+      <Expenses/>
     </>
   );
 }
