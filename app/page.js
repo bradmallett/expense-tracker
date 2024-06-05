@@ -8,12 +8,13 @@ export default async function Home({ searchParams }) {
   return (
     <>
       <h1>EXPENSE TRACKER</h1>
+      <Expenses/>
+      {show && <AddExpenseModal />}
       <Link href="/?show=true">
         <h2>ADD EXPENSE</h2> 
       </Link>
-
-      {show && <AddExpenseModal />}
-      <Expenses/>
     </>
   );
 }
+
+

@@ -1,0 +1,84 @@
+
+- Current Balance
+- Month of a Year (May,2024) // array of days where transaction has happened
+    - Day of transaction(s) //array of transactions for specific day
+        - date of transaction
+        - Transaction
+            - transaction id
+            - name
+            - amount
+            - type of transaction (expense/income)
+            - new balance after transaction
+            - expense category (Fun, Fundamental, Future)
+            - expense tag (household, grocery, rent, miscellaneous...etc)
+    - Total of expenses for month
+    - Total of income for month
+    - Difference of total income/expenses for month
+
+
+partition key - can have duplicates
+partition key + sort key = can’t have duplicates
+if partition keys are all unique - no need for sort key
+
+
+
+data = {
+    currentBalance: 8,000.00,
+    months: [
+        {
+        monthYear: "May, 2024",
+        monthTotalIncome: 4,000.00,
+        monthTotalSpending: 1,900.00,
+        daysWithTransactions: [
+            {
+            date: "Wednesday, May, 20",
+            endOfDayBalance: 8,000.00,
+            transactions: [
+                    {
+                    name: "Healthcare Bill",
+                    amount: 50.00,
+                    transactionType: "expense",
+                    expenseCategory: "Fundamental",
+                    expenseTag: "Health",
+                    },
+                    {
+                    name: "La Juanitas Restaurant",
+                    amount: 29.78,
+                    transactionType: "expense",
+                    expenseCategory: "Fun",
+                    expenseTag: "Restaurants",
+                    }
+                ]
+            },
+            {
+            date: "Wednesday, May, 17",
+            endOfDayBalance: 8,079.78,
+            transactions: [
+                    {
+                    name: "Frying Pan",
+                    amount: 18.53,
+                    transactionType: "expense",
+                    expenseCategory: "Fun",
+                    expenseTag: "Household",
+                    },
+                    {
+                    name: "Paycheck",
+                    amount: 3,000.00,
+                    transactionType: "income",
+                    },
+                    {
+                    name: "Groceries",
+                    amount: 357.89,
+                    transactionType: "expense",
+                    expenseCategory: "Fundamental",
+                    expenseTag: "Groceries",
+                    },
+                ]
+            },
+        ]
+
+    }
+    ]
+}
+
+
