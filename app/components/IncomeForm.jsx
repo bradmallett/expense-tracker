@@ -1,14 +1,12 @@
 'use client';
 import { useState } from "react";
-import { addExpenseItem } from "../services/transactionsService";
+import { addIncomeItem } from "../services/transactionsService";
 
-const ExpenseForm = () => {
+const IncomeForm = () => {
     const [yearMonth, setYearMonth] = useState('');
     const [amount, setAmount] = useState('');
-    const [category, setCategory] = useState('Fundamental');
     const [date, setDate] = useState('');
-    const [expenseName, setExpenseName] = useState('');
-    const [tag, setTag] = useState('');
+    const [incomeName, setIncomeName] = useState('');
 
     const handleAmountChange = (e) => {
         const inputAmount = e.target.value;
@@ -20,20 +18,19 @@ const ExpenseForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!yearMonth || !expenseName || !amount || !date) return;
+        if(!yearMonth || !incomeName || !amount || !date) return;
 
-        addExpenseItem({yearMonth, amount, category, date, expenseName, tag});
+        addIncomeItem({yearMonth, amount, date, incomeName});
         setYearMonth('');
         setAmount('');
         setDate('');
-        setExpenseName('');
-        setTag('');
+        setIncomeName('');
     };
  
 
   return (
     <>
-    <h3>Expense Form</h3>
+    <h3>Income Form</h3>
 
     <form onSubmit={handleSubmit}>
         <label htmlFor="yearMonth">Year Month</label>
@@ -47,28 +44,15 @@ const ExpenseForm = () => {
         <br/>
         <br/>
 
-        <label htmlFor="expenseAmount">Expense Amount</label>
+        <label htmlFor="incomeAmount">Income Amount</label>
         <br/>
         <input 
             type="text" 
-            id="expenseAmount"
+            id="incomeAmount"
             placeholder="00.00"
             value={amount}
             onChange={handleAmountChange}
         />
-        <br/>
-        <br/>
-
-        <label htmlFor="expenseCategory">Expense Category</label>
-        <br/>
-        <select 
-            value={category}
-            onChange={e => setCategory(e.target.value)}
-        >
-            <option value="Fundamental">Fundamental</option>
-            <option value="Fun">Fun</option>
-            <option value="Future">Future</option>
-        </select>
         <br/>
         <br/>
 
@@ -83,27 +67,17 @@ const ExpenseForm = () => {
         <br/>
         <br/>        
 
-        <label htmlFor="expenseName">Expense Name</label>
+        <label htmlFor="incomeName">Income Name</label>
         <br/>
         <input 
             type="text" 
-            id="expenseName" 
-            value={expenseName} 
-            onChange={(e) => setExpenseName(e.target.value)}
+            id="incomeName" 
+            value={incomeName} 
+            onChange={(e) => setIncomeName(e.target.value)}
         />
         <br/>
         <br/>
 
-        <label htmlFor="tag">Expense Tag</label>
-        <br/>
-        <input 
-            type="text" 
-            id="tag" 
-            value={tag} 
-            onChange={(e) => setTag(e.target.value)}
-        />
-        <br/>
-        <br/>
 
 
         <button type='submit'>
@@ -116,6 +90,6 @@ const ExpenseForm = () => {
   )
 }
 
-export default ExpenseForm
+export default IncomeForm;
 
 

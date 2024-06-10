@@ -1,17 +1,27 @@
-import Expenses from "./components/Expenses";
+import Transactions from "./components/Transactions";
 import Link from "next/link";
-import AddExpenseModal from "./components/Modal";
+import AddExpenseModal from "./components/AddExpenseModal";
+import AddIncomeModal from "./components/AddIncomeModal";
 
-export default async function Home({ searchParams }) {
-  const show = searchParams && searchParams.show === "true";
+
+export default function Home({ searchParams }) {
+  const showExpenseForm = searchParams && searchParams.showExpenseForm === "true";
+  const showIncomeForm = searchParams && searchParams.showIncomeForm === "true";
+
 
   return (
     <>
       <h1>EXPENSE TRACKER</h1>
-      <Expenses/>
-      {show && <AddExpenseModal />}
-      <Link href="/?show=true">
+      <Transactions/>
+      {showExpenseForm && <AddExpenseModal />}
+      {showIncomeForm && <AddIncomeModal />}
+
+      <Link href="/?showExpenseForm=true">
         <h2>ADD EXPENSE</h2> 
+      </Link>
+
+      <Link href="/?showIncomeForm=true">
+        <h2>ADD INCOME</h2> 
       </Link>
     </>
   );
