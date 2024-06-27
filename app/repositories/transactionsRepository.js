@@ -19,16 +19,16 @@ export const getTransactions = async () => {
 }
 
 
-export const putExpense = async ({yearMonth, amount, category, date, expenseName, tag}) => {
+export const putExpense = async ({yearMonth, amountValue, category, isoString, expenseName, tag}) => {
 
     try {
         // Create the item to be put into the table
         const ExpenseItem = {
             YearMonth: yearMonth,
             TransactionID: uuid(),
-            Amount: amount,
+            Amount: amountValue,
             Category: category,
-            Date: date,
+            Date: isoString,
             Name: expenseName,
             Tag: tag,
             Type: "Expense"
@@ -50,14 +50,14 @@ export const putExpense = async ({yearMonth, amount, category, date, expenseName
 }
 
 
-export const putIncome = async ({yearMonth, amount, date, incomeName}) => {
+export const putIncome = async ({yearMonth, amountValue, isoString, incomeName}) => {
     try {
         // Create the item to be put into the table
         const incomeItem = {
             YearMonth: yearMonth,
             TransactionID: uuid(),
-            Amount: amount,
-            Date: date,
+            Amount: amountValue,
+            Date: isoString,
             Name: incomeName,
             Type: "Income"
         };

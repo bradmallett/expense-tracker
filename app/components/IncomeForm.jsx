@@ -19,8 +19,11 @@ const IncomeForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!yearMonth || !incomeName || !amount || !date) return;
+        const dateObj = new Date(date);
+        const isoString = dateObj.toISOString();
+        const amountValue = parseFloat(amount);
 
-        addIncomeItem({yearMonth, amount, date, incomeName});
+        addIncomeItem({yearMonth, amountValue, isoString, incomeName});
         setYearMonth('');
         setAmount('');
         setDate('');
@@ -59,8 +62,8 @@ const IncomeForm = () => {
         <label htmlFor="date">Date</label>
         <br/>
         <input
-            type="text" 
-            id="date" 
+            type="text"
+            id="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
         />

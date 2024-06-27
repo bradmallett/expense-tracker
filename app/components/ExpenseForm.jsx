@@ -21,8 +21,11 @@ const ExpenseForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(!yearMonth || !expenseName || !amount || !date) return;
+        const dateObj = new Date(date);
+        const isoString = dateObj.toISOString();
+        const amountValue = parseFloat(amount);
 
-        addExpenseItem({yearMonth, amount, category, date, expenseName, tag});
+        addExpenseItem({yearMonth, amountValue, category, isoString, expenseName, tag});
         setYearMonth('');
         setAmount('');
         setDate('');
