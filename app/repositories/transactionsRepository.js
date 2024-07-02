@@ -4,17 +4,23 @@ import { v4 as uuid } from "uuid";
 
 const client = DynamoDBDocument.from(new DynamoDB({}));
 
-
-export const getTransactions = async () => {
+export const getMonthTransactions = async (yearMonth) => {
     try {
         const params = {
-            TableName: "Transactions"
+            TableName: "Transactions",
+            KeyConditionExpression: "#ym = :ymValue",
+            ExpressionAttributeNames: {
+                "#ym": "YearMonth"
+            },
+            ExpressionAttributeValues: {
+                ":ymValue": yearMonth
+            }
         };
-        const result = await client.scan(params);
+        const result = await client.query(params);
 
         return result;
     } catch (error) {
-        console.error("------ERROR ADDING EXPENSE TO DB----: ", error);
+        console.error("------ERROR ADDING TRANSACTION TO DB----: ", error);
     }
 }
 
