@@ -1,0 +1,26 @@
+
+
+
+MONTHS
+- id SERIAL PRIMARY KEY
+- number INTEGER
+- year INTEGER
+- beginning_balance NUMERIC(10,3) == decimal 0.00
+
+SPENDING TAG INSTANCES
+ - id INTEGER
+ - transaction_id INTEGER
+ - spending_tag_name_id INTEGER
+
+SPENDING TAG NAMES
+ - id INTEGER
+ - name VARCHAR(255)
+
+TRANSACTIONS
+- id INTEGER
+- date DATE
+- month_id INTEGER
+- amount NUMERIC(10,3) == decimal 0.00
+- type VARCHAR(50)
+- description VARCHAR(255)
+- budget_category VARCHAR(20)

@@ -1,13 +1,43 @@
 "use server";
 import { neon } from "@neondatabase/serverless";
 
-export async function getTransactions() {
+export async function getMonthTransactions(monthYear, monthNumber) {
     const sql = neon(process.env.DATABASE_URL);
 
     try {
-        const transactions = await sql`SELECT * FROM transactions;`;
-        console.log("---DB WAS CALLED---", transactions);
-        return transactions;
+        const [ { beginning_balance } ] = await sql`
+            SELECT
+                months.beginning_balance
+            FROM
+                months
+            WHERE 
+                months.year = ${monthYear} 
+            AND 
+                months.number = ${monthNumber};
+         `;
+
+        const transactions = await sql`
+            SELECT 
+                transactions.id,
+                transactions.date,
+                transactions.amount,
+                transactions.type,
+                transactions.description
+            FROM 
+                months
+            JOIN 
+                transactions
+            ON 
+                months.id = transactions.month_id
+            WHERE 
+                months.year = ${monthYear} 
+            AND 
+                months.number = ${monthNumber}
+            ORDER BY 
+                transactions.date ASC;;
+            `;
+
+        return [ beginning_balance, transactions];
 
     } catch (error) {
         return {
@@ -15,7 +45,7 @@ export async function getTransactions() {
         }
     }
 
-}
+};
 
 
 
@@ -25,42 +55,16 @@ export async function getTransactions() {
 
 
 
-// TABLES
-
-// spending_tag_names
-    // id
-    // name - unique
 
 
-// spending_tag_instances
-    // id
-    // transaction_id = foreign key references transactions(id)
-    // spending_tag_id = foreign key references spending_tags(id) 
-    // unique transaction_id and spending_tag_id composite constraint
+// month
+//  beginning balance
 
-
-// months
-    // id
-    // number
-    // year
-    // beginning_balance
-
-
-// transactions
-    // id
-    // date
-    // month_id = foreign key references month(id)
-    // amount
-    // type expense, income, savings
-    // description
-    // budget_cat fun, fundamental, future
-
-
-
-// transactions.type = 
-    // expense
-    // income
-    // savings
-    // new balance?
+// transctions
+//   id
+//   date 
+//   amount
+//   type
+//   description 
 
 
