@@ -19,12 +19,7 @@ export default function SelectMonth() {
         updateQueryParams();
     }, [selectedMonth]);
 
-
-    const handleSelect = (newYearMonth) => {
-        setSelectedMonth(newYearMonth);
-        updateQueryParams();
-    };
-
+    
   function updateQueryParams() {
     const year = selectedMonth.split('-')[0];
     const month = selectedMonth.split('-')[1];
@@ -43,7 +38,7 @@ export default function SelectMonth() {
                 id="yearMonth"
                 name="yearMonth"
                 required
-                onChange={(e) => handleSelect(e.target.value)}
+                onChange={(e) => setSelectedMonth(e.target.value)}
             />
         </div>
     )
