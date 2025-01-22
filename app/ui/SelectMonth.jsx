@@ -37,6 +37,7 @@ export default function SelectMonth() {
                 type="month" 
                 id="yearMonth"
                 name="yearMonth"
+                value={selectedMonth}
                 required
                 onChange={(e) => setSelectedMonth(e.target.value)}
             />
