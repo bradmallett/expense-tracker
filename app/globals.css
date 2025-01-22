@@ -22,8 +22,37 @@ body {
 
 .trans-list-contain {
   margin: 30px 30px;
+  background-color: rgb(255, 240, 241);
 }
 
 .day-contain {
   margin:  20px 0px;
+}
+
+.add-transaction-form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 30px;
+  background-color: antiquewhite;
+  padding: 10px;
+}
+
+input {
+  border: 1px solid gray;
+  background-color: rgb(231, 231, 231);
+  margin: 10px;
+}
+
+.input-contain {
+  margin: 10px 0px;
+}
+
+label {
+  font-weight: bold;
+}
+
+button {
+  border: 2px solid gray;
+  font-weight: bold;
 }

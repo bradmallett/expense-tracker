@@ -1,11 +1,9 @@
 
-import { getMonthTransactions } from "../lib/actions";
 import  formatMonthTransactions from "../lib/formatMonthTransactions";
 
 
-export default async function TransactionsList() {
-    const monthTransactions = await getMonthTransactions(2025, 1);
-    const {dayObjects, beginningMonthBalance} = formatMonthTransactions(monthTransactions);
+export default async function TransactionsList({ monthTransactions }) {
+    const  { monthID, beginningMonthBalance, dayObjects } = await formatMonthTransactions(monthTransactions);
 
     return (
         <div className="trans-list-contain">
