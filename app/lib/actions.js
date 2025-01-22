@@ -52,7 +52,9 @@ export async function getMonthTransactions(monthYear, monthNumber) {
 };
 
 
-export async function addTransaction(formData) {
+export async function addTransaction(monthID, formData) {
+    console.log("monthID: ", monthID)
+    console.log("formData: ", formData)
     
     // use month and year to find month_id from months table
     // if no month exists, create a new month record
