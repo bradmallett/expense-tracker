@@ -1,13 +1,15 @@
 "use server";
 import { neon } from "@neondatabase/serverless";
 
+const sql = neon(process.env.DATABASE_URL);
+
 export async function getMonthTransactions(monthYear, monthNumber) {
-    const sql = neon(process.env.DATABASE_URL);
 
     try {
-        const [ { beginning_balance } ] = await sql`
+        const [ { beginning_balance, id } ] = await sql`
             SELECT
-                months.beginning_balance
+                months.beginning_balance,
+                months.id
             FROM
                 months
             WHERE 
@@ -37,7 +39,7 @@ export async function getMonthTransactions(monthYear, monthNumber) {
                 transactions.date ASC;;
             `;
 
-        return [ beginning_balance, transactions];
+        return { monthID: id, beginning_balance, transactions };
 
     } catch (error) {
         return {
@@ -48,23 +50,17 @@ export async function getMonthTransactions(monthYear, monthNumber) {
 };
 
 
+export async function addTransaction(formData) {
+    console.log(formData);
+    // use month and year to find month_id from months table
+    // if no month exists, create a new month record
+    // grab month_id from months.id to insert into transactions table
+    // create new transaction
+    // revalidate path
+}
 
 
 
 
-
-
-
-
-
-// month
-//  beginning balance
-
-// transctions
-//   id
-//   date 
-//   amount
-//   type
-//   description 
 
 
