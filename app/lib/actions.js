@@ -54,7 +54,7 @@ export async function getMonthTransactions(monthYear, monthNumber) {
 
 
 
-    // use month and year to find month_id from months table
+    
     // if no month exists, create a new month record
     // grab month_id from months.id to insert into transactions table
     // create new transaction
@@ -66,21 +66,37 @@ export async function addTransaction(monthData, formData) {
 
     const { monthID, year, month } = monthData;
 
+    // monthID : months table needs integer
+    // year: months table needs integer
+    // month: months table needs integer
     const transactionDate = formData.get('date');
     const transactionType = formData.get('transactionType');
     const description = formData.get('description');
-    const amount = formData.get('amount');
+    const amount = Math.round(Number(formData.get('amount')) * 100); // db needs integer
     const budgetCategory = formData.get('budgetCategory');
+    
+    try {
+        await sql`
+            INSERT INTO transactions
+                (date, month_id, amount, type, description, budget_category)
+            VALUES (${transactionDate}, ${monthID}, ${amount}, ${transactionType}, ${description}, ${budgetCategory});
+        `;
+    } catch (error) {
+        return {
+            message: 'Database Error: Failed to Create Transaction'
+        }
+    }
 
-    console.log("Date: ", transactionDate, "type: ", typeof transactionDate);
-    console.log("transactionType: ", transactionType, "type: ", typeof transactionType)
-    console.log("description: ", description, "type: ", typeof description)
-    console.log("amount: ", amount, "type: ", typeof amount)
-    console.log("budgetCategory: ", budgetCategory, "type: ", typeof budgetCategory)
-    console.log("monthID: ", monthID, "type: ", typeof monthID)
-    console.log("year: ", year, "type: ", typeof year)
-    console.log("month: ", month, "type: ", typeof month)
+    // console.log("Date: ", transactionDate, "type: ", typeof transactionDate);
+    // console.log("transactionType: ", transactionType, "type: ", typeof transactionType)
+    // console.log("description: ", description, "type: ", typeof description)
+    // console.log("amount: ", amount, "type: ", typeof amount)
+    // console.log("budgetCategory: ", budgetCategory, "type: ", typeof budgetCategory)
+    // console.log("monthIDNumber: ", monthID, "type: ", typeof monthID)
+    // console.log("year: ", year, "type: ", typeof year)
+    // console.log("month: ", month, "type: ", typeof month)
 
+// ===FROM CLIENT
 // Date:  2025-01-23 type:  string
 // transactionType:  expense type:  string
 // description:  bought a pumpkin type:  string
@@ -91,16 +107,8 @@ export async function addTransaction(monthData, formData) {
 // month:  01 type:  string
 
 
-    // try {
-    //     await sql`
-    //         INSERT INTO transactions
-    //             ()
-    //     `;
-    // } catch (error) {
-    //     return {
-    //         message: 'Database Error: Failed to Create Transaction'
-    //     }
-    // }
+
+
     
 
 }

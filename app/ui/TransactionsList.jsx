@@ -13,8 +13,8 @@ export default function TransactionsList({ monthTransactions }) {
                   <p><strong>Date: {day.date}</strong></p>
                   <h1 style={{color: 'green'}}>Balance: {day.endDayBalance}</h1>
                   {day.transactions.map(trans => (
-                    <div key={trans.id}>
-                      <p>{trans.description}</p>
+                    <div key={trans.id} className="trans-contain">
+                      <p className="trans-descrip">{trans.description}</p>
                       <p>{trans.type}</p>
                       <p>{trans.amount}</p>
                     </div>
