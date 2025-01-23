@@ -5,22 +5,22 @@ export default async function AddTransaction({ monthData }) {
     const { monthID, year, month } = monthData;
 
 // TRANSACTIONS
-// - ID
 // - date DATE
-// - month_id INTEGER
-// - amount INTEGER
 // - type VARCHAR(50)
 // - description VARCHAR(255)
+// - amount INTEGER
 // - budget_category VARCHAR(20)
+// - month_id INTEGER
 
-    const addTransactionWithID = addTransaction.bind(null, monthID);
+
+    const addTransactionWithID = addTransaction.bind(null, monthData);
 
     return (
         <div>
             <form action={addTransactionWithID} className="add-transaction-form">
             <h1>CREATE A TRANSACTION</h1>
                 <div className="input-contain">
-                    <label htmlFor="date">Select a date:</label>
+                    <label htmlFor="date">MONTH: {`${year}-${month}`}</label>
                     <input
                         id="date"
                         name="date"
@@ -31,7 +31,7 @@ export default async function AddTransaction({ monthData }) {
 
                 <div className="input-contain">
                     <label htmlFor="transactionType">TRANSACTION TYPE:</label>
-                    <select name="transactionType" id="transactionType">
+                    <select name="transactionType" id="transactionType" required>
                         <option value="expense">expense</option>
                         <option value="income">income</option>
                         <option value="savings">savings</option>
@@ -63,7 +63,7 @@ export default async function AddTransaction({ monthData }) {
 
                 <div className="input-contain">
                     <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
-                    <select name="budgetCategory" id="budgetCategory">
+                    <select name="budgetCategory" id="budgetCategory" required>
                         <option value="fundamental">fundamental</option>
                         <option value="fun">fun</option>
                         <option value="future">future</option>
