@@ -8,7 +8,7 @@ export default async function Transactions({selectedMonth}) {
     const { year, month } = selectedMonth;
     let transactionsListData = null;
     
-    // Query DB with year and month from params
+    // Query DB for transactions, monthID, and beginning month balance
     const monthTransactionsData = await getMonthTransactions(year, month); // { monthIDandBeginningBalance: [{id: 2, beginning_balance: 100000}], transactions: [array of transaction objects] }
 
     // if no data returns, transactionsListData is null
