@@ -1,6 +1,6 @@
 
 import { getMonthTransactions } from "../lib/actions";
-import AddTransaction from "./AddTransaction";
+// import AddTransaction from "./AddTransaction";
 import TransactionsList from "./TransactionsList";
 
 

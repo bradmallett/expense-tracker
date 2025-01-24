@@ -2,9 +2,9 @@ import formatMonthTransactions from "../lib/formatMonthTransactions";
 
 
 export default function TransactionsList({ transactionsListData }) {
+    console.log(transactionsListData)
 
-
-      const formattedTransactions = transactionsListData ? formatMonthTransactions(transactionsListData): null; 
+      // const formattedTransactions = transactionsListData ? formatMonthTransactions(transactionsListData): null; 
       // { monthID, beginningMonthBalance, dayObjects }
 
     
@@ -13,7 +13,7 @@ export default function TransactionsList({ transactionsListData }) {
     return (
         <div className="trans-list-contain">
            <h1>TRANSACTIONS</h1>
-          <h2>MONTH BEGINNING BALANCE: ${formattedTransactions?.beginningMonthBalance}</h2>
+          {/* <h2>MONTH BEGINNING BALANCE: ${formattedTransactions?.beginningMonthBalance}</h2>
     
             {formattedTransactions?.dayObjects.map(day => (
               <div key={day.day} className="day-contain">
@@ -29,7 +29,7 @@ export default function TransactionsList({ transactionsListData }) {
                     ))}
                 </div>
               </div>
-            ))} 
+            ))}  */}
         </div>
       );
 };
