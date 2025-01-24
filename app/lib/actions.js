@@ -6,7 +6,7 @@ const sql = neon(process.env.DATABASE_URL);
 export async function getMonthTransactions(monthYear, monthNumber) {
 
     if( monthYear && monthNumber ) {
-        const monthIDandBeginningBalance = await sql`
+        const [ month ] = await sql`
             SELECT
                 months.id,
                 months.beginning_balance
@@ -36,10 +36,10 @@ export async function getMonthTransactions(monthYear, monthNumber) {
             AND 
                 months.number = ${monthNumber}
             ORDER BY 
-                transactions.date ASC;;
+                transactions.date ASC;
             `;
 
-        return { monthIDandBeginningBalance, transactions };
+        return { month, transactions };
     }
 
 };
