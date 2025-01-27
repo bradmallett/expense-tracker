@@ -41,68 +41,59 @@ export async function getMonthTransactions(monthYear, monthNumber) {
 
         return { month, transactions };
     }
+    
 
 };
 
 
 
 
-    
-    // if no month exists, create a new month record
-    // grab month_id from months.id to insert into transactions table
-    // create new transaction
-    // revalidate path
-export async function addTransaction(monthData, formData) {
-    if(!monthData || !formData) {
-        return 'Please fill out all form fields.';
-    }
 
-    const { monthID, year, month } = monthData;
-
-    // monthID : months table needs integer
-    // year: months table needs integer
-    // month: months table needs integer
+export async function addTransaction(monthID, formData) {
     const transactionDate = formData.get('date');
     const transactionType = formData.get('transactionType');
     const description = formData.get('description');
     const amount = Math.round(Number(formData.get('amount')) * 100); // db needs integer
     const budgetCategory = formData.get('budgetCategory');
-    
-    try {
+    const year = Number(transactionDate.split('-')[0]);
+    const monthNumber = Number(transactionDate.split('-')[1]);
+
+    //hard coding this in for now:
+    // will need to calculate this value
+    const beginningBalance = 300000;
+
+    if (!monthID) {
+            const [newMonthrecord] = await sql`
+                INSERT INTO months
+                    (number, year, beginning_balance)
+                VALUES
+                    (${monthNumber}, ${year}, ${beginningBalance})
+                RETURNING id;
+            `;
+
+            if(!newMonthrecord) {
+                throw new Error("Failed to create a new month record.")
+            }
+
+            monthID = newMonthrecord.id;
+    }
+
+
+   async function insertTransaction(id, transactionData) {
+        const {transactionDate, amount, transactionType, description, budgetCategory} = transactionData;
+
         await sql`
             INSERT INTO transactions
                 (date, month_id, amount, type, description, budget_category)
-            VALUES (${transactionDate}, ${monthID}, ${amount}, ${transactionType}, ${description}, ${budgetCategory});
+            VALUES 
+                (${transactionDate}, ${id}, ${amount}, ${transactionType}, ${description}, ${budgetCategory});
         `;
-    } catch (error) {
-        return {
-            message: 'Database Error: Failed to Create Transaction'
-        }
+        
     }
 
-    // console.log("Date: ", transactionDate, "type: ", typeof transactionDate);
-    // console.log("transactionType: ", transactionType, "type: ", typeof transactionType)
-    // console.log("description: ", description, "type: ", typeof description)
-    // console.log("amount: ", amount, "type: ", typeof amount)
-    // console.log("budgetCategory: ", budgetCategory, "type: ", typeof budgetCategory)
-    // console.log("monthIDNumber: ", monthID, "type: ", typeof monthID)
-    // console.log("year: ", year, "type: ", typeof year)
-    // console.log("month: ", month, "type: ", typeof month)
-
-// ===FROM CLIENT
-// Date:  2025-01-23 type:  string
-// transactionType:  expense type:  string
-// description:  bought a pumpkin type:  string
-// amount:  528.18 type:  string
-// budgetCategory:  fun type:  string
-// monthID:  2 type:  number
-// year:  2025 type:  string
-// month:  01 type:  string
+    await insertTransaction(monthID, {transactionDate, amount, transactionType, description, budgetCategory})
 
 
-
-
-    
 
 }
 

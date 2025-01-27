@@ -1,26 +1,16 @@
 import { addTransaction } from "../lib/actions";
 
 
-export default async function AddTransaction({ monthData }) {
-    const { monthID, year, month } = monthData;
+export default async function AddTransaction({ transactionsListData }) {
 
-// TRANSACTIONS
-// - date DATE
-// - type VARCHAR(50)
-// - description VARCHAR(255)
-// - amount INTEGER
-// - budget_category VARCHAR(20)
-// - month_id INTEGER
-
-
-    const addTransactionWithID = addTransaction.bind(null, monthData);
+    const addTransactionWithID = addTransaction.bind(null, transactionsListData?.month?.id);
 
     return (
         <div>
             <form action={addTransactionWithID} className="add-transaction-form">
             <h1>CREATE A TRANSACTION</h1>
                 <div className="input-contain">
-                    <label htmlFor="date">MONTH: {`${year}-${month}`}</label>
+                    <label htmlFor="date">Select a Date: </label>
                     <input
                         id="date"
                         name="date"
