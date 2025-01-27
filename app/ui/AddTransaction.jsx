@@ -53,7 +53,8 @@ export default async function AddTransaction({ transactionsListData }) {
 
                 <div className="input-contain">
                     <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
-                    <select name="budgetCategory" id="budgetCategory" required>
+                    <select name="budgetCategory" id="budgetCategory">
+                        <option value="">(none)</option>
                         <option value="fundamental">fundamental</option>
                         <option value="fun">fun</option>
                         <option value="future">future</option>
