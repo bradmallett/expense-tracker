@@ -36,50 +36,19 @@ export async function addTransaction(monthID, formData) {
 
 
 
-
-
+//!!!!!!!!!!!!!!NEED TO UPDATE ADJUSTMENT IN CASE OF "new balance" TYPE
     async function updateFutureMonthBalances(currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
         // determine adjustment based on transaction type
         const adjustment = type === "expense" ? -amount : amount;
 
         // Perform bulk update for all future months in one query
-        const updatedRows = await sql`
+         await sql`
             UPDATE months
             SET beginning_balance = beginning_balance + ${adjustment}
             WHERE (year > ${currentSelectedYear})
             OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber})
             RETURNING id, beginning_balance, year, number;
         `;
-
-        console.log("UPDATED FUTURE MONTH BEG BALANCES: ", updatedRows);
-
-        // const futureMonthRecords = await sql`
-        //     SELECT id, beginning_balance, year, number
-        //     FROM months
-        //     WHERE (year > ${currentSelectedYear})
-        //         OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber});
-        // `;
-        
-        // if(futureMonthRecords.length > 0) {
-        //     for (const monthRecord of futureMonthRecords) {
-        //         let newBeginningMonthBalance = monthRecord.beginning_balance;
-
-        //         if( type === "expense") {
-        //             newBeginningMonthBalance -= amount;
-        //         }
-        //         if( type === "income") {
-        //             newBeginningMonthBalance += amount;
-        //         }
-
-        //         await sql`
-        //         UPDATE months
-        //         SET beginning_balance = ${newBeginningMonthBalance}
-        //         WHERE id = ${monthRecord.id};
-        //     `; 
-
-        //     };
-        // }
-
 
     };
 
@@ -113,7 +82,8 @@ export async function addTransaction(monthID, formData) {
         ORDER BY year DESC, number DESC
         LIMIT 1;
         `;
-        
+
+        // no previous month data exists so return newMonthBalance as $0.00
         if (!mostRecentPrevMonth) {
             return newMonthBalance;
         }
@@ -137,6 +107,10 @@ export async function addTransaction(monthID, formData) {
 
             if(trans.type === "income") {
                 newMonthBalance += trans.amount;
+            }
+
+            if(trans.type === "new balance") {
+                newMonthBalance = trans.amount;
             }
         }
 

@@ -15,8 +15,12 @@ export default function formatMonthTransactions( monthTransactions ) {
             const transDay = new Date(trans.date).toDateString().split(' ')[2];
             const transAmount = Number(trans.amount);
 
+
+
             // if transaction day belongs to most recent day object
             if (transDay === currentDay) {
+
+                // added "new balance" type to updateDayBalance func - returns the amount!!!!!!!
                 currentBalance = updateDayBalance(trans.type, currentBalance, transAmount);
                 const endDayBalanceString = centsToDollars(currentBalance);
                 const currentDayIndex = dayObjects.length -1;
@@ -34,9 +38,14 @@ export default function formatMonthTransactions( monthTransactions ) {
                 dayObjects[currentDayIndex].transactions.push(newTransactionObject);
             }
 
+
+
+
+
             // If transaction day does not belong to most recent day object
             else {
                 currentDay = transDay;
+                // added "new balance" type to updateDayBalance func - returns the amount!!!!!!!
                 currentBalance = updateDayBalance(trans.type, currentBalance, transAmount);
                 const endDayBalanceString = centsToDollars(currentBalance);
 
