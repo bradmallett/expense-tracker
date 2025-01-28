@@ -1,4 +1,4 @@
-import { addTransaction } from "../lib/actions";
+import { addTransaction } from "../lib/actions/addTransaction";
 
 
 export default async function AddTransaction({ transactionsListData }) {
