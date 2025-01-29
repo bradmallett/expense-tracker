@@ -12,6 +12,7 @@ export async function addTransaction(monthID, formData) {
     const year = Number(transactionDate.split('-')[0]); // db needs integer
     const monthNumber = Number(transactionDate.split('-')[1]); // db needs integer
 
+    // if no data exists for this month
     if (!monthID) {
         const beginningBalance = await calculateNewMonthBalance(year, monthNumber);
 
@@ -37,7 +38,7 @@ export async function addTransaction(monthID, formData) {
 
 
 //!!!!!!!!!!!!!!NEED TO UPDATE ADJUSTMENT IN CASE OF "new balance" TYPE
-    async function updateFutureMonthBalances(currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
+    async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
         // determine adjustment based on transaction type
         const adjustment = type === "expense" ? -amount : amount;
 
@@ -69,7 +70,7 @@ export async function addTransaction(monthID, formData) {
     }
 
 
-
+    // calculate new month's balance using most recent previous month's data
     async function calculateNewMonthBalance(currentSelectedYear, currentSelectedMonth) {
         let newMonthBalance = 0;
 
