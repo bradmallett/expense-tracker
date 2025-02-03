@@ -26,7 +26,18 @@ body {
 }
 
 .day-contain {
-  margin:  20px 0px;
+  margin: 10px 0px;
+  font-size: .8rem;
+  background-color: rgb(252, 225, 226);
+  width: 50%;
+}
+
+.trans-contain {
+  margin: 10px 0px;
+}
+
+.trans-descrip {
+  font-weight: bolder;
 }
 
 .add-transaction-form {

@@ -2,7 +2,7 @@
 
 
 MONTHS
-- id SERIAL PRIMARY KEY
+- id (auto generated)
 - number INTEGER
 - year INTEGER
 - beginning_balance Integer
@@ -17,7 +17,7 @@ SPENDING TAG NAMES
  - name VARCHAR(255)
 
 TRANSACTIONS
-- id INTEGER
+- id INTEGER (auto generated)
 - date DATE
 - month_id INTEGER
 - amount INTEGER

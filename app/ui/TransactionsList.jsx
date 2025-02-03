@@ -1,9 +1,14 @@
+import formatMonthTransactions from "../lib/formatMonthTransactions";
 
-import  formatMonthTransactions from "../lib/formatMonthTransactions";
 
+export default function TransactionsList({ transactionsListData }) {
 
-export default async function TransactionsList({ monthTransactions }) {
-    const  { monthID, beginningMonthBalance, dayObjects } = await formatMonthTransactions(monthTransactions);
+  if(!transactionsListData?.transactions?.length || !transactionsListData?.month) {
+    return <p>No transactions data for this month</p>
+  }
+
+   const { monthID, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
+    
 
     return (
         <div className="trans-list-contain">
@@ -16,8 +21,8 @@ export default async function TransactionsList({ monthTransactions }) {
                   <p><strong>Date: {day.date}</strong></p>
                   <h1 style={{color: 'green'}}>Balance: {day.endDayBalance}</h1>
                   {day.transactions.map(trans => (
-                    <div key={trans.id}>
-                      <p>{trans.description}</p>
+                    <div key={trans.id} className="trans-contain">
+                      <p className="trans-descrip">{trans.description}</p>
                       <p>{trans.type}</p>
                       <p>{trans.amount}</p>
                     </div>

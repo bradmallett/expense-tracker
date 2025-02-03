@@ -1,23 +1,16 @@
-import { addTransaction } from "../lib/actions";
+import { addTransaction } from "../lib/actions/addTransaction";
 
 
-export default async function AddTransaction() {
+export default async function AddTransaction({ transactionsListData }) {
 
-// TRANSACTIONS
-// - ID
-// - date DATE
-// - month_id INTEGER
-// - amount INTEGER
-// - type VARCHAR(50)
-// - description VARCHAR(255)
-// - budget_category VARCHAR(20)
+    const addTransactionWithID = addTransaction.bind(null, transactionsListData?.month?.id);
 
     return (
         <div>
-            <form action={addTransaction} className="add-transaction-form">
+            <form action={addTransactionWithID} className="add-transaction-form">
             <h1>CREATE A TRANSACTION</h1>
                 <div className="input-contain">
-                    <label htmlFor="date">Select a date:</label>
+                    <label htmlFor="date">Select a Date: </label>
                     <input
                         id="date"
                         name="date"
@@ -28,7 +21,7 @@ export default async function AddTransaction() {
 
                 <div className="input-contain">
                     <label htmlFor="transactionType">TRANSACTION TYPE:</label>
-                    <select name="transactionType" id="transactionType">
+                    <select name="transactionType" id="transactionType" required>
                         <option value="expense">expense</option>
                         <option value="income">income</option>
                         <option value="savings">savings</option>
@@ -61,6 +54,7 @@ export default async function AddTransaction() {
                 <div className="input-contain">
                     <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
                     <select name="budgetCategory" id="budgetCategory">
+                        <option value="">(none)</option>
                         <option value="fundamental">fundamental</option>
                         <option value="fun">fun</option>
                         <option value="future">future</option>
