@@ -9,9 +9,6 @@ export function updateDayBalance(type, currentBalance, amount) {
 
         case 'savings':
             return currentBalance;
-
-        case 'new balance':
-            return amount;
             
         default:
             return currentBalance;

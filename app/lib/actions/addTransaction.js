@@ -35,41 +35,6 @@ export async function addTransaction(monthID, formData) {
     await updateFutureMonthBalances(year, monthNumber, transactionType, amount);
     
 
-
-
-//!!!!!!!!!!!!!!NEED TO UPDATE ADJUSTMENT IN CASE OF "new balance" TYPE
-    async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
-        // determine adjustment based on transaction type
-        const adjustment = type === "expense" ? -amount : amount;
-
-        // Perform bulk update for all future months in one query
-         await sql`
-            UPDATE months
-            SET beginning_balance = beginning_balance + ${adjustment}
-            WHERE (year > ${currentSelectedYear})
-            OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber})
-            RETURNING id, beginning_balance, year, number;
-        `;
-
-    };
-
-
-
-
-
-
-    async function insertTransaction(id, transactionData) {
-        const {transactionDate, amount, transactionType, description, budgetCategory} = transactionData;
-
-        await sql`
-            INSERT INTO transactions
-                (date, month_id, amount, type, description, budget_category)
-            VALUES 
-                (${transactionDate}, ${id}, ${amount}, ${transactionType}, ${description}, ${budgetCategory});
-        `;
-    }
-
-
     // calculate new month's balance using most recent previous month's data
     async function calculateNewMonthBalance(currentSelectedYear, currentSelectedMonth) {
         let newMonthBalance = 0;
@@ -79,12 +44,12 @@ export async function addTransaction(monthID, formData) {
         SELECT id, beginning_balance
         FROM months
         WHERE (year < ${currentSelectedYear})
-           OR (year = ${currentSelectedYear} AND number < ${currentSelectedMonth})
+            OR (year = ${currentSelectedYear} AND number < ${currentSelectedMonth})
         ORDER BY year DESC, number DESC
         LIMIT 1;
         `;
 
-        // no previous month data exists so return newMonthBalance as $0.00
+        // no previous month data exists so return newMonthBalance as $0
         if (!mostRecentPrevMonth) {
             return newMonthBalance;
         }
@@ -109,12 +74,41 @@ export async function addTransaction(monthID, formData) {
             if(trans.type === "income") {
                 newMonthBalance += trans.amount;
             }
-
-            if(trans.type === "new balance") {
-                newMonthBalance = trans.amount;
-            }
         }
 
         return newMonthBalance;
     }
+
+
+
+    async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
+        // determine adjustment based on transaction type
+        const adjustment = type === "expense" ? -amount : amount;
+
+        // Perform bulk update for all future months in one query
+         await sql`
+            UPDATE months
+            SET beginning_balance = beginning_balance + ${adjustment}
+            WHERE (year > ${currentSelectedYear})
+            OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber})
+            RETURNING id, beginning_balance, year, number;
+        `;
+    };
+
+
+
+    async function insertTransaction(id, transactionData) {
+        const {transactionDate, amount, transactionType, description, budgetCategory} = transactionData;
+
+        await sql`
+            INSERT INTO transactions
+                (date, month_id, amount, type, description, budget_category)
+            VALUES 
+                (${transactionDate}, ${id}, ${amount}, ${transactionType}, ${description}, ${budgetCategory});
+        `;
+    }
+
+
+
+
 }
