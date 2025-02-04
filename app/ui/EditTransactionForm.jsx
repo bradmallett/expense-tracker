@@ -1,12 +1,20 @@
 'use client';
 
-import { EditTransaction } from "./buttons";
+import { editTransaction } from "../lib/actions/editTransaction";
+
+
+
 
 
 export default function EditTransactionForm({ transaction }) {
+    const IDandDate = {
+        monthID: transaction.id,
+        transactionDate: transaction.date,
+        prevTransactionAmount: transaction.amount
+    }
 
-    const editTransactionWithID = EditTransaction.bind(null, transaction.id);
-
+    const transactionAmount = (transaction.amount / 100).toFixed(2);
+    const editTransactionWithID = editTransaction.bind(null, IDandDate);
 
     return (
         <div>
@@ -47,7 +55,7 @@ export default function EditTransactionForm({ transaction }) {
                         id="amount"
                         name="amount"
                         type="number"
-                        defaultValue={transaction.amount}
+                        defaultValue={transactionAmount}
                         step="0.01"
                         required
                     />
@@ -67,7 +75,7 @@ export default function EditTransactionForm({ transaction }) {
                     </select>
                 </div>
 
-                <button type="submit">CREATE TRANSACTION</button>
+                <button type="submit">EDIT TRANSACTION</button>
             </form>
         </div>
       );

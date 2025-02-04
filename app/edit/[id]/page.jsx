@@ -6,7 +6,7 @@ export default async function Page( props ) {
     const id = params.id;
 
     const [transaction] = await getTransaction(id);
-    console.log(transaction)
+
 
 
     return (
