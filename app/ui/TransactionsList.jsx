@@ -1,14 +1,14 @@
 import formatMonthTransactions from "../lib/formatMonthTransactions";
-import { EditTransaction } from "./buttons";
+import { EditTransaction, DeleteTransaction } from "./buttons";
 
 
-export default function TransactionsList({ transactionsListData }) {
+export default function TransactionsList({ transactionsListData, selectedMonth }) {
 
   if(!transactionsListData?.transactions?.length || !transactionsListData?.month) {
     return <p>No transactions data for this month</p>
   }
 
-   const { monthID, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
+  const { monthID, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
     
 
     return (
@@ -26,7 +26,16 @@ export default function TransactionsList({ transactionsListData }) {
                       <p className="trans-descrip">{trans.description}</p>
                       <p>{trans.type}</p>
                       <p>{trans.amount}</p>
-                      <EditTransaction id={trans.id}/>
+                      <EditTransaction id={trans.id} />
+                      <DeleteTransaction 
+                        transData={{
+                          id: trans.id,
+                          year: selectedMonth.year,
+                          month: selectedMonth.month,
+                          type: trans.type,
+                          amount: trans.amount
+                        }} 
+                      />
                     </div>
                     ))}
                 </div>
