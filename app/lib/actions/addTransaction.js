@@ -1,5 +1,8 @@
 "use server";
+
 import { neon } from "@neondatabase/serverless";
+import { redirect } from 'next/navigation';
+
 
 const sql = neon(process.env.DATABASE_URL);
 
@@ -9,18 +12,20 @@ export async function addTransaction(monthID, formData) {
     const description = formData.get('description');
     const amount = Math.round(Number(formData.get('amount')) * 100); // db needs integer
     const budgetCategory = formData.get('budgetCategory') === "" ? null : formData.get('budgetCategory');
-    const year = Number(transactionDate.split('-')[0]); // db needs integer
-    const monthNumber = Number(transactionDate.split('-')[1]); // db needs integer
+    const year = transactionDate.split('-')[0];
+    const month = transactionDate.split('-')[1];
+    const yearNumber = Number(year); // db needs integer
+    const monthNumber = Number(month); // db needs integer
 
     // if no data exists for this month
     if (!monthID) {
-        const beginningBalance = await calculateNewMonthBalance(year, monthNumber);
+        const beginningBalance = await calculateNewMonthBalance(yearNumber, monthNumber);
 
         const [newMonthRecord] = await sql`
             INSERT INTO months
                 (number, year, beginning_balance)
             VALUES
-                (${monthNumber}, ${year}, ${beginningBalance})
+                (${monthNumber}, ${yearNumber}, ${beginningBalance})
             RETURNING id;
         `;
 
@@ -32,7 +37,9 @@ export async function addTransaction(monthID, formData) {
     }
 
     await insertTransaction(monthID, {transactionDate, amount, transactionType, description, budgetCategory});
-    await updateFutureMonthBalances(year, monthNumber, transactionType, amount);
+    await updateFutureMonthBalances(yearNumber, monthNumber, transactionType, amount);
+    redirect(`/?year=${year}&month=${month}`);
+
     
 
     // calculate new month's balance using most recent previous month's data

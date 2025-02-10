@@ -1,5 +1,8 @@
 "use server";
+
 import { neon } from "@neondatabase/serverless";
+import { redirect } from 'next/navigation';
+
 
 const sql = neon(process.env.DATABASE_URL);
 
@@ -10,7 +13,8 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
     const budgetCategory = formData.get('budgetCategory') === "" ? null : formData.get('budgetCategory');
     const year = new Date(transactionDate).getFullYear(); // db needs integer
     const monthNumber = new Date(transactionDate).getMonth() + 1; // db needs integer
-
+    const yearString = year.toString();
+    const monthString = monthNumber.toString().padStart(2, '0');
 
     try {
         await sql`
@@ -25,6 +29,7 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
     }
 
     await updateFutureMonthBalances(year, monthNumber, transactionType, amountInCents);
+    redirect(`/?year=${yearString}&month=${monthString}`);
     
 
 

@@ -1,6 +1,8 @@
 'use server'
 
 import { neon } from "@neondatabase/serverless";
+import { redirect } from 'next/navigation';
+
 
 const sql = neon(process.env.DATABASE_URL);
 
@@ -12,13 +14,14 @@ export default async function deleteTransaction( transData ) {
 
     try {
         await sql `DELETE FROM transactions WHERE id = ${id};`;
-
-        await updateFutureMonthBalances(yearNumber, monthNumber, type, transAmount)
+        await updateFutureMonthBalances(yearNumber, monthNumber, type, transAmount);
     } catch(error) {
         return {
             message: 'Unable to delete transaction, please try again.'
         }
     }
+
+    redirect(`/?year=${year}&month=${month}`);
 
     async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
         let adjustment;
