@@ -82,8 +82,15 @@ export async function addTransaction(monthID, formData) {
 
 
     async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
-        // determine adjustment based on transaction type
-        const adjustment = type === "expense" ? -amount : amount;
+        let adjustment;
+
+        if(type === 'expense') {
+            adjustment = -amount;
+        }
+
+        if(type === 'income') {
+            adjustment = amount;
+        }
 
         // Perform bulk update for all future months in one query
          await sql`

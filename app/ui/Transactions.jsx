@@ -12,7 +12,7 @@ export default async function Transactions({selectedMonth}) {
     
     return (
         <div>
-            <TransactionsList transactionsListData={monthTransactionsData} />
+            <TransactionsList transactionsListData={monthTransactionsData} selectedMonth={selectedMonth}/>
             <AddTransaction transactionsListData={monthTransactionsData}/>
         </div>
     );

@@ -48,7 +48,7 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
 
 
         // Perform bulk update for all future months
-        try{
+        try {
             await sql`
                 UPDATE months
                 SET beginning_balance = beginning_balance + ${adjustment}
