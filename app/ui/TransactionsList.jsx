@@ -1,5 +1,6 @@
 import formatMonthTransactions from "../lib/formatMonthTransactions";
 import { EditTransaction, DeleteTransaction } from "./buttons";
+import { Add } from "./Add";
 
 
 export default function TransactionsList({ transactionsListData, selectedMonth }) {
@@ -8,13 +9,12 @@ export default function TransactionsList({ transactionsListData, selectedMonth }
     return <p>No transactions data for this month</p>
   }
 
-  const { monthID, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
+  const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
     
-
     return (
         <div className="trans-list-contain">
-           <h1>TRANSACTIONS</h1>
           <h2>MONTH BEGINNING BALANCE: ${beginningMonthBalance}</h2>
+          <Add monthID={id}/>
     
             {dayObjects.map(day => (
               <div key={day.day} className="day-contain">

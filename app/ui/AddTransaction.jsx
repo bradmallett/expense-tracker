@@ -1,9 +1,9 @@
 import { addTransaction } from "../lib/actions/addTransaction";
 
 
-export default async function AddTransaction({ transactionsListData }) {
+export default function AddTransaction({ monthID }) {
 
-    const addTransactionWithID = addTransaction.bind(null, transactionsListData?.month?.id);
+    const addTransactionWithID = addTransaction.bind(null, monthID);
 
     return (
         <div>

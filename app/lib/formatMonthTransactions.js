@@ -3,7 +3,7 @@ import { updateDayBalance, centsToDollars} from './utils';
 export default function formatMonthTransactions( monthTransactions ) {
 
 
-        const { month: { monthID, beginning_balance}, transactions } = monthTransactions;
+        const { month: { id, beginning_balance}, transactions } = monthTransactions;
 
         let currentBalance = Number(beginning_balance);
         let dayObjects = [];
@@ -66,6 +66,6 @@ export default function formatMonthTransactions( monthTransactions ) {
             }
         }
 
-        return { monthID, beginningMonthBalance, dayObjects };
+        return { id, beginningMonthBalance, dayObjects };
 
 }

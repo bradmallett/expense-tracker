@@ -23,13 +23,14 @@ body {
 .trans-list-contain {
   margin: 30px 30px;
   background-color: rgb(255, 240, 241);
+  width: 50%;
 }
 
 .day-contain {
   margin: 10px 0px;
   font-size: .8rem;
   background-color: rgb(252, 225, 226);
-  width: 50%;
+  width: 100%;
 }
 
 .trans-contain {
@@ -43,8 +44,7 @@ body {
 .add-transaction-form {
   display: flex;
   flex-direction: column;
-  width: 40%;
-  margin: 30px;
+  width: 100%;
   background-color: antiquewhite;
   padding: 10px;
 }

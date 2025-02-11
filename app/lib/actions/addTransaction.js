@@ -17,6 +17,7 @@ export async function addTransaction(monthID, formData) {
     const yearNumber = Number(year); // db needs integer
     const monthNumber = Number(month); // db needs integer
 
+
     // if no data exists for this month
     if (!monthID) {
         const beginningBalance = await calculateNewMonthBalance(yearNumber, monthNumber);
