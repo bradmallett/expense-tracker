@@ -3,9 +3,6 @@
 import { editTransaction } from "../lib/actions/editTransaction";
 
 
-
-
-
 export default function EditTransactionForm({ transaction }) {
     const IDandDate = {
         monthID: transaction.id,
@@ -13,7 +10,6 @@ export default function EditTransactionForm({ transaction }) {
         prevTransactionAmount: transaction.amount
     }
 
-    const transactionAmount = (transaction.amount / 100).toFixed(2);
     const editTransactionWithID = editTransaction.bind(null, IDandDate);
 
     return (
@@ -55,7 +51,7 @@ export default function EditTransactionForm({ transaction }) {
                         id="amount"
                         name="amount"
                         type="number"
-                        defaultValue={transactionAmount}
+                        defaultValue={transaction.amount}
                         step="0.01"
                         required
                     />
@@ -66,7 +62,7 @@ export default function EditTransactionForm({ transaction }) {
                     <select 
                         name="budgetCategory" 
                         id="budgetCategory"
-                        defaultValue={transaction.budget_category}
+                        defaultValue={transaction.budgetCategory}
                         >
                             <option value="">(none)</option>
                             <option value="fundamental">fundamental</option>

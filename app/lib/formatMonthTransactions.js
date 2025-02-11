@@ -29,7 +29,9 @@ export default function formatMonthTransactions( monthTransactions ) {
                     id: trans.id,
                     description: trans.description,
                     type: trans.type,
-                    amount: centsToDollars(transAmount)
+                    amount: centsToDollars(transAmount),
+                    date: trans.date,
+                    budgetCategory: trans.budget_category
                 }
 
                 // Add new transaction object to day object, update endDayBalance
@@ -57,7 +59,9 @@ export default function formatMonthTransactions( monthTransactions ) {
                             id: trans.id,
                             description: trans.description,
                             type: trans.type,
-                            amount: centsToDollars(transAmount)
+                            amount: centsToDollars(transAmount),
+                            date: trans.date,
+                            budgetCategory: trans.budget_category
                         }
                     ]
                 }

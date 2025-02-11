@@ -10,6 +10,7 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
     const transactionType = formData.get('transactionType');
     const description = formData.get('description');
     const amountInCents = Math.round(Number(formData.get('amount')) * 100); // db needs integer
+    const prevTransAmountInCents = Math.round(prevTransactionAmount * 100); // db needs integer
     const budgetCategory = formData.get('budgetCategory') === "" ? null : formData.get('budgetCategory');
     const year = new Date(transactionDate).getFullYear(); // db needs integer
     const monthNumber = new Date(transactionDate).getMonth() + 1; // db needs integer
@@ -37,17 +38,17 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
     async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, newAmount ) {
         let adjustment;
 
-        if (newAmount === prevTransactionAmount) {
+        if (newAmount === prevTransAmountInCents) {
             return;
         }
 
         if(type === "expense") {
-            adjustment = prevTransactionAmount - newAmount;
+            adjustment = prevTransAmountInCents - newAmount;
             console.log(`Expense: Adding ${adjustment} to future balances`);
         }
 
         if(type === "income") {
-            adjustment = newAmount - prevTransactionAmount;
+            adjustment = newAmount - prevTransAmountInCents;
             console.log(`Income: Adding ${adjustment} to future balances`);
         }
 
@@ -68,3 +69,6 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
     };
 
 }
+
+
+// April 3168 3158

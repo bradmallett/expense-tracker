@@ -24,7 +24,8 @@ export default async function getMonthTransactions(monthYear, monthNumber) {
                 transactions.date,
                 transactions.amount,
                 transactions.type,
-                transactions.description
+                transactions.description,
+                transactions.budget_category
             FROM 
                 months
             JOIN 

@@ -1,6 +1,7 @@
 import formatMonthTransactions from "../lib/formatMonthTransactions";
-import { EditTransaction, DeleteTransaction } from "./buttons";
+import { DeleteTransaction } from "./buttons";
 import { Add } from "./Add";
+import  Edit  from "./Edit";
 
 
 export default function TransactionsList({ transactionsListData, selectedMonth }) {
@@ -26,7 +27,7 @@ export default function TransactionsList({ transactionsListData, selectedMonth }
                       <p className="trans-descrip">{trans.description}</p>
                       <p>{trans.type}</p>
                       <p>{trans.amount}</p>
-                      <EditTransaction id={trans.id} />
+                      <Edit transaction={trans}/>
                       <DeleteTransaction 
                         transData={{
                           id: trans.id,
