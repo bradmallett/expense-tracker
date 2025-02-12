@@ -3,7 +3,7 @@ import { DeleteTransaction } from "./buttons";
 import { Add } from "./Add";
 import  Edit  from "./Edit";
 
-
+ 
 export default function TransactionsList({ transactionsListData, selectedMonth }) {
 
   if(!transactionsListData?.transactions?.length || !transactionsListData?.month) {
