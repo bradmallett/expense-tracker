@@ -1,6 +1,5 @@
 
 import  getMonthTransactions from "../lib/actions/getMonthTransactions";
-// import AddTransaction from "./AddTransaction";
 import TransactionsList from "./TransactionsList";
 
 
@@ -13,7 +12,6 @@ export default async function Transactions({selectedMonth}) {
     return (
         <div>
             <TransactionsList transactionsListData={monthTransactionsData} selectedMonth={selectedMonth}/>
-            {/* <AddTransaction transactionsListData={monthTransactionsData}/> */}
         </div>
     );
 }
