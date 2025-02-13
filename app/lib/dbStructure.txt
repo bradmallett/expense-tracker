@@ -3,7 +3,7 @@
 
 MONTHS
 - id (auto generated)
-- number INTEGER
+- number INTEGER -- 1 for jan, 3 for march...etc
 - year INTEGER
 - beginning_balance Integer
 
@@ -18,7 +18,7 @@ SPENDING TAG NAMES
 
 TRANSACTIONS
 - id INTEGER (auto generated)
-- date DATE
+- date DATE -- in yyyy-mm-dd format
 - month_id INTEGER
 - amount INTEGER
 - type VARCHAR(50)

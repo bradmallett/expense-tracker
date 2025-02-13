@@ -1,19 +1,4 @@
-import Link from "next/link";
 import deleteTransaction from "../lib/actions/deleteTransaction";
-
-
-
-export function EditTransaction({ id }) {
-
-    return (
-        <Link
-            href={`/edit/${id}`}
-            className="edit-transaction-btn"
-        >
-        Edit
-        </Link>
-    );
-}
 
 
 
