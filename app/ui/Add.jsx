@@ -6,7 +6,7 @@ import { PlusCircleIcon } from '@heroicons/react/24/solid';
 import AddTransaction from './AddTransaction';
 
 
-export function Add({ monthID }) {
+export function Add({ monthID, spendingTagNames }) {
     const [isOpen, setIsOpen] = useState(false);
    
     const {refs, floatingStyles, context} = useFloating({
@@ -37,7 +37,7 @@ export function Add({ monthID }) {
                 style={floatingStyles}
                 {...getFloatingProps()}
             >
-            <AddTransaction monthID={monthID}/>
+            <AddTransaction monthID={monthID} spendingTagNames={spendingTagNames}/>
           </div>
         )}
       </>

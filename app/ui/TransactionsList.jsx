@@ -4,7 +4,7 @@ import { Add } from "./Add";
 import  Edit  from "./Edit";
 
  
-export default function TransactionsList({ transactionsListData, selectedMonth }) {
+export default function TransactionsList({ transactionsListData, selectedMonth, spendingTagNames }) {
 
   if(!transactionsListData?.transactions?.length || !transactionsListData?.month) {
     return <p>No transactions data for this month</p>
@@ -15,7 +15,7 @@ export default function TransactionsList({ transactionsListData, selectedMonth }
     return (
         <div className="trans-list-contain">
           <h2>MONTH BEGINNING BALANCE: ${beginningMonthBalance}</h2>
-          <Add monthID={id}/>
+          <Add monthID={id} spendingTagNames={spendingTagNames}/>
     
             {dayObjects.map(day => (
               <div key={day.day} className="day-contain">

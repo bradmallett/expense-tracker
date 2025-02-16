@@ -2,11 +2,12 @@
 
 import { neon } from "@neondatabase/serverless";
 import { redirect } from 'next/navigation';
+import addSpendingTags from "./addSpendingTags";
 
 
 const sql = neon(process.env.DATABASE_URL);
 
-export async function addTransaction(monthID, formData) {
+export async function addTransaction({monthID, selectedSpendingTags}, formData) {
     const transactionDate = formData.get('date');
     const transactionType = formData.get('transactionType');
     const description = formData.get('description');
@@ -16,7 +17,6 @@ export async function addTransaction(monthID, formData) {
     const month = transactionDate.split('-')[1];
     const yearNumber = Number(year); // db needs integer
     const monthNumber = Number(month); // db needs integer
-
 
     // if no data exists for this month
     if (!monthID) {
@@ -37,11 +37,13 @@ export async function addTransaction(monthID, formData) {
          monthID = newMonthRecord.id;
     }
 
-    await insertTransaction(monthID, {transactionDate, amount, transactionType, description, budgetCategory});
+    const {id: newTransactionID} = await insertTransaction(monthID, {transactionDate, amount, transactionType, description, budgetCategory});
     await updateFutureMonthBalances(yearNumber, monthNumber, transactionType, amount);
+    await addSpendingTags(selectedSpendingTags, newTransactionID);
     redirect(`/?year=${year}&month=${month}`);
 
     
+
 
     // calculate new month's balance using most recent previous month's data
     async function calculateNewMonthBalance(currentSelectedYear, currentSelectedMonth) {
@@ -49,13 +51,13 @@ export async function addTransaction(monthID, formData) {
 
         // find most recent month record that's no later than the current month selected
         const [ mostRecentPrevMonth ] = await sql`
-        SELECT id, beginning_balance
-        FROM months
-        WHERE (year < ${currentSelectedYear})
-            OR (year = ${currentSelectedYear} AND number < ${currentSelectedMonth})
-        ORDER BY year DESC, number DESC
-        LIMIT 1;
-        `;
+            SELECT id, beginning_balance
+            FROM months
+            WHERE (year < ${currentSelectedYear})
+                OR (year = ${currentSelectedYear} AND number < ${currentSelectedMonth})
+            ORDER BY year DESC, number DESC
+            LIMIT 1;
+            `;
 
         // no previous month data exists so return newMonthBalance as $0
         if (!mostRecentPrevMonth) {
@@ -106,8 +108,8 @@ export async function addTransaction(monthID, formData) {
             SET beginning_balance = beginning_balance + ${adjustment}
             WHERE (year > ${currentSelectedYear})
             OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber})
-            RETURNING id, beginning_balance, year, number;
-        `;
+            RETURNING id, beginning_balance, year, number;`
+        ;
     };
 
 
@@ -115,12 +117,15 @@ export async function addTransaction(monthID, formData) {
     async function insertTransaction(id, transactionData) {
         const {transactionDate, amount, transactionType, description, budgetCategory} = transactionData;
 
-        await sql`
+        const [ transID ] = await sql`
             INSERT INTO transactions
                 (date, month_id, amount, type, description, budget_category)
             VALUES 
-                (${transactionDate}, ${id}, ${amount}, ${transactionType}, ${description}, ${budgetCategory});
-        `;
+                (${transactionDate}, ${id}, ${amount}, ${transactionType}, ${description}, ${budgetCategory})
+            RETURNING id;`
+        ;
+
+        return transID;
     }
 
 
