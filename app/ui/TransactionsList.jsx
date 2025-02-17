@@ -2,20 +2,21 @@ import formatMonthTransactions from "../lib/formatMonthTransactions";
 import { DeleteTransaction } from "./buttons";
 import { Add } from "./Add";
 import  Edit  from "./Edit";
+import TransactionSpendingTags from "./TransactionSpendingTags";
 
  
-export default function TransactionsList({ transactionsListData, selectedMonth, spendingTagNames }) {
+export default function TransactionsList({ monthTransactionsData, selectedMonth, spendingTagNames, spendingTagInstances }) {
 
-  if(!transactionsListData?.transactions?.length) {
+  if(!monthTransactionsData?.transactions?.length) {
     return (
       <div>
         <p>No transactions data for this month</p>
-        <Add monthID={transactionsListData?.month?.id} spendingTagNames={spendingTagNames}/>
+        <Add monthID={monthTransactionsData?.month?.id} spendingTagNames={spendingTagNames}/>
       </div>
     )
   }
 
-  const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
+  const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(monthTransactionsData);
     
     return (
         <div className="trans-list-contain">
@@ -41,6 +42,10 @@ export default function TransactionsList({ transactionsListData, selectedMonth, 
                           type: trans.type,
                           amount: trans.amount
                         }} 
+                      />
+                      <TransactionSpendingTags
+                        spendingTagInstances={spendingTagInstances}
+                        transactionID={trans.id}
                       />
                     </div>
                     ))}

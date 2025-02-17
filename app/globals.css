@@ -78,3 +78,10 @@ button {
   border: 2px solid gray;
   font-weight: bold;
 }
+
+.tagName-contain {
+  margin: 20px 0px 0px 0px;
+  font-size: .8rem;
+  font-weight: bold;
+  color: rgb(196, 35, 35);
+}

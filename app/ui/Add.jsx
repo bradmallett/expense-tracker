@@ -21,6 +21,8 @@ export function Add({ monthID, spendingTagNames }) {
         click,
       ]);
 
+      console.log('monthID: ', monthID);
+
    
     return (
       <>
