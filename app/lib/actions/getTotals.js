@@ -15,7 +15,6 @@ export default async function getTotals(year, month) {
             WHERE EXTRACT(YEAR FROM date) = ${year}
             GROUP BY type;
             `;
-
         return data;
     } catch (error) {
         return {

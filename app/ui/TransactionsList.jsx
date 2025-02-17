@@ -6,8 +6,13 @@ import  Edit  from "./Edit";
  
 export default function TransactionsList({ transactionsListData, selectedMonth, spendingTagNames }) {
 
-  if(!transactionsListData?.transactions?.length || !transactionsListData?.month) {
-    return <p>No transactions data for this month</p>
+  if(!transactionsListData?.transactions?.length) {
+    return (
+      <div>
+        <p>No transactions data for this month</p>
+        <Add monthID={transactionsListData?.month?.id} spendingTagNames={spendingTagNames}/>
+      </div>
+    )
   }
 
   const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
