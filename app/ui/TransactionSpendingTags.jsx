@@ -52,7 +52,7 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
                     {...getFloatingProps()}
                     onClick={e => handleDeleteTag(e, openTag)}
                 >
-                    <TrashIcon className="size-4"/>
+                    <TrashIcon className="size-3"/>
                 </button>
             )}
         </div>

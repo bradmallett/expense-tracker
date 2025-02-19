@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsToTransaction }) {
     const [showTagTextInput, setShowTagTextInput] = useState(false);
     const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
+    const [newSelectedTagName, setNewSelectedTagName] = useState('');
 
     useEffect(() => {
         if(selectedSpendingTags.length > 0) {
             addSpendingTagsToTransaction(selectedSpendingTags);
         }
+
     }, [selectedSpendingTags]);
 
 
@@ -27,6 +29,8 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
                 tagID: null,
                 tagName: formData.get('newSpendingTagName')
             }
+
+            setNewSelectedTagName('');
         }
 
         // // if tag exists in database already
@@ -72,6 +76,8 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
                             type="text"
                             name="newSpendingTagName"
                             placeholder="Enter New Tag Name"
+                            onChange={(e) => setNewSelectedTagName(e.target.value)}
+                            value={newSelectedTagName}
                         />
                     )}
                 </div>

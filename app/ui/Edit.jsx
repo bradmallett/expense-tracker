@@ -23,7 +23,6 @@ export default function Edit({ transaction }) {
    
     return (
       <>
-      <p>EDIT TRANSACTION</p>
         <button 
             ref={refs.setReference}
             {...getReferenceProps()}

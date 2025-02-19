@@ -9,7 +9,9 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
     const selectedSpendingTags = useRef([]);
 
     function addSpendingTagsToTransaction(transactionTags) {
-        selectedSpendingTags.current = [...selectedSpendingTags.current, ...transactionTags]
+        if(transactionTags.length > 0) {
+            selectedSpendingTags.current = [...transactionTags];
+        }
     }
 
     const addTransactionWithID = addTransaction.bind(null, { monthID, selectedSpendingTags});

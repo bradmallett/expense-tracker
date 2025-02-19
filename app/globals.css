@@ -80,8 +80,8 @@ button {
 }
 
 .tagName-contain {
-  margin: 20px 0px 0px 0px;
-  font-size: .8rem;
+  padding: 10px 0px;
+  font-size: .6rem;
   font-weight: bold;
   color: rgb(196, 35, 35);
   display: flex;
@@ -89,7 +89,7 @@ button {
 
 .spendingTagElement {
   display: inline-block;
-  margin: 0px 10px;
+  margin: 0px 5px;
 }
 
 .spendinTagTrash {

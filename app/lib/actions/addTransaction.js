@@ -42,8 +42,8 @@ export async function addTransaction({monthID, selectedSpendingTags}, formData) 
 
 
     console.log("FROM server action", selectedSpendingTags.current);
-    if (selectedSpendingTags.length > 0) {
-        await addSpendingTags(selectedSpendingTags, newTransactionID);
+    if (selectedSpendingTags.current.length > 0) {
+        await addSpendingTags(selectedSpendingTags.current, newTransactionID);
     }
 
     redirect(`/?year=${year}&month=${month}`);
