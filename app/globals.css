@@ -79,6 +79,12 @@ button {
   font-weight: bold;
 }
 
+.addSpendingTagsForm {
+  width: 100%;
+  background-color: rgb(169, 255, 212);
+  padding: 20px 5px;
+}
+
 .tagName-contain {
   padding: 10px 0px;
   font-size: .6rem;

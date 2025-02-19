@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useFloating, useHover, useInteractions, safePolygon } from '@floating-ui/react';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import deleteSpendingTagInstance from "../lib/actions/deleteSpendingTagInstance";
+import AddTagsToExistingTransaction from "./AddTagsToExistingTransaction";
 
 
 export default function TransactionSpendingTags({ spendingTagInstances, transactionID, selectedMonth, spendingTagNames}) {
@@ -31,6 +32,10 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
 
     return (
         <div className="tagName-contain">
+            <AddTagsToExistingTransaction 
+                spendingTagNames={spendingTagNames} 
+                transactionID={transactionID}
+            />
             {transactionTags.map(tag => (
                 <div key={tag.tag_id} className="relative">
                     <p
@@ -58,57 +63,3 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
         </div>
     );
 }
-
-
-
-
-
-
-
-
-// export default function TransactionSpendingTags({spendingTagInstances, transactionID}) {
-//     const [isOpen, setIsOpen] = useState(false);
- 
-//     const {refs, floatingStyles, context} = useFloating({
-//       open: isOpen,
-//       onOpenChange: setIsOpen,
-//       placement: 'top',
-//     });
-   
-//     const hover = useHover(context, {
-//         handleClose: safePolygon({
-//             requireIntent: false,
-//           }),
-//     });
-   
-//     const {getReferenceProps, getFloatingProps} = useInteractions([
-//       hover,
-//     ]);
-
-
-//     const transactionTags = spendingTagInstances.filter(tag => tag.transaction_id === transactionID);
-
-//     return (
-//         <div className="tagName-contain">
-//             {transactionTags.map(tag => (
-//                 <div key={tag.tag_id}>
-//                     <p className="spendingTagElement"
-//                         ref={refs.setReference}
-//                         {...getReferenceProps()}
-//                     >
-//                         {tag.tag_name}
-//                     </p>
-//                     {isOpen && (
-//                         <div className="spendinTagTrash"
-//                             ref={refs.setFloating}
-//                             style={floatingStyles}
-//                             {...getFloatingProps()}
-//                             >
-//                             <TrashIcon className="size-4"/>
-//                         </div>
-//                     )}
-//                 </div>
-//             ))}
-//         </div>
-//     )
-// }

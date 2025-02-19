@@ -4,57 +4,76 @@ import { useEffect, useState } from "react";
 
 
 export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsToTransaction }) {
-    const [showTagTextInput, setShowTagTextInput] = useState(false);
     const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
+    const [showTagTextInput, setShowTagTextInput] = useState(false);
     const [newSelectedTagName, setNewSelectedTagName] = useState('');
+    const [existingSelectedTagName, setExistingSelectedTagName] = useState('');
 
     useEffect(() => {
-        if(selectedSpendingTags.length > 0) {
-            addSpendingTagsToTransaction(selectedSpendingTags);
-        }
-
+        addSpendingTagsToTransaction(selectedSpendingTags);
     }, [selectedSpendingTags]);
 
 
-    function handleUpdateSpendingTags(e) {
+    useEffect(() => {
+        if(existingSelectedTagName && existingSelectedTagName !== 'new' && existingSelectedTagName != '') {
+            const tagHasAlreadyBeenSelected = selectedSpendingTags.some(tag => tag.tagName === existingSelectedTagName.tagName);
+
+            if(!tagHasAlreadyBeenSelected) {
+                setSelectedSpendingTags(prevTags => [...prevTags, existingSelectedTagName]);
+            }
+            setExistingSelectedTagName('');
+        }
+    }, [existingSelectedTagName]);
+
+
+
+    function handleUpdateNewSpendingTagName(e) {
         e.preventDefault();
 
-        const formData = new FormData(e.target);
-        const spendingTagValue = formData.get("spendingTag");
-        let selectedTag = null;
-
-        // if creating a new tag not in database
-        if(spendingTagValue === 'new') {
-            selectedTag = {
-                tagID: null,
-                tagName: formData.get('newSpendingTagName')
-            }
-
-            setNewSelectedTagName('');
+        if(newSelectedTagName === '') {
+            return;
         }
 
-        // // if tag exists in database already
-        if(spendingTagValue !== 'new' && spendingTagValue !== '') {
-            selectedTag = JSON.parse(formData.get('spendingTag'));
+        const selectedTag = {
+            tagID: null,
+            tagName: newSelectedTagName
         }
 
-        const tagHasBeenSelected = selectedSpendingTags.some(tag => tag.tagName === selectedTag.tagName);
+        const tagHasAlreadyBeenSelected = selectedSpendingTags.some(tag => tag.tagName === selectedTag.tagName);
 
-        if(!tagHasBeenSelected) {
+        if(!tagHasAlreadyBeenSelected) {
             setSelectedSpendingTags(prevTags => [...prevTags, selectedTag])
         }
+
+        setNewSelectedTagName('');
     }
 
+       
 
     return (
-        <div>
-            <form onSubmit={handleUpdateSpendingTags}>
+        <div className="addSpendingTagsForm">
+            <form>
                 <div className="input-contain">
                     <label htmlFor="spendingTag">SPENDING TAG: </label>
                     <select 
-                        name="spendingTag" 
+                        name="spendingTag"
                         id="spendingTag"
-                        onChange={(e) => setShowTagTextInput(e.target.value === "new")}
+                        value={existingSelectedTagName}
+                        onChange={(e) => {
+                            if(e.target.value === "new") {
+                                setShowTagTextInput(true);
+                                setExistingSelectedTagName('');
+                            }
+                            else if(e.target.value === '') {
+                                setShowTagTextInput(false);
+                                setExistingSelectedTagName(''); 
+                            }
+                            else {
+                                const selectedValue = JSON.parse(e.target.value);
+                                setShowTagTextInput(false);
+                                setExistingSelectedTagName(selectedValue); 
+                            }        
+                        }}
                     >
                         <option value="">Select a tag...</option>
                         <option value="new">+ Create New Tag...</option>
@@ -72,21 +91,22 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
                     </select>
 
                     {showTagTextInput && (
-                        <input 
-                            type="text"
-                            name="newSpendingTagName"
-                            placeholder="Enter New Tag Name"
-                            onChange={(e) => setNewSelectedTagName(e.target.value)}
-                            value={newSelectedTagName}
-                        />
+                        <div>
+                            <input 
+                                type="text"
+                                name="newSpendingTagName"
+                                placeholder="Enter New Tag Name"
+                                value={newSelectedTagName}
+                                onChange={(e) => setNewSelectedTagName(e.target.value)}
+                            />
+                            <button onClick={(e) => handleUpdateNewSpendingTagName(e)}>ADD TAG</button>
+                        </div>
                     )}
                 </div>
-                <button type="submit">ADD TAG</button>
             </form>
 
             {selectedSpendingTags.length > 0 && 
                 <div>
-                    <p>ADDED SPENDING TAGS:</p>
                     {selectedSpendingTags.map((tag) => (
                         <p key={tag.tagName}>{tag.tagName}</p>
                     ))}
