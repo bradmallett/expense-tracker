@@ -39,7 +39,13 @@ export async function addTransaction({monthID, selectedSpendingTags}, formData) 
 
     const {id: newTransactionID} = await insertTransaction(monthID, {transactionDate, amount, transactionType, description, budgetCategory});
     await updateFutureMonthBalances(yearNumber, monthNumber, transactionType, amount);
-    await addSpendingTags(selectedSpendingTags, newTransactionID);
+
+
+    console.log("FROM server action", selectedSpendingTags.current);
+    if (selectedSpendingTags.length > 0) {
+        await addSpendingTags(selectedSpendingTags, newTransactionID);
+    }
+
     redirect(`/?year=${year}&month=${month}`);
 
     

@@ -84,4 +84,16 @@ button {
   font-size: .8rem;
   font-weight: bold;
   color: rgb(196, 35, 35);
+  display: flex;
+}
+
+.spendingTagElement {
+  display: inline-block;
+  margin: 0px 10px;
+}
+
+.spendinTagTrash {
+  background-color: aqua;
+  color: rgb(14, 49, 49);
+  padding: 2px 10px;
 }

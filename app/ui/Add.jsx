@@ -20,9 +20,6 @@ export function Add({ monthID, spendingTagNames }) {
     const {getReferenceProps, getFloatingProps} = useInteractions([
         click,
       ]);
-
-      console.log('monthID: ', monthID);
-
    
     return (
       <>

@@ -1,40 +1,18 @@
+'use client';
+
+import { useRef } from "react";
 import { addTransaction } from "../lib/actions/addTransaction";
-import { useState } from "react";
+import AddSpendingTagsForm from "./AddSpendingTagsForm";
+
 
 export default function AddTransaction({ monthID, spendingTagNames }) {
-    const [showTagTextInput, setShowTagTextInput] = useState(false);
-    const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
+    const selectedSpendingTags = useRef([]);
 
-    const addTransactionWithID = addTransaction.bind(null, { monthID, selectedSpendingTags});
-
-    function handleUpdateSpendingTags(e) {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-        let selectedTag;
-
-        // if creating a new tag not in database
-        if(showTagTextInput) {
-            selectedTag = {
-                tagID: null,
-                tagName: formData.get('newSpendingTagName')
-            }
-        }
-
-        // if tag exists in database already
-        if(!showTagTextInput && formData.get('spendingTag') !== '') {
-            selectedTag = JSON.parse(formData.get('spendingTag'));
-        }
-
-        const tagHasBeenSelected = selectedSpendingTags.some(tag => tag.tagName === selectedTag.tagName);
-
-        if(!tagHasBeenSelected && formData.get('spendingTag') !== '') {
-            setSelectedSpendingTags(prevTags => [...prevTags, selectedTag])
-        }
+    function addSpendingTagsToTransaction(transactionTags) {
+        selectedSpendingTags.current = [...selectedSpendingTags.current, ...transactionTags]
     }
 
-
-
+    const addTransactionWithID = addTransaction.bind(null, { monthID, selectedSpendingTags});
 
     return (
         <div className="add-transaction-form">
@@ -97,53 +75,10 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
                 <button type="submit">CREATE TRANSACTION</button>
             </form>
 
-
-            {/* COMPONENT STATE SPENDING TAGS */}
-            <form onSubmit={handleUpdateSpendingTags}>
-                <div className="input-contain">
-                    <label htmlFor="spendingTag">SPENDING TAG: </label>
-                    <select 
-                        name="spendingTag" 
-                        id="spendingTag"
-                        onChange={(e) => setShowTagTextInput(e.target.value === "new")}
-                    >
-                        <option value="">Select a tag...</option>
-                        <option value="new">+ Create New Tag...</option>
-                        {spendingTagNames.map((tagName) => (
-                            <option
-                                key={tagName.id} 
-                                value={JSON.stringify({
-                                    tagID: tagName.id,
-                                    tagName: tagName.name
-                                })}
-                            >
-                                    {tagName.name}
-                            </option>
-                        ))}
-                    </select>
-
-                    {showTagTextInput && (
-                        <input 
-                            type="text"
-                            name="newSpendingTagName"
-                            placeholder="Enter New Tag Name"
-                        />
-                    )}
-                </div>
-                <button type="submit">ADD TAG</button>
-            </form>
-
-            {selectedSpendingTags.length > 0 && 
-                <div>
-                    <p>ADDED SPENDING TAGS:</p>
-                    {selectedSpendingTags.map((tag) => (
-                        <p key={tag.tagName}>{tag.tagName}</p>
-                    ))}
-
-                    <button onClick={() => setSelectedSpendingTags([])}>CLEAR TAGS</button>
-                </div>
-            }
-
+            <AddSpendingTagsForm 
+                spendingTagNames={spendingTagNames}
+                addSpendingTagsToTransaction={addSpendingTagsToTransaction}
+            />
         </div>
       );
 };

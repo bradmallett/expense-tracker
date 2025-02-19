@@ -19,7 +19,8 @@ export default async function getMonthSpendingTagInstances(transactions) {
 
         return spendingTagInstances;
     } catch (error) {
-        throw new Error("Failed to fetch spending tag instances")
+        console.error(error);
+        throw new Error("Failed to fetch spending tag instances");
     }
  
 }

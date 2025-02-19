@@ -8,7 +8,7 @@ export function DeleteTransaction({ transData }) {
     
     return (
         <form action={deleteTransactionWithTransData}>
-            <button>Delete</button>
+            <button>DELETE TRANSACTION</button>
         </form>
     )
 }

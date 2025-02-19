@@ -26,7 +26,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
             {dayObjects.map(day => (
               <div key={day.day} className="day-contain">
                 <div>
-                  <p><strong>Date: {day.date}</strong></p>
+                  <p><strong>{day.date}</strong></p>
                   <h1 style={{color: 'green'}}>Balance: {day.endDayBalance}</h1>
                   {day.transactions.map(trans => (
                     <div key={trans.id} className="trans-contain">
@@ -46,6 +46,8 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
                       <TransactionSpendingTags
                         spendingTagInstances={spendingTagInstances}
                         transactionID={trans.id}
+                        selectedMonth={selectedMonth}
+                        spendingTagNames={spendingTagNames}
                       />
                     </div>
                     ))}
