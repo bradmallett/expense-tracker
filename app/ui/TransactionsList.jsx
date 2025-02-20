@@ -17,6 +17,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
   }
 
   const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(monthTransactionsData);
+
     
     return (
         <div className="trans-list-contain">
