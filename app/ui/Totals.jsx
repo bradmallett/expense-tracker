@@ -4,12 +4,27 @@ export async function Totals({ selectedMonth }) {
     const { year, month } = selectedMonth;
 
     const totals = await getTotals(year, month);
-    const totalYearExpense = Number(totals[0]?.year_total);
-    const totalMonthExpense = Number(totals[0]?.month_total);
-    const totalYearIncome = Number(totals[1]?.year_total);
-    const totalMonthIncome = Number(totals[1]?.month_total);
-    const monthTotalDifference = totalMonthIncome - totalMonthExpense;
+
+    let totalYearExpense = 0;
+    let totalMonthExpense = 0;
+    let totalYearIncome = 0;
+    let totalMonthIncome = 0;
     const monthName = new Date(year, month - 1).toLocaleString('en-US', {month: 'long'});
+
+    if (totals.length > 0) {
+        for(const total of totals) {
+            if (total.type === 'income') {
+                totalYearIncome = Number(total.year_total) > 0 ? Number(total.year_total) : 0;
+                totalMonthIncome = Number(total.month_total) > 0 ? Number(total.month_total) : 0;
+            }
+            if (total.type === 'expense') {
+                totalYearExpense = Number(total.year_total) > 0 ? Number(total.year_total) : 0;
+                totalMonthExpense = Number(total.month_total) > 0 ? Number(total.month_total) : 0;
+            }
+        }
+    }
+
+    const monthTotalDifference = totalMonthIncome - totalMonthExpense;
 
     return (
         <div className="totals-contain">
@@ -22,7 +37,7 @@ export async function Totals({ selectedMonth }) {
                 <p>{`$${totalMonthIncome / 100}`}</p>
             </div>
             <div>
-                <p>{`${monthName} DIFFERENCE`}</p>
+                <p>{`${monthName} INCOME VS SPENDING`}</p>
                 <p>{`$${monthTotalDifference / 100}`}</p>
             </div>
             <div>

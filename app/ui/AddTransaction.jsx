@@ -1,14 +1,34 @@
+'use client';
+
+import { useState, useRef } from "react";
 import { addTransaction } from "../lib/actions/addTransaction";
+import AddSpendingTagsForm from "./AddSpendingTagsForm";
 
 
-export default function AddTransaction({ monthID }) {
+export default function AddTransaction({ monthID, spendingTagNames }) {
+    const selectedSpendingTags = useRef([]);
+    const [transactionType, setTransactionType ]= useState('expense');
 
-    const addTransactionWithID = addTransaction.bind(null, monthID);
+    function addSpendingTagsToTransaction(transactionTags) {
+        if(transactionTags.length > 0) {
+            selectedSpendingTags.current = [...transactionTags];
+        }
+    }
+
+    const addTransactionWithID = addTransaction.bind(null, { monthID, selectedSpendingTags});
 
     return (
-        <div>
-            <form action={addTransactionWithID} className="add-transaction-form">
-            <h1>CREATE A TRANSACTION</h1>
+        <div className="add-transaction-form">
+            { transactionType === 'expense' &&
+                <AddSpendingTagsForm 
+                    spendingTagNames={spendingTagNames}
+                    addSpendingTagsToTransaction={addSpendingTagsToTransaction}
+                    transactionID={null}
+                />
+            }
+
+            <form action={addTransactionWithID}>
+                <h1>CREATE A TRANSACTION</h1>
                 <div className="input-contain">
                     <label htmlFor="date">Select a Date: </label>
                     <input
@@ -21,7 +41,13 @@ export default function AddTransaction({ monthID }) {
 
                 <div className="input-contain">
                     <label htmlFor="transactionType">TRANSACTION TYPE:</label>
-                    <select name="transactionType" id="transactionType" required>
+                    <select 
+                        name="transactionType" 
+                        id="transactionType"
+                        value={transactionType}
+                        onChange={(e) => {setTransactionType(e.target.value)}}
+                        required
+                    >
                         <option value="expense">expense</option>
                         <option value="income">income</option>
                         <option value="savings">savings</option>
@@ -51,21 +77,23 @@ export default function AddTransaction({ monthID }) {
                     />
                 </div>
 
-                <div className="input-contain">
-                    <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
-                    <select name="budgetCategory" id="budgetCategory">
-                        <option value="">(none)</option>
-                        <option value="fundamental">fundamental</option>
-                        <option value="fun">fun</option>
-                        <option value="future">future</option>
-                    </select>
-                </div>
-
+                { transactionType === 'expense' &&
+                    <div className="input-contain">
+                        <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
+                        <select 
+                            name="budgetCategory"
+                            id="budgetCategory"
+                        >
+                            <option value="">(none)</option>
+                            <option value="fundamental">fundamental</option>
+                            <option value="fun">fun</option>
+                            <option value="future">future</option>
+                        </select>
+                    </div>
+                }
                 <button type="submit">CREATE TRANSACTION</button>
             </form>
         </div>
       );
 };
-
-
 

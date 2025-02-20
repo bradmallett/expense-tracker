@@ -1,26 +1,33 @@
 import formatMonthTransactions from "../lib/formatMonthTransactions";
 import { DeleteTransaction } from "./buttons";
-import { Add } from "./Add";
+import CreateNewTransaction from "./CreateNewTransaction";
 import  Edit  from "./Edit";
+import TransactionSpendingTags from "./TransactionSpendingTags";
 
  
-export default function TransactionsList({ transactionsListData, selectedMonth }) {
+export default function TransactionsList({ monthTransactionsData, selectedMonth, spendingTagNames, spendingTagInstances }) {
 
-  if(!transactionsListData?.transactions?.length || !transactionsListData?.month) {
-    return <p>No transactions data for this month</p>
+  if(!monthTransactionsData?.transactions?.length) {
+    return (
+      <div>
+        <p>No transactions data for this month</p>
+        <CreateNewTransaction monthID={monthTransactionsData?.month?.id} spendingTagNames={spendingTagNames}/>
+      </div>
+    )
   }
 
-  const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(transactionsListData);
+  const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(monthTransactionsData);
+
     
     return (
         <div className="trans-list-contain">
           <h2>MONTH BEGINNING BALANCE: ${beginningMonthBalance}</h2>
-          <Add monthID={id}/>
+          <CreateNewTransaction monthID={id} spendingTagNames={spendingTagNames}/>
     
             {dayObjects.map(day => (
               <div key={day.day} className="day-contain">
                 <div>
-                  <p><strong>Date: {day.date}</strong></p>
+                  <p><strong>{day.date}</strong></p>
                   <h1 style={{color: 'green'}}>Balance: {day.endDayBalance}</h1>
                   {day.transactions.map(trans => (
                     <div key={trans.id} className="trans-contain">
@@ -37,6 +44,14 @@ export default function TransactionsList({ transactionsListData, selectedMonth }
                           amount: trans.amount
                         }} 
                       />
+                      {trans.type === 'expense' &&
+                        <TransactionSpendingTags
+                          spendingTagInstances={spendingTagInstances}
+                          transactionID={trans.id}
+                          selectedMonth={selectedMonth}
+                          spendingTagNames={spendingTagNames}
+                        />
+                      }
                     </div>
                     ))}
                 </div>

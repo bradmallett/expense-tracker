@@ -13,6 +13,7 @@ export default async function deleteTransaction( transData ) {
     const transAmount = Math.round(Number(amount) * 100); // db needs integer
 
     try {
+        await sql `DELETE FROM spending_tag_instances WHERE transaction_id = ${id};`;
         await sql `DELETE FROM transactions WHERE id = ${id};`;
         await updateFutureMonthBalances(yearNumber, monthNumber, type, transAmount);
     } catch(error) {
@@ -42,6 +43,5 @@ export default async function deleteTransaction( transData ) {
             OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber});
         `;
     };
-
 }
 
