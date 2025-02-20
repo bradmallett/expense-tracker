@@ -1,16 +1,26 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import addSpendingTags from "../lib/actions/addSpendingTags";
 
 
-export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsToTransaction }) {
+export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsToTransaction, transactionID }) {
     const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
     const [showTagTextInput, setShowTagTextInput] = useState(false);
     const [newSelectedTagName, setNewSelectedTagName] = useState('');
     const [existingSelectedTagName, setExistingSelectedTagName] = useState('');
+    const [showAddTagButton, setShowAddTagButton] = useState(false);
 
     useEffect(() => {
         addSpendingTagsToTransaction(selectedSpendingTags);
+
+        if(transactionID && selectedSpendingTags.length > 0) {
+            setShowAddTagButton(true);
+        } 
+
+        if(!transactionID || selectedSpendingTags.length === 0) {
+            setShowAddTagButton(false);
+        }
     }, [selectedSpendingTags]);
 
 
@@ -21,10 +31,10 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
             if(!tagHasAlreadyBeenSelected) {
                 setSelectedSpendingTags(prevTags => [...prevTags, existingSelectedTagName]);
             }
+
             setExistingSelectedTagName('');
         }
     }, [existingSelectedTagName]);
-
 
 
     function handleUpdateNewSpendingTagName(e) {
@@ -48,7 +58,15 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
         setNewSelectedTagName('');
     }
 
-       
+
+    function handleAddTagsToTransaction() {
+        if(!transactionID || selectedSpendingTags.length === 0) {
+            return;
+        }
+
+        addSpendingTags(selectedSpendingTags, transactionID);
+    }
+
 
     return (
         <div className="addSpendingTagsForm">
@@ -105,14 +123,20 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
                 </div>
             </form>
 
+            
             {selectedSpendingTags.length > 0 && 
                 <div>
+                    {/* CLEAR TAGS FROM FORM */}
+                    <button onClick={() => setSelectedSpendingTags([])}>CLEAR</button>
                     {selectedSpendingTags.map((tag) => (
                         <p key={tag.tagName}>{tag.tagName}</p>
                     ))}
-
-                    <button onClick={() => setSelectedSpendingTags([])}>CLEAR TAGS</button>
                 </div>
+            }
+
+            {/* Show button if rendered from existing transaction */}
+            {showAddTagButton && 
+                <button className="addTagsToTransaction" onClick={handleAddTagsToTransaction}>ADD SPENDING TAGS</button>
             }
         </div>
     )

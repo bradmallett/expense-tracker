@@ -1,16 +1,13 @@
 'use client';
 
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import { useFloating, useClick, useInteractions } from '@floating-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import AddSpendingTagsForm from "./AddSpendingTagsForm";
-import addSpendingTags from "../lib/actions/addSpendingTags";
 
 
 export default function AddTagsToExistingTransaction({ spendingTagNames, transactionID }) { 
     const [isOpen, setIsOpen] = useState(false);
-    const selectedSpendingTags = useRef([]);
-    const [showButton, setShowButton] = useState(false);
 
     const {refs, floatingStyles, context} = useFloating({
       open: isOpen,
@@ -23,25 +20,6 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
     const {getReferenceProps, getFloatingProps} = useInteractions([
         click,
       ]);
-
-
-    function addSpendingTagsToTransaction(transactionTags) {
-        if(transactionTags.length > 0) {
-            selectedSpendingTags.current = [...transactionTags];
-            setShowButton(true);
-        }
-        if(transactionTags.length === 0) {
-            setShowButton(false);
-        }
-    }
-
-    
-    function handleAddTagsToTransaction(e) {
-        e.preventDefault();
-
-        // addSpendingTags(selectedSpendingTags, transactionID);
-    }
-
 
     return (
         <div>
@@ -59,16 +37,11 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
                 >
                     <AddSpendingTagsForm 
                         spendingTagNames={spendingTagNames}
-                        addSpendingTagsToTransaction={addSpendingTagsToTransaction}
+                        addSpendingTagsToTransaction={(e) => {}}
+                        transactionID={transactionID}
                     />
-
-                    {showButton && 
-                        <button onClick={e => handleAddTagsToTransaction(e)}>ADD SPENDING TAGS</button>
-                    }
-
                 </div>
             )}
         </div>
     )
-
 }

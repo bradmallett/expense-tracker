@@ -80,6 +80,7 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
             <AddSpendingTagsForm 
                 spendingTagNames={spendingTagNames}
                 addSpendingTagsToTransaction={addSpendingTagsToTransaction}
+                transactionID={null}
             />
         </div>
       );
