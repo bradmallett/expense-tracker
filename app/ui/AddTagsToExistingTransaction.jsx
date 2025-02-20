@@ -6,7 +6,7 @@ import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import AddSpendingTagsForm from "./AddSpendingTagsForm";
 
 
-export default function AddTagsToExistingTransaction({ spendingTagNames, transactionID }) { 
+export default function AddTagsToExistingTransaction({ spendingTagNames, transactionID, selectedMonth }) { 
     const [isOpen, setIsOpen] = useState(false);
 
     const {refs, floatingStyles, context} = useFloating({
@@ -26,6 +26,7 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
             <button 
                 ref={refs.setReference}
                 {...getReferenceProps()}
+                className="btn-addTagsToTransaction"
             >
                 <PlusCircleIcon className="size-5"/>
             </button>
@@ -39,6 +40,7 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
                         spendingTagNames={spendingTagNames}
                         addSpendingTagsToTransaction={(e) => {}}
                         transactionID={transactionID}
+                        selectedMonth={selectedMonth}
                     />
                 </div>
             )}

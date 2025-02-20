@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import addSpendingTags from "../lib/actions/addSpendingTags";
 
 
-export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsToTransaction, transactionID }) {
+export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsToTransaction, transactionID, selectedMonth }) {
     const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
     const [showTagTextInput, setShowTagTextInput] = useState(false);
     const [newSelectedTagName, setNewSelectedTagName] = useState('');
@@ -64,7 +64,7 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
             return;
         }
 
-        addSpendingTags(selectedSpendingTags, transactionID);
+        addSpendingTags(selectedSpendingTags, transactionID, selectedMonth);
     }
 
 
@@ -123,7 +123,6 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
                 </div>
             </form>
 
-            
             {selectedSpendingTags.length > 0 && 
                 <div>
                     {/* CLEAR TAGS FROM FORM */}

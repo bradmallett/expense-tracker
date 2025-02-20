@@ -1,10 +1,14 @@
 "use server";
 
 import { neon } from "@neondatabase/serverless";
+import { redirect } from 'next/navigation';
+
+
 const sql = neon(process.env.DATABASE_URL);
 
 
-export default async function addSpendingTags(spendingTags, transactionID) {
+export default async function addSpendingTags(spendingTags, transactionID, selectedMonth) {
+
     for(const tag of spendingTags) {
         let spendingTagNameID = tag.tagID;
 
@@ -37,4 +41,10 @@ export default async function addSpendingTags(spendingTags, transactionID) {
             }
         }
     }
+
+    if(selectedMonth) {
+        const { year, month } = selectedMonth;
+        redirect(`/?year=${year}&month=${month}`);
+    }
+
 }

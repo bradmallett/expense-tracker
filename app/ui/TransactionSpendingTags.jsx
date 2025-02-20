@@ -35,6 +35,7 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
             <AddTagsToExistingTransaction 
                 spendingTagNames={spendingTagNames} 
                 transactionID={transactionID}
+                selectedMonth={selectedMonth}
             />
             {transactionTags.map(tag => (
                 <div key={tag.tag_id} className="relative">

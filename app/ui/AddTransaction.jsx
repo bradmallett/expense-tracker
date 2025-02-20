@@ -18,8 +18,14 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
 
     return (
         <div className="add-transaction-form">
+            <AddSpendingTagsForm 
+                spendingTagNames={spendingTagNames}
+                addSpendingTagsToTransaction={addSpendingTagsToTransaction}
+                transactionID={null}
+            />
+
             <form action={addTransactionWithID}>
-            <h1>CREATE A TRANSACTION</h1>
+                <h1>CREATE A TRANSACTION</h1>
                 <div className="input-contain">
                     <label htmlFor="date">Select a Date: </label>
                     <input
@@ -76,12 +82,6 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
                 </div>
                 <button type="submit">CREATE TRANSACTION</button>
             </form>
-
-            <AddSpendingTagsForm 
-                spendingTagNames={spendingTagNames}
-                addSpendingTagsToTransaction={addSpendingTagsToTransaction}
-                transactionID={null}
-            />
         </div>
       );
 };
