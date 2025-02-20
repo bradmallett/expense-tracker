@@ -6,7 +6,7 @@ import { PlusCircleIcon } from '@heroicons/react/24/solid';
 import AddTransaction from './AddTransaction';
 
 
-export function Add({ monthID, spendingTagNames }) {
+export default function CreateNewTransaction({ monthID, spendingTagNames }) {
     const [isOpen, setIsOpen] = useState(false);
    
     const {refs, floatingStyles, context} = useFloating({

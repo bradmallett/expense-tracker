@@ -1,6 +1,6 @@
 import formatMonthTransactions from "../lib/formatMonthTransactions";
 import { DeleteTransaction } from "./buttons";
-import { Add } from "./Add";
+import CreateNewTransaction from "./CreateNewTransaction";
 import  Edit  from "./Edit";
 import TransactionSpendingTags from "./TransactionSpendingTags";
 
@@ -11,7 +11,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
     return (
       <div>
         <p>No transactions data for this month</p>
-        <Add monthID={monthTransactionsData?.month?.id} spendingTagNames={spendingTagNames}/>
+        <CreateNewTransaction monthID={monthTransactionsData?.month?.id} spendingTagNames={spendingTagNames}/>
       </div>
     )
   }
@@ -22,7 +22,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
     return (
         <div className="trans-list-contain">
           <h2>MONTH BEGINNING BALANCE: ${beginningMonthBalance}</h2>
-          <Add monthID={id} spendingTagNames={spendingTagNames}/>
+          <CreateNewTransaction monthID={id} spendingTagNames={spendingTagNames}/>
     
             {dayObjects.map(day => (
               <div key={day.day} className="day-contain">
@@ -44,12 +44,14 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
                           amount: trans.amount
                         }} 
                       />
-                      <TransactionSpendingTags
-                        spendingTagInstances={spendingTagInstances}
-                        transactionID={trans.id}
-                        selectedMonth={selectedMonth}
-                        spendingTagNames={spendingTagNames}
-                      />
+                      {trans.type === 'expense' &&
+                        <TransactionSpendingTags
+                          spendingTagInstances={spendingTagInstances}
+                          transactionID={trans.id}
+                          selectedMonth={selectedMonth}
+                          spendingTagNames={spendingTagNames}
+                        />
+                      }
                     </div>
                     ))}
                 </div>

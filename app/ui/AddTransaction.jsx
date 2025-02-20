@@ -1,12 +1,13 @@
 'use client';
 
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { addTransaction } from "../lib/actions/addTransaction";
 import AddSpendingTagsForm from "./AddSpendingTagsForm";
 
 
 export default function AddTransaction({ monthID, spendingTagNames }) {
     const selectedSpendingTags = useRef([]);
+    const [transactionType, setTransactionType ]= useState('expense');
 
     function addSpendingTagsToTransaction(transactionTags) {
         if(transactionTags.length > 0) {
@@ -18,11 +19,13 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
 
     return (
         <div className="add-transaction-form">
-            <AddSpendingTagsForm 
-                spendingTagNames={spendingTagNames}
-                addSpendingTagsToTransaction={addSpendingTagsToTransaction}
-                transactionID={null}
-            />
+            { transactionType === 'expense' &&
+                <AddSpendingTagsForm 
+                    spendingTagNames={spendingTagNames}
+                    addSpendingTagsToTransaction={addSpendingTagsToTransaction}
+                    transactionID={null}
+                />
+            }
 
             <form action={addTransactionWithID}>
                 <h1>CREATE A TRANSACTION</h1>
@@ -38,7 +41,13 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
 
                 <div className="input-contain">
                     <label htmlFor="transactionType">TRANSACTION TYPE:</label>
-                    <select name="transactionType" id="transactionType" required>
+                    <select 
+                        name="transactionType" 
+                        id="transactionType"
+                        value={transactionType}
+                        onChange={(e) => {setTransactionType(e.target.value)}}
+                        required
+                    >
                         <option value="expense">expense</option>
                         <option value="income">income</option>
                         <option value="savings">savings</option>
@@ -68,18 +77,20 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
                     />
                 </div>
 
-                <div className="input-contain">
-                    <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
-                    <select 
-                        name="budgetCategory"
-                        id="budgetCategory"
-                    >
-                        <option value="">(none)</option>
-                        <option value="fundamental">fundamental</option>
-                        <option value="fun">fun</option>
-                        <option value="future">future</option>
-                    </select>
-                </div>
+                { transactionType === 'expense' &&
+                    <div className="input-contain">
+                        <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
+                        <select 
+                            name="budgetCategory"
+                            id="budgetCategory"
+                        >
+                            <option value="">(none)</option>
+                            <option value="fundamental">fundamental</option>
+                            <option value="fun">fun</option>
+                            <option value="future">future</option>
+                        </select>
+                    </div>
+                }
                 <button type="submit">CREATE TRANSACTION</button>
             </form>
         </div>
