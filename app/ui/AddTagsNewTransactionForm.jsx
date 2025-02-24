@@ -1,26 +1,16 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import addSpendingTags from "../lib/actions/addSpendingTags";
 
 
-export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsToTransaction, transactionID, selectedMonth }) {
+export default function AddTagsNewTransactionForm({ spendingTagNames, addSpendingTagsToTransaction }) {
     const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
     const [showTagTextInput, setShowTagTextInput] = useState(false);
     const [newSelectedTagName, setNewSelectedTagName] = useState('');
     const [existingSelectedTagName, setExistingSelectedTagName] = useState('');
-    const [showAddTagButton, setShowAddTagButton] = useState(false);
 
     useEffect(() => {
         addSpendingTagsToTransaction(selectedSpendingTags);
-
-        if(transactionID && selectedSpendingTags.length > 0) {
-            setShowAddTagButton(true);
-        } 
-
-        if(!transactionID || selectedSpendingTags.length === 0) {
-            setShowAddTagButton(false);
-        }
     }, [selectedSpendingTags]);
 
 
@@ -56,15 +46,6 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
         }
 
         setNewSelectedTagName('');
-    }
-
-
-    function handleAddTagsToTransaction() {
-        if(!transactionID || selectedSpendingTags.length === 0) {
-            return;
-        }
-
-        addSpendingTags(selectedSpendingTags, transactionID, selectedMonth);
     }
 
 
@@ -131,11 +112,6 @@ export default function AddSpendingTagsForm({ spendingTagNames, addSpendingTagsT
                         <p key={tag.tagName}>{tag.tagName}</p>
                     ))}
                 </div>
-            }
-
-            {/* Show button if rendered from existing transaction */}
-            {showAddTagButton && 
-                <button className="addTagsToTransaction" onClick={handleAddTagsToTransaction}>ADD SPENDING TAGS</button>
             }
         </div>
     )

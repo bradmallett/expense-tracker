@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useFloating, useClick, useInteractions } from '@floating-ui/react';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import AddSpendingTagsForm from "./AddSpendingTagsForm";
+import AddTagsExistingTransForm from "./AddTagsExistingTransForm";
 
 
 export default function AddTagsToExistingTransaction({ spendingTagNames, transactionID, selectedMonth }) { 
@@ -36,9 +36,8 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
                     style={floatingStyles}
                     {...getFloatingProps()}
                 >
-                    <AddSpendingTagsForm 
+                    <AddTagsExistingTransForm
                         spendingTagNames={spendingTagNames}
-                        addSpendingTagsToTransaction={(e) => {}}
                         transactionID={transactionID}
                         selectedMonth={selectedMonth}
                     />
