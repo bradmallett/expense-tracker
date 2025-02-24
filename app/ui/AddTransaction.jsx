@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { addTransaction } from "../lib/actions/addTransaction";
-import AddSpendingTagsForm from "./AddSpendingTagsForm";
+import AddTagsNewTransactionForm from "./AddTagsNewTransactionForm";
 
 
 export default function AddTransaction({ monthID, spendingTagNames }) {
@@ -20,10 +20,9 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
     return (
         <div className="add-transaction-form">
             { transactionType === 'expense' &&
-                <AddSpendingTagsForm 
+                <AddTagsNewTransactionForm 
                     spendingTagNames={spendingTagNames}
                     addSpendingTagsToTransaction={addSpendingTagsToTransaction}
-                    transactionID={null}
                 />
             }
 
