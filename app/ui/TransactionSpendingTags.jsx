@@ -1,27 +1,11 @@
 'use client';
 
-import { useState } from "react";
-import { useFloating, useHover, useInteractions, safePolygon } from '@floating-ui/react';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import deleteSpendingTagInstance from "../lib/actions/deleteSpendingTagInstance";
 import AddTagsToExistingTransaction from "./AddTagsToExistingTransaction";
 
 
 export default function TransactionSpendingTags({ spendingTagInstances, transactionID, selectedMonth, spendingTagNames}) {
-    const [openTag, setOpenTag] = useState(null); // Track which tag is open
-
-    const { refs, floatingStyles, context } = useFloating({
-        open: openTag !== null, 
-        onOpenChange: (open) => !open && setOpenTag(null), 
-        placement: 'top',
-    });
-
-    const hover = useHover(context, {
-        handleClose: safePolygon({ requireIntent: false }),
-    });
-
-    const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
-
     const transactionTags = spendingTagInstances.filter(tag => tag.transaction_id === transactionID);
 
     function handleDeleteTag(e, tagID) {
@@ -38,29 +22,21 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
                 selectedMonth={selectedMonth}
             />
             {transactionTags.map(tag => (
-                <div key={tag.tag_id} className="relative">
-                    <p
-                        className="spendingTagElement"
-                        ref={openTag === tag.tag_id ? refs.setReference : null} // Only set ref for open tag
-                        {...getReferenceProps()}
-                        onMouseEnter={() => setOpenTag(tag.tag_id)} // Set the hovered tag
-                    >
+                <div 
+                    key={tag.tag_id}
+                    className="spendingTagElement"    
+                >
+                    <p>
                         #{tag.tag_name}
                     </p>
+                    <button
+                        className="spendinTagTrash"
+                        onClick={e => handleDeleteTag(e, tag.tag_id)}
+                    >
+                        <TrashIcon className="size-3"/>
+                    </button>
                 </div>
             ))}
-
-            {openTag !== null && (
-                <button
-                    className="spendinTagTrash absolute bg-gray-200 p-1 rounded shadow"
-                    ref={refs.setFloating}
-                    style={floatingStyles}
-                    {...getFloatingProps()}
-                    onClick={e => handleDeleteTag(e, openTag)}
-                >
-                    <TrashIcon className="size-3"/>
-                </button>
-            )}
         </div>
     );
 }
