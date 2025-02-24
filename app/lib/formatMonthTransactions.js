@@ -69,6 +69,8 @@ export default function formatMonthTransactions( monthTransactions ) {
                 dayObjects.push(newDayObject);
             }
         }
+        
+        dayObjects.reverse();
 
         return { id, beginningMonthBalance, dayObjects };
 
