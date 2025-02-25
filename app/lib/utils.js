@@ -16,6 +16,6 @@ export function updateDayBalance(type, currentBalance, amount) {
 }
 
 export function centsToDollars(cents) {
-    return cents / 100;
+    return (cents / 100).toFixed(2);
 }
 

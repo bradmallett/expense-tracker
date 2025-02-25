@@ -18,26 +18,27 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
 
   const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(monthTransactionsData);
 
+
   
     return (
-        <div className="trans-list-contain m-5 p-4 max-w-3xl">
+        <div className="trans-list-contain mt-5 m-auto p-4 min-w-full">
           <h2>MONTH BEGINNING BALANCE: ${beginningMonthBalance}</h2>
           <CreateNewTransaction monthID={id} spendingTagNames={spendingTagNames}/>
     
             {dayObjects.map(day => (
               <div key={day.day} className="mt-2 p-3 bg-slate-900">
-                <div className="flex justify-between">
+                <div className="text-slate-400 text-sm flex justify-between">
                   <p>{day.date}</p>
                   <p>End Day Balance: ${day.endDayBalance}</p>
                 </div>
 
 
                   {day.transactions.map(trans => (
-                    <div key={trans.id} className="m-2 p-2 bg-slate-800">
+                    <div key={trans.id} className="m-2 p-2 bg-slate-800 border-l-2 border-orange-600">
 
 
                       <div className="flex justify-between">
-                        <p className="self-start">{trans.description}</p>
+                        <p className="self-start">{trans.type}</p>
                         <div className="flex justify-end">
                           <Edit
                             transaction={trans}
@@ -55,9 +56,12 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
                         </div>
                       </div>
 
+                      <div className="flex justify-between mt-3">
+                        <p>{trans.description}</p>
+                        <p>{trans.type === "expense" && '-'}${trans.amount}</p>
+                      </div> 
 
-                      <p>{trans.type}</p>
-                      <p>{trans.amount}</p>
+
                       {trans.type === 'expense' &&
                         <TransactionSpendingTags
                           spendingTagInstances={spendingTagInstances}
