@@ -13,7 +13,7 @@ export default async function Transactions({selectedMonth}) {
     const spendingTagNames = await getSpendingTagNames();
     
     return (
-        <div className="bg-slate-950 flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row">
             <TransactionsList 
                 monthTransactionsData={monthTransactionsData} 
                 selectedMonth={selectedMonth}

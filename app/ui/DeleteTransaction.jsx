@@ -1,12 +1,14 @@
 'use client';
 
+import DeleteTransactionForm from './DeleteTransactionForm';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { useFloating, useClick, useInteractions } from '@floating-ui/react';
 import { useState } from 'react';
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
-import EditTransactionForm from './EditTransactionForm'; 
 
 
-export default function Edit({ transaction }) {
+
+export default function DeleteTransaction({ transData }) {
+
     const [isOpen, setIsOpen] = useState(false);
    
     const {refs, floatingStyles, context} = useFloating({
@@ -20,15 +22,15 @@ export default function Edit({ transaction }) {
     const {getReferenceProps, getFloatingProps} = useInteractions([
         click,
       ]);
-   
+
     return (
-      <>
+        <>
         <button 
             className='mr-3'
             ref={refs.setReference}
             {...getReferenceProps()}
         >
-            <PencilSquareIcon className="size-6"/>
+            <TrashIcon className="size-6"/>
         </button>
         {isOpen && (
             <div 
@@ -36,9 +38,9 @@ export default function Edit({ transaction }) {
                 style={floatingStyles}
                 {...getFloatingProps()}
             >
-            <EditTransactionForm transaction={transaction}/>
+            <DeleteTransactionForm transData={transData}/>
           </div>
         )}
       </>
-    );
-};
+    )
+}
