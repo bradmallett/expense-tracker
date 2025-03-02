@@ -22,7 +22,7 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
       ]);
 
     return (
-        <div>
+        <div className="flex justify-center align-middle">
             <button 
                 ref={refs.setReference}
                 {...getReferenceProps()}
@@ -30,6 +30,7 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
             >
                 <PlusCircleIcon className="size-5"/>
             </button>
+            
             {isOpen && (
                 <div 
                     ref={refs.setFloating} 

@@ -7,7 +7,7 @@ export default async function Home( props ) {
 
 
   return (
-    <div>
+    <div className="w-full">
       <SelectMonth />
       <Totals selectedMonth={searchParams} />
       <TransactionContain selectedMonth={searchParams}/>

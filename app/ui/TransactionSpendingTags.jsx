@@ -1,6 +1,6 @@
 'use client';
 
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { XCircleIcon } from '@heroicons/react/24/outline';
 import deleteSpendingTagInstance from "../lib/actions/deleteSpendingTagInstance";
 import AddTagsToExistingTransaction from "./AddTagsToExistingTransaction";
 
@@ -15,25 +15,25 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
     }
 
     return (
-        <div className="tagName-contain">
+        <div className="flex">
             <AddTagsToExistingTransaction 
                 spendingTagNames={spendingTagNames} 
                 transactionID={transactionID}
                 selectedMonth={selectedMonth}
             />
             {transactionTags.map(tag => (
-                <div 
+                <div
                     key={tag.tag_id}
-                    className="spendingTagElement"    
+                    className="p-1 m-1 flex border border-slate-900 hover:border-orange-600 hover:text-orange-600"    
                 >
                     <p>
-                        #{tag.tag_name}
+                        {tag.tag_name}
                     </p>
                     <button
-                        className="spendinTagTrash"
+                        className=""
                         onClick={e => handleDeleteTag(e, tag.tag_id)}
                     >
-                        <TrashIcon className="size-3"/>
+                        <XCircleIcon className="size-4"/>
                     </button>
                 </div>
             ))}

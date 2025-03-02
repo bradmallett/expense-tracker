@@ -58,34 +58,5 @@ label {
   margin: 30px 0px;
 }
 
-.tagName-contain {
-  padding: 10px 0px;
-  font-size: .8rem;
-  font-weight: bold;
-  color: rgb(196, 35, 35);
-  display: flex;
-  width: 100%;
-}
 
-.spendingTagElement {
-  display: inline-block;
-  margin: 0px 5px;
-}
 
-.spendinTagTrash {
-  background-color: rgb(255, 145, 0);
-  color: rgb(14, 49, 49);
-  padding: 2px 10px;
-}
-
-.addTagsToTransaction {
-  font-size: 1.3em;
-  color:rgb(12, 49, 66);
-  border: 2px solid rgb(12, 49, 66);
-  padding: 5px;
-  margin: 20px 0px 0px;
-}
-
-.btn-addTagsToTransaction {
-  border: none;
-}
