@@ -1,5 +1,5 @@
 import SelectMonth from "./ui/SelectMonth";
-import Transactions from "./ui/Transactions";
+import TransactionContain from "./ui/TransactionContain";
 import { Totals } from "./ui/Totals";
 
 export default async function Home( props ) {
@@ -10,7 +10,7 @@ export default async function Home( props ) {
     <div>
       <SelectMonth />
       <Totals selectedMonth={searchParams} />
-      <Transactions selectedMonth={searchParams}/>
+      <TransactionContain selectedMonth={searchParams}/>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function Edit({ transaction }) {
             ref={refs.setReference}
             {...getReferenceProps()}
         >
-            <PencilSquareIcon className="size-6"/>
+            <PencilSquareIcon className="size-5"/>
         </button>
         {isOpen && (
             <div 

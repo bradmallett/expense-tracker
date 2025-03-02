@@ -16,7 +16,7 @@ export default function DeleteTransaction({ transData }) {
                 className='mr-3'
                 onClick={() => setIsOpen(true)}
             >
-                <TrashIcon className="size-6 hover:text-orange-600"/>
+                <TrashIcon className="size-5 hover:text-orange-600"/>
             </button>
         {isOpen && (
             <div className="bg-slate-900 min-w-72 border-2 border-orange-600 p-2 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" >
