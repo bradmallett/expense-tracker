@@ -13,8 +13,7 @@ export default function DeleteTransaction({ transData }) {
     return (
         <>
             <button 
-                className='mr-3'
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsOpen(!isOpen)}
             >
                 <TrashIcon className="size-5 hover:text-orange-600"/>
             </button>

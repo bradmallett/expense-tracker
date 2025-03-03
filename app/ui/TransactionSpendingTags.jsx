@@ -1,6 +1,6 @@
 'use client';
 
-import { XCircleIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import deleteSpendingTagInstance from "../lib/actions/deleteSpendingTagInstance";
 import AddTagsToExistingTransaction from "./AddTagsToExistingTransaction";
 
@@ -15,7 +15,7 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
     }
 
     return (
-        <div className="flex">
+        <div className="flex mt-3">
             <AddTagsToExistingTransaction 
                 spendingTagNames={spendingTagNames} 
                 transactionID={transactionID}
@@ -24,7 +24,7 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
             {transactionTags.map(tag => (
                 <div
                     key={tag.tag_id}
-                    className="p-1 m-1 flex border border-slate-900 hover:border-orange-600 hover:text-orange-600"    
+                    className="p-1 m-1 flex border border-slate-600 group"    
                 >
                     <p>
                         {tag.tag_name}
@@ -33,7 +33,7 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
                         className=""
                         onClick={e => handleDeleteTag(e, tag.tag_id)}
                     >
-                        <XCircleIcon className="size-4"/>
+                        <XMarkIcon className="size-4 ml-1 group-hover:text-orange-600"/>
                     </button>
                 </div>
             ))}

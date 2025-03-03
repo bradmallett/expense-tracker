@@ -13,7 +13,7 @@ export default async function TransactionContain({selectedMonth}) {
     const spendingTagNames = await getSpendingTagNames();
     
     return (
-        <div className="flex flex-col max-w-3/4 lg:flex-row">
+        <div className="flex flex-col">
             <TransactionsList 
                 monthTransactionsData={monthTransactionsData} 
                 selectedMonth={selectedMonth}
