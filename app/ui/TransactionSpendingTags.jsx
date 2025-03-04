@@ -20,6 +20,7 @@ export default function TransactionSpendingTags({ spendingTagInstances, transact
                 spendingTagNames={spendingTagNames} 
                 transactionID={transactionID}
                 selectedMonth={selectedMonth}
+                transactionTags={transactionTags}
             />
             {transactionTags.map(tag => (
                 <div

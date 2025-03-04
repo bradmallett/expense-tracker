@@ -6,18 +6,20 @@ import { PlusCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import addSpendingTags from "../lib/actions/addSpendingTags";
 
 
-export default function AddTagsExistingTransForm({ spendingTagNames, transactionID, selectedMonth }) {
+export default function AddTagsExistingTransForm({ spendingTagNames, transactionID, selectedMonth, transactionTags }) {
     const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
     const [newSelectedTagName, setNewSelectedTagName] = useState('');
     const [existingSelectedTagName, setExistingSelectedTagName] = useState(null);
     const [showTagOptions, setShowTagOptions] = useState(false);
 
+
     // adding EXISTING tag to MAIN STATE LIST
     useEffect(() => {
         if(existingSelectedTagName) {
             const tagHasAlreadyBeenSelected = selectedSpendingTags.some(tag => tag.tagName === existingSelectedTagName.tagName);
+            const tagAlreadyInTransaction = transactionTags.some(tag => tag.tag_name === existingSelectedTagName.tagName);
 
-            if(!tagHasAlreadyBeenSelected) {
+            if(!tagHasAlreadyBeenSelected && !tagAlreadyInTransaction) {
                 setSelectedSpendingTags(prevTags => [...prevTags, existingSelectedTagName]);
             }
 
@@ -39,8 +41,9 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
         }
 
         const tagHasAlreadyBeenSelected = selectedSpendingTags.some(tag => tag.tagName === selectedTag.tagName);
+        const tagAlreadyInTransaction = transactionTags.some(tag => tag.tag_name === selectedTag.tagName);
 
-        if(!tagHasAlreadyBeenSelected) {
+        if(!tagHasAlreadyBeenSelected && !tagAlreadyInTransaction) {
             setSelectedSpendingTags(prevTags => [...prevTags, selectedTag])
         }
 
@@ -60,27 +63,30 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
 
 
     return (
-        <div className="m-2 mt-5">
+        <div className="m-2 mt-5 text-slate-500">
+            <p className="text-xs">SELECT TAG</p>
             <button
-                className="mb-2 p-2 bg-slate-900 border-2 flex"
+                className="mb-3 p-2 bg-slate-950 border border-slate-500 flex text-slate-400 hover:border-orange-600 group"
                 name="spendingTag"
                 id="spendingTag"
-                value={existingSelectedTagName}
                 onClick={() => setShowTagOptions(!showTagOptions)}
             >
-                ADD EXISTING TAG...<ChevronDownIcon className="size-5 ml-1"/>
+                ADD EXISTING TAG...<ChevronDownIcon className="size-5 ml-1 group-hover:text-orange-600"/>
             </button>
 
             {showTagOptions &&
-                <ul className="bg-slate-900 fixed p-1 flex flex-col">
+                <ul className="bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600 ">
                     {spendingTagNames.map((tagName) => (
                         <button
                             className="p-1 hover:bg-orange-600 hover:text-slate-900"
                             key={tagName.id}
-                            onClick={() => setExistingSelectedTagName({
-                                tagName: tagName.name,
-                                tagID: tagName.id
-                            })}
+                            onClick={() => {
+                                setExistingSelectedTagName({
+                                        tagName: tagName.name,
+                                        tagID: tagName.id
+                                    })
+                                setShowTagOptions(false);
+                                }}
                         >
                                 {tagName.name}
                         </button>
@@ -88,24 +94,27 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
                 </ul>
             }
 
+
             <p>---or---</p>
 
 
-            <div className="mt-2 flex align-middle">
-                <input 
-                    className="p-2 border-2 bg-slate-900"
-                    type="text"
-                    placeholder="CREATE NEW TAG..."
-                    value={newSelectedTagName}
-                    onChange={(e) => setNewSelectedTagName(e.target.value)}
-                />
-                
-                <PlusCircleIcon
-                    className="size-8 self-center cursor-pointer hover:text-orange-600"
-                    onClick={handleAddNewSelectedTag}
-                />
+            <div className="mt-3">
+                <p className="text-xs">ENTER NEW TAG</p>
+                <div className="flex align-middle group">
+                    <input 
+                        className="p-2 border border-slate-500 bg-slate-950 text-slate-400 hover:border-orange-600"
+                        type="text"
+                        placeholder="Enter Tag..."
+                        value={newSelectedTagName}
+                        onChange={(e) => setNewSelectedTagName(e.target.value)}
+                    />
+                    
+                    <PlusCircleIcon
+                        className="size-8 ml-1 self-center cursor-pointer hover:text-orange-600 group-hover:text-orange-600"
+                        onClick={handleAddNewSelectedTag}
+                    />
+                </div>
             </div>
-
 
             {selectedSpendingTags.length > 0 && 
                 <div className="mt-5 pt-2 border-t-2 border-orange-600">
