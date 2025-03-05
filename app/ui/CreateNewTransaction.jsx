@@ -2,7 +2,7 @@
 
 import { useFloating, useClick, useInteractions } from '@floating-ui/react';
 import { useState } from 'react';
-import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import AddTransaction from './AddTransaction';
 
 
@@ -22,13 +22,12 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
       ]);
    
     return (
-      <>
-      <p>ADD TRANSACTION</p>
-        <button 
+      <div className='text-center'>
+        <button
             ref={refs.setReference}
             {...getReferenceProps()}
         >
-            <PlusCircleIcon className="size-6"/>
+            <PlusCircleIcon className='w-16 h-16 text-orange-600 hover:text-white'/>
         </button>
         {isOpen && (
             <div 
@@ -39,6 +38,6 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
             <AddTransaction monthID={monthID} spendingTagNames={spendingTagNames}/>
           </div>
         )}
-      </>
+      </div>
     );
 }

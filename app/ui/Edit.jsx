@@ -1,40 +1,24 @@
 'use client';
 
-import { useFloating, useClick, useInteractions } from '@floating-ui/react';
 import { useState } from 'react';
-import { PencilSquareIcon } from '@heroicons/react/24/solid';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import EditTransactionForm from './EditTransactionForm'; 
 
 
 export default function Edit({ transaction }) {
     const [isOpen, setIsOpen] = useState(false);
    
-    const {refs, floatingStyles, context} = useFloating({
-      open: isOpen,
-      onOpenChange: setIsOpen,
-      placement: 'bottom-start',
-    });
-
-    const click = useClick(context);
-
-    const {getReferenceProps, getFloatingProps} = useInteractions([
-        click,
-      ]);
    
     return (
       <>
         <button 
-            ref={refs.setReference}
-            {...getReferenceProps()}
+            className='mr-3 hover:text-orange-600'
+            onClick={() => setIsOpen(!isOpen)}
         >
-            <PencilSquareIcon className="size-6"/>
+            <PencilSquareIcon className="size-5"/>
         </button>
         {isOpen && (
-            <div 
-                ref={refs.setFloating} 
-                style={floatingStyles}
-                {...getFloatingProps()}
-            >
+            <div>
             <EditTransactionForm transaction={transaction}/>
           </div>
         )}
