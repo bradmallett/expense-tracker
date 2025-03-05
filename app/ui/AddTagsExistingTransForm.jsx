@@ -132,11 +132,11 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
                     >
                         CLEAR
                     </button>
-                    <div className="mb-5 text-orange-600 font-bold flex flex-wrap">
+                    <div className="mb-5 mt-3 text-orange-600 font-bold flex flex-wrap">
                         {selectedSpendingTags.map(tag => (
                             <p 
                                 key={tag.tagName}
-                                className="p-1 mr-1 mt-2 border border-orange-600"
+                                className="pr-2 mr-1 border-orange-600"
                             >
                                 {tag.tagName}
                             </p>
