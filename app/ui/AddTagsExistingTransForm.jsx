@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { PlusCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-
 import addSpendingTags from "../lib/actions/addSpendingTags";
 
 
@@ -11,6 +10,19 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
     const [newSelectedTagName, setNewSelectedTagName] = useState('');
     const [existingSelectedTagName, setExistingSelectedTagName] = useState(null);
     const [showTagOptions, setShowTagOptions] = useState(false);
+
+    // CLOSE DROPDOWN WITH CLICK OUTSIDE
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if(showTagOptions && !event.target.closest(".options")) {
+                setShowTagOptions(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    }, [showTagOptions])
 
 
     // adding EXISTING tag to MAIN STATE LIST
@@ -26,7 +38,6 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
             setExistingSelectedTagName(null);
         }
     }, [existingSelectedTagName]);
-
 
 
     // adding NEW tag to MAIN STATE LIST
@@ -49,7 +60,6 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
 
         setNewSelectedTagName('');
     }
-
 
 
     // calling SERVER ACTION with MAIN STATE
@@ -75,7 +85,7 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
             </button>
 
             {showTagOptions &&
-                <ul className="bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600 ">
+                <ul className="options bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600 max-h-48 overflow-auto sm:max-h-[400px]">
                     {spendingTagNames.map((tagName) => (
                         <button
                             className="p-1 hover:bg-orange-600 hover:text-slate-900"
@@ -94,9 +104,7 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
                 </ul>
             }
 
-
             <p>---or---</p>
-
 
             <div className="mt-3">
                 <p className="text-xs">ENTER NEW TAG</p>
@@ -118,24 +126,24 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
 
             {selectedSpendingTags.length > 0 && 
                 <div className="mt-5 pt-2 border-t-2 border-orange-600">
-                    <button 
+                    <button
                         onClick={() => setSelectedSpendingTags([])}
                         className="p-1 border-2 border-orange-600 text-orange-600 font-bold hover:text-slate-900 hover:bg-orange-600"
                     >
                         CLEAR
                     </button>
-                    <div className="mb-5 text-orange-600 font-bold">
+                    <div className="mb-5 text-orange-600 font-bold flex flex-wrap">
                         {selectedSpendingTags.map(tag => (
                             <p 
                                 key={tag.tagName}
-                                className=""
+                                className="p-1 mr-1 mt-2 border border-orange-600"
                             >
                                 {tag.tagName}
                             </p>
                         ))}
                     </div>
                     <button 
-                        // onClick={() => setSelectedSpendingTags([])}
+                        // onClick={handleAddTagsToTransaction}
                         className="w-full p-2 border-2 text-base border-orange-600 bg-orange-600 text-slate-900 font-bold hover:text-slate-700"
                     >
                         ADD TAGS TO TRANSACTION
