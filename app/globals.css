@@ -27,12 +27,4 @@ body {
   font-size: .8rem;
 }
 
-.add-transaction-form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: antiquewhite;
-  padding: 10px;
-}
-
 
