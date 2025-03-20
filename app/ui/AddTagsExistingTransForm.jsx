@@ -73,8 +73,8 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
 
 
     return (
-        <div className="m-2 mt-5 text-slate-500">
-            <p className="text-xs">SELECT TAG</p>
+        <div className="m-2 mt-5 text-slate-400">
+            <p className="text-xs font-bold">SELECT TAG</p>
             <button
                 className="mb-3 p-2 bg-slate-950 border border-slate-500 flex text-slate-400 hover:border-orange-600 group"
                 name="spendingTag"
@@ -107,7 +107,7 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
             <p>---or---</p>
 
             <div className="mt-3">
-                <p className="text-xs">ENTER NEW TAG</p>
+                <p className="text-xs font-bold">ENTER NEW TAG</p>
                 <div className="flex align-middle group">
                     <input 
                         className="p-2 border border-slate-500 bg-slate-950 text-slate-400 hover:border-orange-600"
@@ -130,7 +130,7 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
                         onClick={() => setSelectedSpendingTags([])}
                         className="p-1 border-2 border-orange-600 text-orange-600 font-bold hover:text-slate-900 hover:bg-orange-600"
                     >
-                        CLEAR
+                        CLEAR TAGS
                     </button>
                     <div className="mb-5 mt-3 text-orange-600 font-bold flex flex-wrap">
                         {selectedSpendingTags.map(tag => (

@@ -2,11 +2,27 @@
 
 import deleteTransaction from "../lib/actions/deleteTransaction";
 import { TrashIcon, XCircleIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 export default function DeleteTransaction({ transData }) {
     const [isOpen, setIsOpen] = useState(false);
+
+    // CLOSE POPUP WITH CLICK OUTSIDE
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if(isOpen && !event.target.closest(".deleteTransaction")) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    }, [isOpen])
+
+
+
 
     const deleteTransactionWithTransData = deleteTransaction.bind(null, transData);
     
@@ -18,14 +34,17 @@ export default function DeleteTransaction({ transData }) {
                 <TrashIcon className="size-5 hover:text-orange-600"/>
             </button>
         {isOpen && (
-            <div className="bg-slate-900 min-w-72 border-2 border-orange-600 p-2 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" >
-                <div className='text-orange-600 m-2 font-bold flex justify-between'>
-                    <p className="inline-block border-b-2 border-orange-600">DELETE TRANSACTION</p>
+
+            <div className="deleteTransaction bg-slate-900 min-w-72 border-2 border-orange-600 p-1 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" >
+
+                <div className='m-2 text-orange-600 font-bold flex justify-between align-middle border-b-2 border-orange-600'>
+                    <p className="self-center text-base">DELETE TRANSACTION</p>
                     <XCircleIcon 
                         className="size-8 hover:cursor-pointer hover:text-white"
                         onClick={() => setIsOpen(false)}
                     />
                 </div>
+
                 <p className="mt-6 ml-2">{`${transData.description}`}</p>
                 <p className="ml-2 mb-6">{`$${transData.amount}`}</p>
                 <form action={deleteTransactionWithTransData} className="text-center">
