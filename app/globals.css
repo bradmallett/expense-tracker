@@ -27,4 +27,73 @@ body {
   font-size: .8rem;
 }
 
+/* 
+slate-200 = rgb(226 232 240)
+slate-400 = rgb(148 163 184)
+slate-900 = rgb(15 23 42)
+slate-950 = rgb(2 6 23)
+orange-600 = rgb(234 88 12)
+*/
 
+
+
+.react-datepicker {
+  border: 2px solid rgb(234 88 12) !important;
+  border-radius: none !important;
+}
+
+.react-datepicker__triangle {
+  fill: rgb(234 88 12) !important;
+  color: rgb(234 88 12) !important;
+  stroke: none !important;
+}
+
+
+/* header */
+.month-picker .react-datepicker__header {
+  text-align: center;
+  color: rgb(234 88 12) !important;
+  background-color: rgb(15 23 42) !important;
+  border-bottom: 2px solid rgb(234 88 12) !important;
+  border-top-left-radius: none !important;
+}
+
+
+/* calendar */
+.month-picker .react-datepicker__month-container {
+  background-color: rgb(15 23 42);
+}
+
+.month-picker .react-datepicker__month-text {
+  color: rgb(226 232 240);
+  border: 2px solid rgba(234, 90, 12, 0);
+  border-radius: 0px;
+  font-weight: bold;
+}
+
+.month-picker .react-datepicker__month-text:hover {
+  color: rgb(234 88 12);
+  background-color: rgb(15, 23, 42) !important;
+  border: 2px solid rgb(234 88 12);
+  border-radius: 0px !important;
+}
+
+.month-picker .react-datepicker__month-text--keyboard-selected {
+  color: rgb(234 88 12) !important;
+  background-color: rgb(15, 23, 42) !important;
+  border: 2px solid rgb(234 88 12);
+  border-radius: 0px !important;
+}
+
+.month-picker .react-datepicker__month-text--selected {
+  border-radius: 0px !important;
+}
+
+.month-picker .react-datepicker__navigation-icon::before {
+  border-color: rgb(234 88 12) !important;
+  cursor: pointer;
+}
+
+.month-picker .react-datepicker__navigation-icon:hover::before {
+  border-color: rgb(226 232 240) !important;
+}
