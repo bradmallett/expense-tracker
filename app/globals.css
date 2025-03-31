@@ -17,6 +17,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
+  box-sizing: border-box;
 }
 
 .totals-contain {
@@ -50,7 +51,7 @@ orange-600 = rgb(234 88 12)
 
 
 /* header */
-.month-picker .react-datepicker__header {
+.react-datepicker__header {
   text-align: center;
   color: rgb(234 88 12) !important;
   background-color: rgb(15 23 42) !important;
@@ -58,42 +59,54 @@ orange-600 = rgb(234 88 12)
   border-top-left-radius: none !important;
 }
 
+.react-datepicker__current-month, .react-datepicker__day-name {
+  color: rgb(234 88 12) !important;
+  font-weight: bold;
+}
+
+
+
+
 
 /* calendar */
-.month-picker .react-datepicker__month-container {
+.react-datepicker__month-container {
   background-color: rgb(15 23 42);
 }
 
-.month-picker .react-datepicker__month-text {
-  color: rgb(226 232 240);
+.react-datepicker__month-text, .react-datepicker__day {
+  color: rgb(226 232 240) !important;
   border: 2px solid rgba(234, 90, 12, 0);
   border-radius: 0px;
   font-weight: bold;
 }
 
-.month-picker .react-datepicker__month-text:hover {
+.react-datepicker__month-text:hover, .react-datepicker__day:hover {
   color: rgb(234 88 12);
   background-color: rgb(15, 23, 42) !important;
   border: 2px solid rgb(234 88 12);
   border-radius: 0px !important;
 }
 
-.month-picker .react-datepicker__month-text--keyboard-selected {
+.react-datepicker__month-text--keyboard-selected, .react-datepicker__day--selected {
   color: rgb(234 88 12) !important;
   background-color: rgb(15, 23, 42) !important;
   border: 2px solid rgb(234 88 12);
   border-radius: 0px !important;
 }
 
-.month-picker .react-datepicker__month-text--selected {
+.react-datepicker__month-text--selected {
   border-radius: 0px !important;
 }
 
-.month-picker .react-datepicker__navigation-icon::before {
+.react-datepicker__navigation-icon::before {
   border-color: rgb(234 88 12) !important;
   cursor: pointer;
 }
 
-.month-picker .react-datepicker__navigation-icon:hover::before {
+.react-datepicker__navigation-icon:hover::before {
   border-color: rgb(226 232 240) !important;
+}
+
+.react-datepicker__view-calendar-icon input {
+  padding: 7px 10px 7px 25px !important;
 }

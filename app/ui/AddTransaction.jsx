@@ -31,13 +31,11 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
     });
 
 
-
-
     // CLOSE DROPDOWN WITH CLICK OUTSIDE
     useEffect(() => {
         const handleClickOutside = (event) => {
             if(showCatOptions && !event.target.closest(".categories")) {
-                setSelectedCat(false);
+                setShowCatOptions(false);
             }
         };
 
@@ -51,14 +49,14 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
             selectedSpendingTags.current = [...transactionTags];
         }
     }
-
-
-
-    // now sending transactionType to addTransaction with bind
-    const addTransactionWithID = addTransaction.bind(null, { monthID, selectedSpendingTags, transactionType, selectedCat });
+    
+    
+    
+        // now sending transactionType to addTransaction with bind
+        const addTransactionWithID = addTransaction.bind(null, { monthID, selectedSpendingTags, transactionType, selectedCat });
 
     return (
-        <div className="mt-2 mb-2">
+        <div className="m-2 text-xs md:text-sm">
             <div className="mt-4 mb-4 flex justify-around align-middle">
                 <button
                     className={clsx(
@@ -89,15 +87,15 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
                 </button>
             </div>
 
-            <div className="m-2 group inline-block">
+            <div className="m-2  group inline-block">
                 <p>DATE</p>
                 <DatePicker
-                    className="bg-slate-900 text-slate-200 border-2 hover:border-orange-600"
-                    calendarClassName="month-picker"
+                    className="p-2 font-bold bg-slate-950 text-slate-400 border border-slate-500 group-hover:border-orange-600"
+                    calendarClassName="date-picker"
                     selected={selectedDate}
                     onChange={date => setSelectedDate(date)}
                     showIcon
-                    icon={<CalendarIcon className="m p-0 top-1"/>} 
+                    icon={<CalendarIcon />} 
                 />
             </div>
 
@@ -128,18 +126,25 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
 
 
 
+
+
+
+
+
+
+
             { transactionType === 'expense' &&
                 <div className="m-2">
                     <p>BUDGET CATEGORY</p>
                     <button
-                        className="mb-3 p-2 font-bold bg-slate-950 border border-slate-500 flex text-slate-400 hover:border-orange-600 hover:text-orange-600 group"
+                        className="mb-3 p-2 font-bold bg-slate-950 border border-slate-500 flex  text-slate-400 hover:border-orange-600 hover:text-orange-600 group"
                         onClick={() => setShowCatOptions(true)}
                     >
-                        {selectedCat}<ChevronDownIcon className="size-5 ml-1 group-hover:text-orange-600"/>
+                        {selectedCat}<ChevronDownIcon className="size-5 ml-1  group-hover:text-orange-600"/>
                     </button>
 
                     {showCatOptions &&
-                        <ul className="categories bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600 max-h-48 overflow-auto sm:max-h-[400px]">
+                        <ul className="categories bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600">
                             {['fun', 'fundamental', 'future'].map((cat) => (
                                 <button
                                     className="p-1 hover:bg-orange-600 hover:text-slate-900"
@@ -164,16 +169,27 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
             }
 
 
+
+
+
+
+
+
                  
 
-
-            <button 
-                // update on click!!!
-                onClick={() => console.log('clicked')}
-                className="w-full p-2 border-2 text-base border-orange-600 bg-orange-600 text-slate-900 font-bold hover:text-slate-700"    
-            >
-                CREATE {`${transactionType.toUpperCase()}`}
-            </button>
+            <div className="m-2 flex justify-center">
+                <button 
+                    // update on click!!!
+                    onClick={() => console.log('clicked')}
+                    className={clsx("w-5/6 p-3 text-base bg-orange-600 text-slate-900 font-bold",
+                        transactionType === 'expense' &&  'hover:bg-red-500', 
+                        transactionType === 'income' &&  'hover:bg-green-500',
+                        transactionType === 'savings' &&  'hover:bg-purple-500',
+                    )}    
+                >
+                    CREATE {`${transactionType.toUpperCase()}`}
+                </button>
+            </div>
         </div>
       );
 };
