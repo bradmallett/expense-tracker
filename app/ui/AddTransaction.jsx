@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { addTransaction } from "../lib/actions/addTransaction";
 import AddTagsNewTransactionForm from "./AddTagsNewTransactionForm";
+import SelectTransactionType from "./SelectTransactionType";
 import clsx from "clsx";
 import { ChevronDownIcon} from '@heroicons/react/24/outline';
 import { useSearchParams } from 'next/navigation';
@@ -49,7 +50,10 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
             selectedSpendingTags.current = [...transactionTags];
         }
     }
-    
+
+    function updateTransactionType(updatedTransactionType) {
+        setTransactionType(updatedTransactionType);
+    }
     
     
         // now sending transactionType to addTransaction with bind
@@ -57,35 +61,11 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
 
     return (
         <div className="m-2 text-xs md:text-sm">
-            <div className="mt-4 mb-4 flex justify-around align-middle">
-                <button
-                    className={clsx(
-                    "p-1 font-bold hover:bg-red-500 hover:text-slate-900",
-                    transactionType === 'expense' && 'border-t-2 border-b-2 border-red-500 text-red-500' 
-                    )}
-                    onClick={() => setTransactionType('expense')}
-                >
-                    EXPENSE
-                </button>
-                <button
-                    className={clsx(
-                    "p-1 font-bold hover:bg-green-500 hover:text-slate-900",
-                    transactionType === 'income' && 'border-t-2 border-b-2 border-green-500 text-green-500'
-                    )}
-                    onClick={() => setTransactionType('income')}
-                >
-                    INCOME
-                </button>
-                <button
-                    className={clsx(
-                    "p-1 font-bold hover:bg-purple-500 hover:text-slate-900",
-                    transactionType === 'savings' && 'border-t-2 border-b-2 border-purple-500 text-purple-500'
-                    )}
-                    onClick={() => setTransactionType('savings')}
-                >
-                    SAVINGS
-                </button>
-            </div>
+
+            <SelectTransactionType 
+                transactionType={transactionType}  
+                updateTransactionType={updateTransactionType}
+            />
 
             <div className="m-2  group inline-block">
                 <p>DATE</p>

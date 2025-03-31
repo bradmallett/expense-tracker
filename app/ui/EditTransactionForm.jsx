@@ -1,38 +1,46 @@
 'use client';
 
 import { editTransaction } from "../lib/actions/editTransaction";
+import { useState, useEffect } from 'react';
+import clsx from "clsx";
+import { CurrencyInput } from 'react-currency-mask';
+import { ChevronDownIcon} from '@heroicons/react/24/outline';
+import SelectTransactionType from "./SelectTransactionType";
+
+
 
 
 export default function EditTransactionForm({ transaction }) {
+    const [transactionType, setTransactionType ]= useState('expense');
+    const [description, setDescription] = useState('');
+    const [amount, setAmount] = useState('');
+    const [showCatOptions, setShowCatOptions] = useState(false);
+    const [selectedCat, setSelectedCat] = useState('fun');
+
+    function updateTransactionType(updatedTransactionType) {
+        setTransactionType(updatedTransactionType);
+    }
+    
+
+
     const IDandDate = {
         monthID: transaction.id,
         transactionDate: transaction.date,
         prevTransactionAmount: transaction.amount
     }
 
-    const editTransactionWithID = editTransaction.bind(null, IDandDate);
+    // NOT GOING TO BIND ANYMORE
+    // const editTransactionWithID = editTransaction.bind(null, IDandDate);
 
     return (
         <div>
-            <p>{transaction.description}</p>
+            <p>EDITING {transactionType.toUpperCase()}: {transaction.description}</p>
             <p>{new Date(transaction.date).toDateString()}</p>
 
-            <form action={editTransactionWithID} className="add-transaction-form">
-            <h1>EDIT TRANSACTION</h1>
-
-                <div className="input-contain">
-                    <label htmlFor="transactionType">TRANSACTION TYPE:</label>
-                    <select 
-                        name="transactionType" 
-                        id="transactionType" 
-                        defaultValue={transaction.type}
-                        required
-                    >
-                            <option value="expense">expense</option>
-                            <option value="income">income</option>
-                            <option value="savings">savings</option>
-                    </select>
-                </div>
+            <SelectTransactionType 
+                transactionType={transactionType}  
+                updateTransactionType={updateTransactionType}
+            />
 
                 <div className="input-contain">
                     <label htmlFor="description">DESCRIPTION: </label>
@@ -71,8 +79,7 @@ export default function EditTransactionForm({ transaction }) {
                     </select>
                 </div>
 
-                <button type="submit">EDIT TRANSACTION</button>
-            </form>
+                <button>EDIT TRANSACTION</button>
         </div>
       );
 };
