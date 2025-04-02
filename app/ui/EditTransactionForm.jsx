@@ -11,11 +11,26 @@ import SelectTransactionType from "./SelectTransactionType";
 
 
 export default function EditTransactionForm({ transaction }) {
-    const [transactionType, setTransactionType ]= useState('expense');
-    const [description, setDescription] = useState('');
+    const [transactionType, setTransactionType ] = useState(transaction.type);
+    const [description, setDescription] = useState(transaction.description);
     const [amount, setAmount] = useState('');
     const [showCatOptions, setShowCatOptions] = useState(false);
-    const [selectedCat, setSelectedCat] = useState('fun');
+    const [selectedCat, setSelectedCat] = useState(transaction.budgetCategory);
+
+
+    // CLOSE DROPDOWN WITH CLICK OUTSIDE
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if(showCatOptions && !event.target.closest(".categories")) {
+                setShowCatOptions(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside); 
+    }, [showCatOptions])
+
+
 
     function updateTransactionType(updatedTransactionType) {
         setTransactionType(updatedTransactionType);
@@ -34,52 +49,80 @@ export default function EditTransactionForm({ transaction }) {
 
     return (
         <div>
-            <p>EDITING {transactionType.toUpperCase()}: {transaction.description}</p>
-            <p>{new Date(transaction.date).toDateString()}</p>
+            <p className="">EDITING {transaction.type.toUpperCase()}: <span className="text-orange-600 font-bold">"{transaction.description}"</span></p>
+            <p className="">DATE: <span className="text-orange-600 font-bold">{new Date(transaction.date).toDateString()}</span></p>
 
             <SelectTransactionType 
                 transactionType={transactionType}  
                 updateTransactionType={updateTransactionType}
             />
 
-                <div className="input-contain">
-                    <label htmlFor="description">DESCRIPTION: </label>
-                    <input
-                        id="description"
-                        name="description"
-                        type="text"
-                        defaultValue={transaction.description}
-                        required
-                    />
-                </div>
+            <div className="m-2 group inline-block">
+                <p>DESCRIPTION</p>
+                <input
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="p-2 font-bold bg-slate-950 text-slate-400 border border-slate-500 group-hover:border-orange-600"
+                />
+            </div>
 
-                <div className="input-contain">
-                    <label htmlFor="amount">AMOUNT: </label>
-                    <input
-                        id="amount"
-                        name="amount"
-                        type="number"
-                        defaultValue={transaction.amount}
-                        step="0.01"
-                        required
-                    />
-                </div>
+            <div className="m-2 group inline-block">
+                <p>AMOUNT</p>
+                <CurrencyInput
+                    className="p-2 font-bold bg-slate-950 text-slate-400 border border-slate-500 group-hover:border-orange-600"
+                    currency="USD"
+                    locale="en-US"
+                    defaultValue={transaction.amount}
+                    onChangeValue={(event, originalValue, maskedValue) => {
+                        setAmount(originalValue);
+                    }}
+                />
+            </div>
 
-                <div className="input-contain">
-                    <label htmlFor="budgetCategory">BUDGET CATEGORY: </label>
-                    <select 
-                        name="budgetCategory" 
-                        id="budgetCategory"
-                        defaultValue={transaction.budgetCategory}
+                { transactionType === 'expense' &&
+                    <div className="m-2">
+                        <p>BUDGET CATEGORY</p>
+                        <button
+                            className="mb-3 p-2 font-bold bg-slate-950 border border-slate-500 flex  text-slate-400 hover:border-orange-600 hover:text-orange-600 group"
+                            onClick={() => setShowCatOptions(true)}
                         >
-                            <option value="">(none)</option>
-                            <option value="fundamental">fundamental</option>
-                            <option value="fun">fun</option>
-                            <option value="future">future</option>
-                    </select>
-                </div>
+                            {selectedCat}<ChevronDownIcon className="size-5 ml-1  group-hover:text-orange-600"/>
+                        </button>
+    
+                        {showCatOptions &&
+                            <ul className="categories bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600">
+                                {['fun', 'fundamental', 'future'].map((cat) => (
+                                    <button
+                                        className="p-1 hover:bg-orange-600 hover:text-slate-900"
+                                        key={cat}
+                                        onClick={() => {
+                                            setSelectedCat(cat);
+                                            setShowCatOptions(false);
+                                            }}
+                                    >
+                                            {cat}
+                                    </button>
+                                ))}
+                            </ul>
+                        }
+                    </div>
+                }
 
-                <button>EDIT TRANSACTION</button>
+                
+                <div className="m-2 flex justify-center">
+                    <button 
+                        // update on click!!!
+                        onClick={() => console.log('clicked')}
+                        className={clsx("w-5/6 p-3 text-base bg-orange-600 text-slate-900 font-bold",
+                            transaction.type === 'expense' &&  'hover:bg-red-500', 
+                            transaction.type === 'income' &&  'hover:bg-green-500',
+                            transaction.type === 'savings' &&  'hover:bg-purple-500',
+                        )}    
+                    >
+                        EDIT {`${transaction.type.toUpperCase()}`}
+                    </button>
+                </div>
         </div>
       );
 };

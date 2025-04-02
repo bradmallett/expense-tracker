@@ -132,7 +132,6 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
                                     onClick={() => {
                                         setSelectedCat(cat);
                                         setShowCatOptions(false);
-                                        
                                         }}
                                 >
                                         {cat}
