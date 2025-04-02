@@ -20,6 +20,10 @@ export default function Edit({ transaction }) {
       return () => document.removeEventListener("mousedown", handleClickOutside);
       
     }, [isOpen])
+
+    function closeEditTransactionOnSubmit() {
+      setIsOpen(false);
+    }
    
    
     return (
@@ -39,7 +43,7 @@ export default function Edit({ transaction }) {
                   onClick={() => setIsOpen(false)}
               />
             </div>
-            <EditTransactionForm transaction={transaction}/>
+            <EditTransactionForm transaction={transaction} closeEditTransactionOnSubmit={closeEditTransactionOnSubmit}/>
           </div>
         )}
       </>
