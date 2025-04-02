@@ -21,6 +21,9 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
       
     }, [isOpen])
       
+    function closeAddTransactionOnSubmit() {
+      setIsOpen(false);
+    }
     
     return (
       <div>
@@ -32,7 +35,7 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
         </button>
 
         {isOpen && (
-          <div className='addNewTransaction bg-slate-900 min-w-72 border-2 border-orange-600 p-1 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+          <div className='addNewTransaction w-full min-h-screen bg-slate-900 border-2 absolute top-0 border-orange-600 p-1 md:w-1/2 md:h-auto md:min-h-0 md:max-w-[660px]  md:fixed md:top-1/4 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/4'>
 
             <div className='m-2 text-orange-600 font-bold flex justify-between align-middle border-b-2 border-orange-600'>
               <p className="self-center text-base">ADD NEW TRANSACTION</p>
@@ -42,7 +45,7 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
               />
             </div>
 
-            <AddTransaction monthID={monthID} spendingTagNames={spendingTagNames}/>
+            <AddTransaction monthID={monthID} spendingTagNames={spendingTagNames} closeAddTransactionOnSubmit={closeAddTransactionOnSubmit}/>
           </div>
         )}
 

@@ -76,7 +76,8 @@ export default function AddTagsNewTransactionForm({ spendingTagNames, addSpendin
 
 
     return (
-        <div className="mt-5 mb-5 ml-2 mr-2 p-2 text-slate-400 bg-slate-800">
+        <div className="mt-2 mb-3 border-t-2 border-orange-600 text-slate-400 bg-slate-800">
+            <p className="pt-[3px] pb-2  text-orange-600 ">SPENDING TAGS</p>
 
             {selectedSpendingTags.length > 0 && 
                 <div className="">
@@ -100,18 +101,20 @@ export default function AddTagsNewTransactionForm({ spendingTagNames, addSpendin
             }
 
 
-            <p>SELECT TAG</p>
             <button
                 className="mb-3 p-2 font-bold bg-slate-950 border border-slate-500 flex text-slate-400 hover:border-orange-600 hover:text-orange-600 group"
                 name="spendingTag"
                 id="spendingTag"
-                onClick={() => setShowTagOptions(!showTagOptions)}
+                onClick={() => {
+                    setShowTagOptions(!showTagOptions);
+                    setShowNewInput(false);
+                }}
             >
                 EXISTING TAGS...<ChevronDownIcon className="size-5 ml-1 group-hover:text-orange-600"/>
             </button>
 
             {showTagOptions &&
-                <ul className="options bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600 max-h-48 overflow-auto sm:max-h-[400px]">
+                <ul className="options bg-slate-950 text-slate-400 fixed p-1 flex flex-col border-t-2 border-orange-600 overflow-auto max-h-[250px]">
                     {spendingTagNames.map((tagName) => (
                         <button
                             className="p-1 hover:bg-orange-600 hover:text-slate-900"

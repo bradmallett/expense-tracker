@@ -17,6 +17,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
+  box-sizing: border-box;
 }
 
 .totals-contain {
@@ -27,4 +28,85 @@ body {
   font-size: .8rem;
 }
 
+/* 
+slate-200 = rgb(226 232 240)
+slate-400 = rgb(148 163 184)
+slate-900 = rgb(15 23 42)
+slate-950 = rgb(2 6 23)
+orange-600 = rgb(234 88 12)
+*/
 
+
+
+.react-datepicker {
+  border: 2px solid rgb(234 88 12) !important;
+  border-radius: none !important;
+}
+
+.react-datepicker__triangle {
+  fill: rgb(234 88 12) !important;
+  color: rgb(234 88 12) !important;
+  stroke: none !important;
+}
+
+
+/* header */
+.react-datepicker__header {
+  text-align: center;
+  color: rgb(234 88 12) !important;
+  background-color: rgb(15 23 42) !important;
+  border-bottom: 2px solid rgb(234 88 12) !important;
+  border-top-left-radius: none !important;
+}
+
+.react-datepicker__current-month, .react-datepicker__day-name {
+  color: rgb(234 88 12) !important;
+  font-weight: bold;
+}
+
+
+
+
+
+/* calendar */
+.react-datepicker__month-container {
+  background-color: rgb(15 23 42);
+}
+
+.react-datepicker__month-text, .react-datepicker__day {
+  color: rgb(226 232 240) !important;
+  border: 2px solid rgba(234, 90, 12, 0);
+  border-radius: 0px;
+  font-weight: bold;
+}
+
+.react-datepicker__month-text:hover, .react-datepicker__day:hover {
+  color: rgb(234 88 12);
+  background-color: rgb(15, 23, 42) !important;
+  border: 2px solid rgb(234 88 12);
+  border-radius: 0px !important;
+}
+
+.react-datepicker__month-text--keyboard-selected, .react-datepicker__day--selected {
+  color: rgb(234 88 12) !important;
+  background-color: rgb(15, 23, 42) !important;
+  border: 2px solid rgb(234 88 12);
+  border-radius: 0px !important;
+}
+
+.react-datepicker__month-text--selected {
+  border-radius: 0px !important;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: rgb(234 88 12) !important;
+  cursor: pointer;
+}
+
+.react-datepicker__navigation-icon:hover::before {
+  border-color: rgb(226 232 240) !important;
+}
+
+.react-datepicker__view-calendar-icon input {
+  padding: 7px 10px 7px 25px !important;
+}

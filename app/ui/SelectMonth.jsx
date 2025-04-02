@@ -43,6 +43,4 @@ export default function SelectMonth() {
             />
         </div>
     )
-
-
 }

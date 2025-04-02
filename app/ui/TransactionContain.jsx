@@ -4,7 +4,6 @@ import TransactionsList from "./TransactionsList";
 import getSpendingTagNames from "../lib/actions/getSpendingTagNames";
 import getMonthSpendingTagInstances from "../lib/actions/getMonthSpendingTagInstances";
 
-
 export default async function TransactionContain({selectedMonth}) {
     const { year, month } = selectedMonth;
     
@@ -20,6 +19,7 @@ export default async function TransactionContain({selectedMonth}) {
                 spendingTagNames={spendingTagNames}
                 spendingTagInstances={spendingTagInstances}
             />
+            
             <div>SPENDING CHARTS ETC...</div>
         </div>
     );

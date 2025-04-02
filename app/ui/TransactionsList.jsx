@@ -17,7 +17,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
   const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(monthTransactionsData);
 
   return (
-      <div className="trans-list-contain mt-5 p-3 m-auto w-full max-w-3xl text-slate-400 text-xs">
+      <div className="trans-list-contain mt-5 m-auto w-full max-w-3xl text-slate-400 text-xs">
         
         <CreateNewTransaction monthID={id} spendingTagNames={spendingTagNames}/>
   
