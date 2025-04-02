@@ -21,6 +21,9 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
       
     }, [isOpen])
       
+    function closeAddTransactionOnSubmit() {
+      setIsOpen(false);
+    }
     
     return (
       <div>
@@ -42,7 +45,7 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
               />
             </div>
 
-            <AddTransaction monthID={monthID} spendingTagNames={spendingTagNames}/>
+            <AddTransaction monthID={monthID} spendingTagNames={spendingTagNames} closeAddTransactionOnSubmit={closeAddTransactionOnSubmit}/>
           </div>
         )}
 

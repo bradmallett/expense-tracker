@@ -7,12 +7,9 @@ import addSpendingTags from "./addSpendingTags";
 
 const sql = neon(process.env.DATABASE_URL);
 
-export async function addTransaction({monthID, selectedSpendingTags}, formData) {
-    const transactionDate = formData.get('date');
-    const transactionType = formData.get('transactionType');
-    const description = formData.get('description');
-    const amount = Math.round(Number(formData.get('amount')) * 100); // db needs integer
-    const budgetCategory = formData.get('budgetCategory') === "" ? null : formData.get('budgetCategory');
+export async function addTransaction( transactionData ) {
+    const { monthID, description, amountInCents, transactionDate, selectedSpendingTags, transactionType, selectedCat  } = transactionData;
+    const budgetCategory = selectedCat ===  '' ? null : selectedCat;
     const year = transactionDate.split('-')[0];
     const month = transactionDate.split('-')[1];
     const yearNumber = Number(year); // db needs integer
@@ -37,13 +34,12 @@ export async function addTransaction({monthID, selectedSpendingTags}, formData) 
          monthID = newMonthRecord.id;
     }
 
-    const {id: newTransactionID} = await insertTransaction(monthID, {transactionDate, amount, transactionType, description, budgetCategory});
-    await updateFutureMonthBalances(yearNumber, monthNumber, transactionType, amount);
+    const {id: newTransactionID} = await insertTransaction(monthID, transactionDate, amountInCents, transactionType, description, budgetCategory);
+    await updateFutureMonthBalances(yearNumber, monthNumber, transactionType, amountInCents);
 
 
-    console.log("FROM server action", selectedSpendingTags.current);
-    if (selectedSpendingTags.current.length > 0) {
-        await addSpendingTags(selectedSpendingTags.current, newTransactionID, null);
+    if (selectedSpendingTags.length > 0) {
+        await addSpendingTags(selectedSpendingTags, newTransactionID, null);
     }
 
     redirect(`/?year=${year}&month=${month}`);
@@ -97,7 +93,7 @@ export async function addTransaction({monthID, selectedSpendingTags}, formData) 
 
 
 
-    async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, amount ) {
+    async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonth, type, amount ) {
         let adjustment;
 
         if(type === 'expense') {
@@ -113,21 +109,19 @@ export async function addTransaction({monthID, selectedSpendingTags}, formData) 
             UPDATE months
             SET beginning_balance = beginning_balance + ${adjustment}
             WHERE (year > ${currentSelectedYear})
-            OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber})
+            OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonth})
             RETURNING id, beginning_balance, year, number;`
         ;
     };
 
 
 
-    async function insertTransaction(id, transactionData) {
-        const {transactionDate, amount, transactionType, description, budgetCategory} = transactionData;
-
+    async function insertTransaction(id, date, amount, type, descript, category) {
         const [ transID ] = await sql`
             INSERT INTO transactions
                 (date, month_id, amount, type, description, budget_category)
             VALUES 
-                (${transactionDate}, ${id}, ${amount}, ${transactionType}, ${description}, ${budgetCategory})
+                (${date}, ${id}, ${amount}, ${type}, ${descript}, ${category})
             RETURNING id;`
         ;
 

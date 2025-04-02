@@ -12,9 +12,8 @@ export default function TestDatePicker() {
         const year = searchParams.get('year');
         const month = searchParams.get('month');
 
-        if (year && month) {
-            return new Date(`${year}-${month}-01`);
-        }
+        if (year && month) return new Date(`${year}/${month}/01`);
+
         return new Date();
     });
     

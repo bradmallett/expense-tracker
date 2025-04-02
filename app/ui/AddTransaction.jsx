@@ -13,7 +13,7 @@ import { CalendarIcon } from '@heroicons/react/24/outline';
 import { CurrencyInput } from 'react-currency-mask';
 
 
-export default function AddTransaction({ monthID, spendingTagNames }) {
+export default function AddTransaction({ monthID, spendingTagNames, closeAddTransactionOnSubmit }) {
     const selectedSpendingTags = useRef([]);
     const [transactionType, setTransactionType ]= useState('expense');
     const [description, setDescription] = useState('');
@@ -51,13 +51,33 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
         }
     }
 
+    
     function updateTransactionType(updatedTransactionType) {
         setTransactionType(updatedTransactionType);
     }
-    
-    
-        // now sending transactionType to addTransaction with bind
-        const addTransactionWithID = addTransaction.bind(null, { monthID, selectedSpendingTags, transactionType, selectedCat });
+
+
+    function handleAddTransactionClick() {
+        // check if all fields are filled
+        if(!description || !amount) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        const transactionData = {
+            monthID,
+            description,
+            amountInCents: Math.round(Number(amount) * 100),
+            transactionDate: selectedDate.toISOString().split('T')[0],
+            selectedSpendingTags: selectedSpendingTags.current,
+            transactionType,
+            selectedCat
+        };
+
+        addTransaction(transactionData);
+        closeAddTransactionOnSubmit();
+    }
+
 
     return (
         <div className="m-2 text-xs md:text-sm">
@@ -103,16 +123,6 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
                 />
             </div>
 
-
-
-
-
-
-
-
-
-
-
             { transactionType === 'expense' &&
                 <div className="m-2">
                     <p>BUDGET CATEGORY</p>
@@ -147,19 +157,9 @@ export default function AddTransaction({ monthID, spendingTagNames }) {
                 </div>
             }
 
-
-
-
-
-
-
-
-                 
-
             <div className="m-2 flex justify-center">
                 <button 
-                    // update on click!!!
-                    onClick={() => console.log('clicked')}
+                    onClick={() => handleAddTransactionClick()}
                     className={clsx("w-5/6 p-3 text-base bg-orange-600 text-slate-900 font-bold",
                         transactionType === 'expense' &&  'hover:bg-red-500', 
                         transactionType === 'income' &&  'hover:bg-green-500',

@@ -49,8 +49,8 @@ export default function EditTransactionForm({ transaction }) {
 
     return (
         <div>
-            <p className="">EDITING {transaction.type.toUpperCase()}: <span className="text-orange-600 font-bold">"{transaction.description}"</span></p>
-            <p className="">DATE: <span className="text-orange-600 font-bold">{new Date(transaction.date).toDateString()}</span></p>
+            <p className="ml-2">EDITING {transaction.type.toUpperCase()}: <span className="text-orange-600 font-bold">"{transaction.description}"</span></p>
+            <p className="ml-2">DATE: <span className="text-orange-600 font-bold">{new Date(transaction.date).toDateString()}</span></p>
 
             <SelectTransactionType 
                 transactionType={transactionType}  
