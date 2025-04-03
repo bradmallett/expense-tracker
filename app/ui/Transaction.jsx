@@ -23,8 +23,6 @@ export default function Transaction({ trans, selectedMonth, spendingTagNames, sp
         transColor = 'text-purple-500';
     }
     
-
-
     return (
         <div>
             <div className="flex justify-between">
@@ -48,7 +46,7 @@ export default function Transaction({ trans, selectedMonth, spendingTagNames, sp
 
             <div className="flex justify-between mt-3 text-base">
                 <p className="text-white">{trans.description}</p>
-                <p className={transColor}>{amountSymbol}${trans.amount}</p>
+                <p className={transColor}>{amountSymbol}{trans.amount}</p>
             </div> 
 
             {trans.type === 'expense' &&

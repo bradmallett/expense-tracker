@@ -1,50 +1,48 @@
 import getTotals from "../lib/actions/getTotals";
 import { ArrowDownIcon, ArrowUpIcon} from '@heroicons/react/24/outline';
 import clsx from "clsx";
+import { formatCentsToDollars } from "../lib/utils";
 
 
 export async function Totals({ selectedMonth }) {
     const { year, month } = selectedMonth;
     const totals = await getTotals(year, month);
 
-    let totalYearExpense ;
-    let totalMonthExpense;
-    let totalYearIncome;
-    let totalMonthIncome;
+    let totalYearExpense = 0;
+    let totalMonthExpense = 0;
+    let totalYearIncome = 0;
+    let totalMonthIncome = 0;
+    let monthTotalDifference = 0;
     const monthName = new Date(year, month - 1).toLocaleString('en-US', {month: 'short'}).toUpperCase();
 
-    if (totals.length > 0) {
-        for(const total of totals) {
-            console.log(total);
-            if (total.type === 'income') {
-                totalYearIncome = Number(total.year_total) > 0 ? Number(total.year_total) : 0.00;
-                totalMonthIncome = Number(total.month_total) > 0 ? Number(total.month_total) : 0.00;
-            }
-            if (total.type === 'expense') {
-                totalYearExpense = Number(total.year_total) > 0 ? Number(total.year_total) : 0.00;
-                totalMonthExpense = Number(total.month_total) > 0 ? Number(total.month_total) : 0.00;
-            }
+
+    for(const total of totals) {
+        if (total.type === 'income') {
+            totalYearIncome = Number(total.year_total) > 0 ? Number(total.year_total) : 0;
+            totalMonthIncome = Number(total.month_total) > 0 ? Number(total.month_total) : 0;
+        }
+        if (total.type === 'expense') {
+            totalYearExpense = Number(total.year_total) > 0 ? Number(total.year_total) : 0;
+            totalMonthExpense = Number(total.month_total) > 0 ? Number(total.month_total) : 0;
         }
     }
-  
-    const monthTotalDifference = totalMonthIncome - totalMonthExpense;
+
+    monthTotalDifference = totalMonthIncome - totalMonthExpense;
+
 
 
     return (
         <div className="mt-2 mb-2 p-2 w-11/12 flex justify-around text-xs border-b border-orange-600 m-auto">
-
-
             <div className="text-center w-1/3 flex justify-evenly">
                 <div className="text-center">
                     <p className="text-green-500">{`${monthName} Income`}</p>
-                    <p>{`$${totalMonthIncome / 100}`}</p>
+                    <p>{`${formatCentsToDollars(totalMonthIncome)}`}</p>
                 </div>
                 <div className="text-center">
                     <p className="text-red-500">{`${monthName} Spent`}</p>
-                    <p>{`$${totalMonthExpense / 100}`}</p>
+                    <p>{`${formatCentsToDollars(totalMonthExpense)}`}</p>
                 </div>
             </div>
-
             <div className="text-center w-1/3">
                 <div className="flex justify-center">
                     <p>{`${monthName}`}</p>
@@ -54,19 +52,17 @@ export async function Totals({ selectedMonth }) {
                 <p className={clsx(monthTotalDifference > 0 ? "text-green-500" : "text-red-500",
                     "text-base font-bold")}
                 >
-                    {`$${monthTotalDifference / 100}`}
+                    {`${formatCentsToDollars(monthTotalDifference)}`}
                     </p>
             </div>
-
-
             <div className="text-center w-1/3 flex justify-evenly">
                 <div className="text-center">
                     <p className="text-red-500">{`${year} Spent`}</p>
-                    <p>{`$${totalYearExpense / 100}`}</p>
+                    <p>{`${formatCentsToDollars(totalYearExpense)}`}</p>
                 </div>
                 <div className="text-center">
                     <p className="text-green-500">{`${year} Income`}</p>
-                    <p>{`$${totalYearIncome / 100}`}</p>
+                    <p>{`${formatCentsToDollars(totalYearIncome)}`}</p>
                 </div>
             </div>
 
