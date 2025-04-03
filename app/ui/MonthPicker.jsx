@@ -42,12 +42,12 @@ export default function TestDatePicker() {
 
       return (
         <DatePicker
-            className="bg-slate-900 text-slate-200 border-2 hover:border-orange-600"
+            className="bg-slate-900 text-slate-300 border border-slate-500 hover:border-orange-600"
             calendarClassName="month-picker"
             selected={selectedDate}
             onChange={date => setSelectedDate(date)}
             showIcon
-            icon={<CalendarIcon className="m p-0 top-1"/>} 
+            icon={<CalendarIcon className="m p-0 top-1 text-slate-300"/>} 
             renderMonthContent={renderMonthContent}
             showMonthYearPicker
             dateFormat="MMMM, YYYY"

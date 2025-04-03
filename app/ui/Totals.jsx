@@ -30,7 +30,6 @@ export async function Totals({ selectedMonth }) {
     const monthTotalDifference = totalMonthIncome - totalMonthExpense;
 
 
-    // mt-2 mb-2 p-1 md:p-2 w-full md-w-11/12 flex justify-around text-xs border-b border-orange-600 m-auto
     return (
         <div className="mt-2 mb-2 p-2 w-11/12 flex justify-around text-xs border-b border-orange-600 m-auto">
 

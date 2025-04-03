@@ -19,7 +19,11 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
 
-    }, [isOpen])
+    }, [isOpen]);
+
+    function closeAddTagsFormOnSubmit() {
+        setIsOpen(false)
+    };
     
 
     return (
@@ -47,6 +51,7 @@ export default function AddTagsToExistingTransaction({ spendingTagNames, transac
                         transactionID={transactionID}
                         selectedMonth={selectedMonth}
                         transactionTags={transactionTags}
+                        closeAddTagsFormOnSubmit={closeAddTagsFormOnSubmit}
                     />
                 </div>
             )}

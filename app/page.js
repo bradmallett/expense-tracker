@@ -10,8 +10,8 @@ export default async function Home( props ) {
   return (
     <div className="w-full">
       <Totals selectedMonth={searchParams} />
-      <div className="relative text-center">
-        <p className="text-xs font-bold text-slate-200">SELECT MONTH</p>
+      <div className="relative text-center mt-4">
+        <p className="text-xs font-bold text-slate-300">SELECT MONTH</p>
         <MonthPicker />
       </div>
       <TransactionContain selectedMonth={searchParams}/>
