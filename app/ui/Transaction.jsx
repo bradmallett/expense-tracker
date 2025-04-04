@@ -1,6 +1,7 @@
 import Edit from "./Edit";
 import DeleteTransaction from "./DeleteTransaction";
 import TransactionSpendingTags from "./TransactionSpendingTags";
+import { formatCentsToDollars } from "../lib/utils";             
 
 
 
@@ -46,7 +47,7 @@ export default function Transaction({ trans, selectedMonth, spendingTagNames, sp
 
             <div className="flex justify-between mt-3 text-base">
                 <p className="text-white">{trans.description}</p>
-                <p className={transColor}>{amountSymbol}{trans.amount}</p>
+                <p className={transColor}>{amountSymbol}{formatCentsToDollars(trans.amount)}</p>
             </div> 
 
             {trans.type === 'expense' &&

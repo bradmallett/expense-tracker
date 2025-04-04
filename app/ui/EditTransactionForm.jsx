@@ -13,10 +13,12 @@ import SelectTransactionType from "./SelectTransactionType";
 export default function EditTransactionForm({ transaction, closeEditTransactionOnSubmit }) {
     const [transactionType, setTransactionType ] = useState(transaction.type);
     const [description, setDescription] = useState(transaction.description);
-    const [amount, setAmount] = useState('');
+    const [amount, setAmount] = useState(transaction.amount / 100);
     const [showCatOptions, setShowCatOptions] = useState(false);
     const [selectedCat, setSelectedCat] = useState(transaction.budgetCategory);
 
+
+    console.log('amount from EditTransactionForm: ', amount, typeof amount);
 
     // CLOSE DROPDOWN WITH CLICK OUTSIDE
     useEffect(() => {
@@ -48,8 +50,8 @@ export default function EditTransactionForm({ transaction, closeEditTransactionO
         const transactionData = {
             monthID: transaction.id,
             description,
-            amountInCents: Math.round(Number(amount) * 100),
-            prevTransAmountInCents: Math.round(transaction.amount * 100),
+            amountInCents: Math.round(amount * 100),
+            prevTransAmountInCents: transaction.amount,
             transactionDate: transaction.date,
             transactionType,
             selectedCat
@@ -95,7 +97,7 @@ export default function EditTransactionForm({ transaction, closeEditTransactionO
                     className="p-2 font-bold bg-slate-950 text-slate-400 border border-slate-500 group-hover:border-orange-600"
                     currency="USD"
                     locale="en-US"
-                    defaultValue={transaction.amount}
+                    defaultValue={transaction.amount / 100}
                     onChangeValue={(event, originalValue, maskedValue) => {
                         setAmount(originalValue);
                     }}

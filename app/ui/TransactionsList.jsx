@@ -1,6 +1,7 @@
-import formatMonthTransactions from "../lib/formatMonthTransactions";
+import buildDayObjects from "../lib/buildDayObjects";
 import CreateNewTransaction from "./CreateNewTransaction";
 import Transaction from "./Transaction";
+import { formatCentsToDollars } from "../lib/utils";
 
 
 export default function TransactionsList({ monthTransactionsData, selectedMonth, spendingTagNames, spendingTagInstances }) {
@@ -16,8 +17,8 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
     )
   }
 
-  // const { id, beginningMonthBalance, dayObjects } = formatMonthTransactions(monthTransactionsData);
-  const {  beginningMonthBalance, dayObjects } = formatMonthTransactions(monthTransactionsData.month.beginning_balance, transactions);
+
+  const { dayObjects } = buildDayObjects(monthTransactionsData.month.beginning_balance, transactions);
 
 
   return (
@@ -29,7 +30,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
             <div key={day.day} className="mt-2 p-2 bg-slate-900 border-l-2 border-orange-600">
               <div className="flex justify-between">
                 <p className="text-orange-600">{day.date}</p>
-                <p>End Day Balance: {day.endDayBalance}</p>
+                <p>End Day Balance: {formatCentsToDollars(day.endDayBalance)}</p>
               </div>
 
                 {day.transactions.map(trans => (
@@ -45,7 +46,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
             </div>
           ))}
 
-        <h2 className="text-right mt-1">MONTH BEGINNING BALANCE: {beginningMonthBalance}</h2>
+        <h2 className="text-right mt-1">MONTH BEGINNING BALANCE: {formatCentsToDollars(monthTransactionsData.month.beginning_balance)}</h2>
       </div>
     );
 };
