@@ -7,7 +7,7 @@ import getMonthSpendingTagInstances from "../lib/actions/getMonthSpendingTagInst
 export default async function TransactionContain({selectedMonth}) {
     const { year, month } = selectedMonth;
     
-    const monthTransactionsData = await getMonthTransactions(year, month);
+    const monthTransactionsData = await getMonthTransactions(year, month); // { month, transactions }
     const spendingTagInstances =  await getMonthSpendingTagInstances(monthTransactionsData?.transactions);
     const spendingTagNames = await getSpendingTagNames();
     

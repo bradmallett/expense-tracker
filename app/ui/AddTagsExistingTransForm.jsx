@@ -5,7 +5,7 @@ import { PlusCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import addSpendingTags from "../lib/actions/addSpendingTags";
 
 
-export default function AddTagsExistingTransForm({ spendingTagNames, transactionID, selectedMonth, transactionTags }) {
+export default function AddTagsExistingTransForm({ spendingTagNames, transactionID, selectedMonth, transactionTags, closeAddTagsFormOnSubmit }) {
     const [selectedSpendingTags, setSelectedSpendingTags] = useState([]);
     const [newSelectedTagName, setNewSelectedTagName] = useState('');
     const [existingSelectedTagName, setExistingSelectedTagName] = useState(null);
@@ -69,6 +69,7 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
         }
 
         addSpendingTags(selectedSpendingTags, transactionID, selectedMonth);
+        closeAddTagsFormOnSubmit();
     }
 
 
@@ -143,7 +144,7 @@ export default function AddTagsExistingTransForm({ spendingTagNames, transaction
                         ))}
                     </div>
                     <button 
-                        // onClick={handleAddTagsToTransaction}
+                        onClick={handleAddTagsToTransaction}
                         className="w-full p-2 border-2 text-base border-orange-600 bg-orange-600 text-slate-900 font-bold hover:text-slate-700"
                     >
                         ADD TAGS TO TRANSACTION

@@ -14,11 +14,11 @@ export async function addTransaction( transactionData ) {
     const month = transactionDate.split('-')[1];
     const yearNumber = Number(year); // db needs integer
     const monthNumber = Number(month); // db needs integer
+    let correctMonthID = monthID;
 
     // if no data exists for this month
     if (!monthID) {
         const beginningBalance = await calculateNewMonthBalance(yearNumber, monthNumber);
-
         const [newMonthRecord] = await sql`
             INSERT INTO months
                 (number, year, beginning_balance)
@@ -27,14 +27,12 @@ export async function addTransaction( transactionData ) {
             RETURNING id;
         `;
 
-         if(!newMonthRecord) {
-             throw new Error("Failed to create a new month record.")
-         }
+         if(!newMonthRecord) throw new Error("Failed to create a new month record.")
 
-         monthID = newMonthRecord.id;
+         correctMonthID = newMonthRecord.id;
     }
 
-    const {id: newTransactionID} = await insertTransaction(monthID, transactionDate, amountInCents, transactionType, description, budgetCategory);
+    const {id: newTransactionID} = await insertTransaction(correctMonthID, transactionDate, amountInCents, transactionType, description, budgetCategory);
     await updateFutureMonthBalances(yearNumber, monthNumber, transactionType, amountInCents);
 
 

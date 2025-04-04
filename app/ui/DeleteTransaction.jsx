@@ -3,6 +3,7 @@
 import deleteTransaction from "../lib/actions/deleteTransaction";
 import { TrashIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
+import { formatCentsToDollars } from "../lib/utils";
 
 
 export default function DeleteTransaction({ transData }) {
@@ -46,7 +47,7 @@ export default function DeleteTransaction({ transData }) {
                 </div>
 
                 <p className="mt-6 ml-2">{`${transData.description}`}</p>
-                <p className="ml-2 mb-6">{`$${transData.amount}`}</p>
+                <p className="ml-2 mb-6">{`${formatCentsToDollars(transData.amount)}`}</p>
                 <form action={deleteTransactionWithTransData} className="text-center">
                     <button
                         className="p-3 text-orange-600 m-2 border-2 border-orange-600 font-bold hover:text-slate-900 hover:bg-orange-600"

@@ -6,16 +6,14 @@ import { redirect } from 'next/navigation';
 
 const sql = neon(process.env.DATABASE_URL);
 
-export async function editTransaction({monthID, transactionDate, prevTransactionAmount}, formData) {
-    const transactionType = formData.get('transactionType');
-    const description = formData.get('description');
-    const amountInCents = Math.round(Number(formData.get('amount')) * 100); // db needs integer
-    const prevTransAmountInCents = Math.round(prevTransactionAmount * 100); // db needs integer
-    const budgetCategory = formData.get('budgetCategory') === "" ? null : formData.get('budgetCategory');
-    const year = new Date(transactionDate).getFullYear(); // db needs integer
-    const monthNumber = new Date(transactionDate).getMonth() + 1; // db needs integer
+export async function editTransaction(transactionData) {
+    const { monthID, description, amountInCents, prevTransAmountInCents, transactionDate, transactionType, selectedCat } = transactionData;
+    const budgetCategory = selectedCat === "" ? null : selectedCat;
+    const year = transactionDate.getFullYear(); // db needs integer
+    const monthNumber = transactionDate.getMonth() + 1; // db needs integer
     const yearString = year.toString();
     const monthString = monthNumber.toString().padStart(2, '0');
+
 
     try {
         await sql`
@@ -32,7 +30,6 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
     await updateFutureMonthBalances(year, monthNumber, transactionType, amountInCents);
     redirect(`/?year=${yearString}&month=${monthString}`);
     
-
 
 
     async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, newAmount ) {
@@ -69,6 +66,3 @@ export async function editTransaction({monthID, transactionDate, prevTransaction
     };
 
 }
-
-
-// April 3168 3158

@@ -10,13 +10,15 @@ import SelectTransactionType from "./SelectTransactionType";
 
 
 
-export default function EditTransactionForm({ transaction }) {
+export default function EditTransactionForm({ transaction, closeEditTransactionOnSubmit }) {
     const [transactionType, setTransactionType ] = useState(transaction.type);
     const [description, setDescription] = useState(transaction.description);
-    const [amount, setAmount] = useState('');
+    const [amount, setAmount] = useState(transaction.amount / 100);
     const [showCatOptions, setShowCatOptions] = useState(false);
     const [selectedCat, setSelectedCat] = useState(transaction.budgetCategory);
 
+
+    console.log('amount from EditTransactionForm: ', amount, typeof amount);
 
     // CLOSE DROPDOWN WITH CLICK OUTSIDE
     useEffect(() => {
@@ -38,11 +40,33 @@ export default function EditTransactionForm({ transaction }) {
     
 
 
-    const IDandDate = {
-        monthID: transaction.id,
-        transactionDate: transaction.date,
-        prevTransactionAmount: transaction.amount
+    function handleEditTransactionClick() {
+        // check if all fields are filled
+        if(!description || !amount) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        const transactionData = {
+            monthID: transaction.id,
+            description,
+            amountInCents: Math.round(amount * 100),
+            prevTransAmountInCents: transaction.amount,
+            transactionDate: transaction.date,
+            transactionType,
+            selectedCat
+        };
+
+        editTransaction(transactionData);
+        closeEditTransactionOnSubmit();
     }
+
+
+    // const IDandDate = {
+    //     monthID: transaction.id,
+    //     transactionDate: transaction.date,
+    //     prevTransactionAmount: transaction.amount
+    // }
 
     // NOT GOING TO BIND ANYMORE
     // const editTransactionWithID = editTransaction.bind(null, IDandDate);
@@ -73,7 +97,7 @@ export default function EditTransactionForm({ transaction }) {
                     className="p-2 font-bold bg-slate-950 text-slate-400 border border-slate-500 group-hover:border-orange-600"
                     currency="USD"
                     locale="en-US"
-                    defaultValue={transaction.amount}
+                    defaultValue={transaction.amount / 100}
                     onChangeValue={(event, originalValue, maskedValue) => {
                         setAmount(originalValue);
                     }}
@@ -112,8 +136,7 @@ export default function EditTransactionForm({ transaction }) {
                 
                 <div className="m-2 flex justify-center">
                     <button 
-                        // update on click!!!
-                        onClick={() => console.log('clicked')}
+                        onClick={() => handleEditTransactionClick()}
                         className={clsx("w-5/6 p-3 text-base bg-orange-600 text-slate-900 font-bold",
                             transaction.type === 'expense' &&  'hover:bg-red-500', 
                             transaction.type === 'income' &&  'hover:bg-green-500',

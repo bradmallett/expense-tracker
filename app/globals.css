@@ -20,13 +20,6 @@ body {
   box-sizing: border-box;
 }
 
-.totals-contain {
-  width: 100%;
-  margin: 10px;
-  display: flex;
-  justify-content: space-around;
-  font-size: .8rem;
-}
 
 /* 
 slate-200 = rgb(226 232 240)
