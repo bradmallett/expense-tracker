@@ -2,10 +2,11 @@
 import TransactionContain from "./ui/TransactionContain";
 import { Totals } from "./ui/Totals";
 import MonthPicker from "./ui/MonthPicker";
+import seedSpendingTagNames from "./lib/actions/seedSpendingTagNames";
 
 export default async function Home( props ) {
   const searchParams = await props.searchParams;
-
+  await seedSpendingTagNames();
 
   return (
     <div className="w-full">
