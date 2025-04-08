@@ -8,7 +8,6 @@ export default async function Home( props ) {
   const searchParams = await props.searchParams;
   await seedSpendingTagNames();
 
-
   return (
     <div className="w-full">
       <Totals selectedMonth={searchParams} />
