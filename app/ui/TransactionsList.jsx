@@ -40,6 +40,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
                       selectedMonth={selectedMonth}
                       spendingTagNames={spendingTagNames}
                       spendingTagInstances={spendingTagInstances}
+                      monthID={monthID}
                     />
                   </div>
                   ))}

@@ -7,18 +7,19 @@ import { redirect } from 'next/navigation';
 const sql = neon(process.env.DATABASE_URL);
 
 export default async function deleteTransaction( transData ) {
-    const {id, year, month, type, amount} = transData;
+    const {id, year, month, type, amount, monthID} = transData;
     const yearNumber = Number(year);
     const monthNumber = Number(month);
- // db needs integer
-
-    console.log('!!entering deleteTransaction');
 
     try {
         await sql `DELETE FROM spending_tag_instances WHERE transaction_id = ${id};`;
         await sql `DELETE FROM transactions WHERE id = ${id};`;
-        
-        console.log(`deleted transaction with id ${id}`);
+        const transactionsForSelectedMonth = await sql`SELECT id FROM transactions WHERE month_id = ${monthID};`;
+
+        if (transactionsForSelectedMonth.length === 0) {
+            await sql`DELETE FROM months WHERE id = ${monthID};`;
+        }
+
     } catch(error) {
         console.error('Error deleting transaction:', error);
         return {
@@ -27,17 +28,10 @@ export default async function deleteTransaction( transData ) {
     }
 
     await updateFutureMonthBalances(yearNumber, monthNumber, type, amount);
-    console.log(`redirecting to /?year=${year}&month=${month}`);
     redirect(`/?year=${year}&month=${month}`);
 
     async function updateFutureMonthBalances( currentSelectedYear, currentSelectedMonthNumber, type, amountInCents ) {
         let adjustment;
-        console.log('!!entering updateFutureMonthBalances');
-        console.log('currentSelectedYear:', currentSelectedYear, typeof currentSelectedYear);
-        console.log('currentSelectedMonthNumber:', currentSelectedMonthNumber, typeof currentSelectedMonthNumber);
-        console.log('type:', type, typeof type);
-        console.log('amountInCents:', amountInCents, typeof amountInCents);
-        console.log('amount:', amount, typeof amount);
 
         if(type === 'expense') {
             adjustment = amountInCents;
@@ -55,8 +49,6 @@ export default async function deleteTransaction( transData ) {
                WHERE (year > ${currentSelectedYear})
                OR (year = ${currentSelectedYear} AND number > ${currentSelectedMonthNumber});
            `;
-   
-           console.log(`updated future month balances for year ${currentSelectedYear} and month ${currentSelectedMonthNumber} with the ${adjustment} adjustment`); 
         }
         catch(error) {
             console.error('Error in updateFutureMonthBalances:', error);

@@ -6,7 +6,7 @@ import { formatCentsToDollars } from "../lib/utils";
 
 
 
-export default function Transaction({ trans, selectedMonth, spendingTagNames, spendingTagInstances }){
+export default function Transaction({ trans, selectedMonth, spendingTagNames, spendingTagInstances, monthID }){
     let transColor = '';
     let amountSymbol = '';
 
@@ -39,7 +39,8 @@ export default function Transaction({ trans, selectedMonth, spendingTagNames, sp
                         month: selectedMonth.month,
                         type: trans.type,
                         amount: trans.amount,
-                        description: trans.description
+                        description: trans.description,
+                        monthID: monthID
                     }} 
                     />
                 </div>
