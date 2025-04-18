@@ -3,8 +3,10 @@ import { neon } from "@neondatabase/serverless";
 
 const sql = neon(process.env.DATABASE_URL);
 
-export default async function getMonthTransactions(monthYear, monthNumber) {
-
+export default async function getMonthTransactions( searchParams ) {
+    const monthYear = searchParams?.year;
+    const monthNumber = searchParams?.month;
+    
     if( monthYear && monthNumber ) {
         try{
             const [ month ] = await sql`

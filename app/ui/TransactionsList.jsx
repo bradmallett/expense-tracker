@@ -10,7 +10,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
 
   if(transactions.length === 0 || monthID === null) {
     return (
-      <div className="text-center mt-5">
+      <div className="text-center">
         <p>Enter a transaction.</p>
         <CreateNewTransaction monthID={monthID} spendingTagNames={spendingTagNames}/>
       </div>
@@ -22,7 +22,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
 
 
   return (
-      <div className="trans-list-contain mt-2 m-auto w-full max-w-3xl text-slate-400 text-xs">
+      <div className="trans-list-contain m-auto w-full max-w-3xl text-slate-400 text-xs">
         
         <CreateNewTransaction monthID={monthID} spendingTagNames={spendingTagNames} />
   

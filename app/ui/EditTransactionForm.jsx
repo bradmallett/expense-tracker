@@ -36,6 +36,10 @@ export default function EditTransactionForm({ transaction, closeEditTransactionO
 
     function updateTransactionType(updatedTransactionType) {
         setTransactionType(updatedTransactionType);
+
+        if(updatedTransactionType === 'income' || updatedTransactionType === 'savings') {
+            setSelectedCat('');
+        }
     }
     
 
@@ -111,7 +115,7 @@ export default function EditTransactionForm({ transaction, closeEditTransactionO
                             className="mb-3 p-2 font-bold bg-slate-950 border border-slate-500 flex  text-slate-400 hover:border-orange-600 hover:text-orange-600 group"
                             onClick={() => setShowCatOptions(true)}
                         >
-                            {selectedCat}<ChevronDownIcon className="size-5 ml-1  group-hover:text-orange-600"/>
+                            {selectedCat !== '' ? selectedCat : "Pick a Category"}<ChevronDownIcon className="size-5 ml-1  group-hover:text-orange-600"/>
                         </button>
     
                         {showCatOptions &&
