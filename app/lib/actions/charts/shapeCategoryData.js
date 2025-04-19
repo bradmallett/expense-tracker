@@ -1,5 +1,5 @@
 
-
+import { formatCentsToDollars } from "../../utils";
 
 export default function shapeCategoryData(monthTransactionsData) {
     let totalIncome = 0;
