@@ -1,7 +1,8 @@
 
-import { getNameOfMonth } from "@/app/lib/utils";
+
 // import CategoriesChart from "./CategoriesChart"
-import shapeCategoryData from "@/app/lib/actions/charts/shapeCategoryData";
+import { getNameOfMonth } from "../../lib/utils";
+import shapeCategoryData from "../../lib/actions/charts/shapeCategoryData";
 
 
 export default function ChartContain({ selectedMonth, monthTransactionsData}) {
