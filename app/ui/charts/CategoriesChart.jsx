@@ -29,7 +29,7 @@ export default function CategoriesChart({ categoryChartData }) {
                     <XAxis dataKey="name" stroke="#9333ea" xAxisId="one" />
                     <Bar dataKey="actual" fill="#9333ea" barSize={70} xAxisId="two" activeBar={{ fill: '#9333ea', stroke: 'none', style: {filter: 'brightness(1.2)',},}} />
                     <XAxis dataKey="name" xAxisId="two" hide/>
-                    <Tooltip content={<CustomTooltip />} cursor={false}/>
+                    <Tooltip content={CustomTooltip} cursor={false}/>
                 </BarChart>
             </ResponsiveContainer>
         </>
