@@ -19,7 +19,7 @@ export default function AddTransaction({ monthID, spendingTagNames, closeAddTran
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [showCatOptions, setShowCatOptions] = useState(false);
-    const [selectedCat, setSelectedCat] = useState('fun');
+    const [selectedCat, setSelectedCat] = useState('');
     const searchParams = useSearchParams();
     const [selectedDate, setSelectedDate] = useState(() => {
         const year = searchParams.get('year');
@@ -54,6 +54,10 @@ export default function AddTransaction({ monthID, spendingTagNames, closeAddTran
     
     function updateTransactionType(updatedTransactionType) {
         setTransactionType(updatedTransactionType);
+
+        if(updatedTransactionType === 'income' || updatedTransactionType === 'savings') {
+            setSelectedCat('');
+        }
     }
 
 
@@ -130,7 +134,7 @@ export default function AddTransaction({ monthID, spendingTagNames, closeAddTran
                         className="mb-3 p-2 font-bold bg-slate-950 border border-slate-500 flex  text-slate-400 hover:border-orange-600 hover:text-orange-600 group"
                         onClick={() => setShowCatOptions(true)}
                     >
-                        {selectedCat}<ChevronDownIcon className="size-5 ml-1  group-hover:text-orange-600"/>
+                        {selectedCat !== '' ? selectedCat : "Pick a Category"}<ChevronDownIcon className="size-5 ml-1  group-hover:text-orange-600"/>
                     </button>
 
                     {showCatOptions &&

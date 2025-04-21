@@ -29,3 +29,15 @@ export function formatCentsToDollars(cents) {
         minimumFractionDigits: 2,
     }).format(amount);
 }
+
+export function formatNumberToPercent(number) {
+    return `${number}%`;
+}
+
+export function getNameOfMonth(selectedMonth) {
+    const rawMonth = selectedMonth?.month?.trim();
+    const monthIndex = parseInt(rawMonth, 10) - 1; // JS months are 0-indexed
+    const date = new Date(2025, monthIndex, 1); // year, monthIndex, day
+
+    return date.toLocaleString('default', { month: 'long' }).toUpperCase();
+}

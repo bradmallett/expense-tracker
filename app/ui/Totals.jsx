@@ -32,7 +32,7 @@ export async function Totals({ selectedMonth }) {
 
 
     return (
-        <div className="mt-2 mb-2 p-2 w-11/12 flex justify-around text-xs border-b border-orange-600 m-auto">
+        <div className="mt-2 md:p-2 md:w-11/12 flex justify-around text-xs border-b border-orange-600 max-w-[1480px] mx-auto">
             <div className="text-center w-1/3 flex justify-evenly">
                 <div className="text-center">
                     <p className="text-green-500">{`${monthName} Income`}</p>
