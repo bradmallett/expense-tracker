@@ -14,8 +14,6 @@ export default function shapeCategoryData(monthTransactionsData) {
 
         if(transaction.type === 'expense') {
             if(transaction.budget_category === 'fundamental') {
-                console.log("totalFundamental: ", totalFundamental)
-                console.log('!fundamental: ', transaction.amount + 'added!')
                 totalFundamental += transaction.amount;
             }
             if(transaction.budget_category === 'fun') {
@@ -34,21 +32,20 @@ export default function shapeCategoryData(monthTransactionsData) {
     const data = [
         {
             name: 'FUNDAMENTAL',
-            target: Math.ceil(totalIncome * .5),
-            actual: totalFundamental,
+            target: 50,
+            actual: Number(((totalFundamental / totalIncome) * 100).toFixed(1)),
         },
         {
             name: 'FUN',
-            target: Math.ceil(totalIncome * .3),
-            actual: totalFun,
+            target: 30,
+            actual: Number(((totalFun / totalIncome) * 100).toFixed(1)),
         },
         {
             name: 'FUTURE',
-            target: Math.ceil(totalIncome * .2),
-            actual: totalFuture,
+            target: 20,
+            actual: Number(((totalFuture / totalIncome) * 100).toFixed(1)),
         }
     ];
-    console.log(data)
 
     return data;
 }

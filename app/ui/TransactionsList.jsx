@@ -22,9 +22,9 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
 
 
   return (
-      <div className="trans-list-contain m-auto w-full max-w-3xl text-slate-400 text-xs">
+      <div className="trans-list-contain m-auto w-full max-w-3xl text-slate-400 text-xs text-center md:text-left">
         
-        <CreateNewTransaction monthID={monthID} spendingTagNames={spendingTagNames} />
+        <CreateNewTransaction monthID={monthID} spendingTagNames={spendingTagNames}/>
   
           {dayObjects.map(day => (
             <div key={day.day} className="mt-2 p-2 bg-slate-900 border-l-2 border-orange-600">

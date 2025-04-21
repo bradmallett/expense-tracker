@@ -9,7 +9,7 @@ export default async function TransactionContain({ selectedMonth, monthTransacti
     const spendingTagNames = await getSpendingTagNames();
     
     return (
-        <div className="flex flex-col w-[50%] m-5">
+        <div className="flex flex-col w-full md:m-3 md:w-1/2">
             <TransactionsList 
                 monthTransactionsData={monthTransactionsData} 
                 selectedMonth={selectedMonth}

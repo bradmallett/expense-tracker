@@ -26,7 +26,7 @@ export default function CreateNewTransaction({ monthID, spendingTagNames }) {
     }
     
     return (
-      <div>
+      <div className="mt-5 md:mt-0">
         <button
           className=""
           onClick={() => setIsOpen(!isOpen)}
