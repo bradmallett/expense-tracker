@@ -2,13 +2,13 @@
 
 // import CategoriesChart from "./CategoriesChart"
 import { getNameOfMonth } from "../../lib/utils";
-// import shapeCategoryData from "../../lib/actions/charts/shapeCategoryData";
+import shapeCategoryData from "../../lib/actions/charts/shapeCategoryData";
 
 
 export default function ChartContain({ selectedMonth, monthTransactionsData}) {
     const monthName = getNameOfMonth(selectedMonth);
-    console.log(monthTransactionsData)
-    // const categoryChartData = shapeCategoryData(monthTransactionsData);
+    const categoryChartData = shapeCategoryData(monthTransactionsData);
+    console.log(categoryChartData)
 
 
     return (
