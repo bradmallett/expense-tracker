@@ -11,8 +11,11 @@ import SpendingTagsChartContain from "./ui/charts/SpendingTagsChartContain";
 export default async function Home( props ) {
   const searchParams = await props.searchParams;
   const monthTransactionsData = await getMonthTransactions(searchParams);
-  const spendingTagInstances =  await getMonthSpendingTagInstances(monthTransactionsData?.transactions);
+  const monthID = monthTransactionsData?.month?.id || null;
+  const transactions = monthTransactionsData?.transactions || [];
 
+
+  const spendingTagInstances =  await getMonthSpendingTagInstances(monthTransactionsData?.transactions);
   await seedSpendingTagNames();
 
   return (
@@ -22,12 +25,20 @@ export default async function Home( props ) {
         <p className="text-xs font-bold text-slate-300">SELECT MONTH</p>
         <MonthPicker />
       </div>
+
       <div className="w-full flex flex-col md:flex-row max-w-[1500px] mx-auto">
         <TransactionContain selectedMonth={searchParams} monthTransactionsData={monthTransactionsData} spendingTagInstances={spendingTagInstances}/>
-        <div className="w-full md:w-1/2">
-          <SpendingTagsChartContain selectedMonth={searchParams} monthTransactionsData={monthTransactionsData} spendingTagInstances={spendingTagInstances}/>
-          <CategoriesChartContain selectedMonth={searchParams} monthTransactionsData={monthTransactionsData}/>
-        </div>
+
+
+
+        {transactions.length > 0 && monthID != null &&
+          <div className="w-full md:w-1/2">
+            <SpendingTagsChartContain selectedMonth={searchParams} monthTransactionsData={monthTransactionsData} spendingTagInstances={spendingTagInstances}/>
+            <CategoriesChartContain selectedMonth={searchParams} monthTransactionsData={monthTransactionsData}/>
+          </div>
+        }
+
+
       </div>
     </div>
   );

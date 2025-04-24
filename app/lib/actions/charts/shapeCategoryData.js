@@ -34,6 +34,10 @@ export default function shapeCategoryData(monthTransactionsData) {
             }
         }
 
+        if(totalIncome === 0) {
+            return [];
+        }
+
         const data = [
             {
                 name: 'FUNDAMENTAL',
