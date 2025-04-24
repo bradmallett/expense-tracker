@@ -4,12 +4,13 @@ import { formatCentsToDollars } from '../../lib/utils.js';
 import { useState, useEffect } from 'react';
 
 
-const CategoriesChart = ({ shapedMonthTagsData, totalMonthIncome, monthName }) => {
+const MonthSpendingChart = ({ shapedMonthTagsData, totalMonthExpense, monthName }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [tagColor, setTagColor] = useState('');
     const [tagAmount, setTagAmount] = useState(0);
     const [tagName, setTagName] = useState('');
     const [percentOfIncome, setPercentOfIncome] = useState(0);
+
 
     useEffect(() => {
       if (shapedMonthTagsData && shapedMonthTagsData.length > 0) {
@@ -22,7 +23,7 @@ const CategoriesChart = ({ shapedMonthTagsData, totalMonthIncome, monthName }) =
     }, [activeIndex, shapedMonthTagsData]);
 
     function calculatePercentOfIncome(amount) {
-      const percentage = Number(((amount / totalMonthIncome) * 100).toFixed(1));
+      const percentage = Number(((amount / totalMonthExpense) * 100).toFixed(1));
       return percentage;
     } 
 
@@ -88,7 +89,7 @@ const CategoriesChart = ({ shapedMonthTagsData, totalMonthIncome, monthName }) =
   
     return (
       <ResponsiveContainer width="100%" height="100%" >
-        <p style={{color: tagColor}}>Spent {percentOfIncome}% of {monthName} Income on {tagName}</p>
+        <p style={{color: tagColor}}>{percentOfIncome}% of <span className='font-bold'>{monthName} SPENDING</span> spent on {tagName}</p>
         <PieChart>
           <Pie
             activeIndex={activeIndex}
@@ -111,5 +112,5 @@ const CategoriesChart = ({ shapedMonthTagsData, totalMonthIncome, monthName }) =
     );
   };
   
-  export default CategoriesChart;
+  export default MonthSpendingChart;
 
