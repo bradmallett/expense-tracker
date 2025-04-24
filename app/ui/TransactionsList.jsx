@@ -22,7 +22,7 @@ export default function TransactionsList({ monthTransactionsData, selectedMonth,
 
 
   return (
-      <div className="trans-list-contain m-auto w-full max-w-3xl text-slate-400 text-xs text-center md:text-left">
+      <div className="trans-list-contain  w-full max-w-3xl text-slate-400 text-xs text-center md:text-left">
         
         <CreateNewTransaction monthID={monthID} spendingTagNames={spendingTagNames}/>
   

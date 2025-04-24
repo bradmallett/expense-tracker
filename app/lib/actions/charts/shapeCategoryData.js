@@ -2,8 +2,7 @@
 export default function shapeCategoryData(monthTransactionsData) {
 
     if (!monthTransactionsData || !monthTransactionsData.transactions) {
-        console.log('###monthTransactionsData undefined or incomplete data, returning empty array###');
-        return []; // Return an empty array or some default data
+        return [];
     }
 
     if(monthTransactionsData.transactions.length > 0) {
@@ -14,8 +13,6 @@ export default function shapeCategoryData(monthTransactionsData) {
 
         
         for(const transaction of monthTransactionsData.transactions) {
-            console.log('###TRANSACTIONS EXIST!!!###');
-
             if(transaction.type === 'income') {
                 totalIncome += transaction.amount;
             }
@@ -54,7 +51,7 @@ export default function shapeCategoryData(monthTransactionsData) {
                 actual: Number(((totalFuture / totalIncome) * 100).toFixed(1)),
             }
         ];
-        console.log('###SHAPED DATA###', data);
+
         return data;
     }
     else {
