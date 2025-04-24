@@ -12,11 +12,12 @@ export default async function Home( props ) {
   const searchParams = await props.searchParams;
   const monthTransactionsData = await getMonthTransactions(searchParams);
   const spendingTagInstances =  await getMonthSpendingTagInstances(monthTransactionsData?.transactions);
+
   await seedSpendingTagNames();
 
   return (
     <div className="w-full">
-      <Totals selectedMonth={searchParams} />
+      <Totals selectedMonth={searchParams}/>
       <div className="relative text-center mt-8">
         <p className="text-xs font-bold text-slate-300">SELECT MONTH</p>
         <MonthPicker />

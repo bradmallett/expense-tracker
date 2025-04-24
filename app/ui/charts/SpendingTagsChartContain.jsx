@@ -1,17 +1,25 @@
 import { getNameOfMonth } from "../../lib/utils";
 import shapeMonthSpendingTagData from "../../lib/actions/charts/shapeMonthSpendingTagData";
 import MonthSpendingChart from "./MonthSpendingChart";
+import getTotals from "@/app/lib/actions/getTotals";
 
-export default function SpendingTagsChartContain({ selectedMonth, monthTransactionsData, spendingTagInstances}) {
+export default async function SpendingTagsChartContain({ selectedMonth, monthTransactionsData, spendingTagInstances}) {
+    const { year, month } = selectedMonth;
     const monthName = getNameOfMonth(selectedMonth);
     const shapedMonthTagsData = shapeMonthSpendingTagData(monthTransactionsData, spendingTagInstances);
-    
+    const totals = await getTotals(year, month);
+    let totalMonthIncome;
+
+    for(const total of totals) {
+        if (total.type === 'income') {
+            totalMonthIncome = Number(total.month_total) > 0 ? Number(total.month_total) : 0;
+        }
+    }
 
     return (
-        <div className="m-0 md:m-5 mt-10 md:mt-16 p-1 md:p-3 pb-6 w-full h-[80vw] md:h-[40vw] max-h-[600px] bg-slate-900 text-center text-slate-300">
-            <h2 className="font-bold text-xl text-purple-600">{monthName} SPENDING</h2>
-            <MonthSpendingChart shapedMonthTagsData={shapedMonthTagsData}/>
-            {/* <YearSpendingChart  /> */}
+        <div className="max-w-[530px] w-11/12 aspect-square mx-auto mt-10 text-center   md:mt-16 ">
+            <h2 className="font-bold text-xl text-slate-300 mb-5 md:mb-10">{monthName} SPENDING</h2>
+            <MonthSpendingChart shapedMonthTagsData={shapedMonthTagsData} totalMonthIncome={totalMonthIncome} monthName={monthName}/>
         </div>
     )
 }
