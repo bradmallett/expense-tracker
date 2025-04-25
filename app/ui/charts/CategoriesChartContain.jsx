@@ -17,7 +17,7 @@ export default function CategoriesChartContain({ selectedMonth, monthTransaction
 
     return (
         // <div className="m-0 md:m-5 mt-10 md:mt-10 p-1 md:p-3 pb-6 w-full h-[80vw] md:h-[30vw] max-h-[600px] bg-slate-900 text-center text-slate-300">
-        <div className="max-w-[530px] w-11/12 aspect-square mx-auto mt-16 mb-10 pt-10 text-center   bg-slate-900">
+        <div className="max-w-[530px] w-11/12 aspect-square mx-auto mt-16 mb-10 pt-5 text-center   bg-slate-900">
             <h2 className="font-bold text-xl text-purple-600">BUDGET GOALS</h2>
             <p>PERCENTAGE OF SPENT {monthName} INCOME</p>
             <CategoriesChart categoryChartData={categoryChartData} />
